@@ -136,13 +136,13 @@ export default function RedesignAI() {
 
           <p className="hero-sub fade-up delay-2">
             AI theory won't grow your business. Implementation will.<br />
-            In 2 days at ISB Hyderabad, you walk out with live systems, not notes.
+            In 2 days, you walk out with live systems, not notes.
           </p>
 
           <div className="hero-meta fade-up delay-3">
             <div className="hero-meta-item">
               <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              A Weekend in April 2026
+              One Weekend in April '26
             </div>
             <div className="hero-meta-divider" />
             <div className="hero-meta-item">
@@ -152,7 +152,7 @@ export default function RedesignAI() {
             <div className="hero-meta-divider" />
             <div className="hero-meta-item">
               <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              9:00 AM to 6:00 PM Both Days
+              9:00 AM to 5:00 PM Both Days
             </div>
             <div className="hero-meta-divider" />
             <div className="hero-meta-item">
@@ -354,7 +354,7 @@ export default function RedesignAI() {
       <section className="speaker-section" id="faculty">
         <div className="section-inner">
           <span className="section-tag fade-up">Faculty</span>
-          <h2 className="section-h2 fade-up delay-1">Learn from practitioners, not just professors.</h2>
+          <h2 className="section-h2 fade-up delay-1">Learn from practitioners, not from theorists.</h2>
           <p className="section-sub fade-up delay-2">3 to 4 faculty across ISB academia, AI implementation, and Indian SME operations. Theory in the morning, hands-on build sessions in the afternoon.</p>
 
           <div className="faculty-grid fade-up delay-2">
@@ -713,7 +713,7 @@ export default function RedesignAI() {
             <div>
               <div className="footer-col-title">Workshop Details</div>
               <ul className="footer-col-items">
-                <li>📅 A Weekend in April 2026</li>
+                <li>📅 One Weekend in April '26</li>
                 <li>🕘 9:00 AM – 6:00 PM (Both Days)</li>
                 <li>🏛️ Indian School of Business, Gachibowli, Hyderabad</li>
                 <li>👥 Limited to 50 Participants</li>
