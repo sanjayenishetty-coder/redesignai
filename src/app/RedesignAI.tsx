@@ -203,22 +203,17 @@ export default function RedesignAI() {
           </div>
           <div className="logo-strip-divider" />
           <div className="logo-partner">
-            <div className="logo-partner-name" style={{ color: "var(--teal-500)" }}>{"S{cale}ME"}</div>
-            <div className="logo-partner-role">SME Growth &amp; Operator Community</div>
+            <img src="/assets/scaleme-logo.png" alt="ScaleMe" className="logo-partner-img" />
             <div className="logo-partner-desc">India's leading community for SME founders and operators</div>
           </div>
           <div className="logo-strip-divider" />
           <div className="logo-partner">
-            <div className="logo-partner-name" style={{ color: "#1a3a7a" }}>
-              ISB <span style={{ fontSize: "13px", fontWeight: 600, letterSpacing: 0, color: "var(--ink-3)" }}>Centre for Business Innovation</span>
-            </div>
-            <div className="logo-partner-role">Indian School of Business &middot; Gachibowli, Hyderabad</div>
-            <div className="logo-partner-desc">India's #1 ranked business school, venue and academic partner</div>
+            <img src="/assets/isb-logo.png" alt="ISB Centre for Business Innovation" className="logo-partner-img" />
+            <div className="logo-partner-desc">Knowledge Partner</div>
           </div>
           <div className="logo-strip-divider" />
           <div className="logo-partner">
-            <div className="logo-partner-name" style={{ color: "var(--teal-400)" }}>AICoworkers</div>
-            <div className="logo-partner-role">AI Automation for Indian Businesses</div>
+            <img src="/assets/aicoworkers-logo.png" alt="AICoworkers" className="logo-partner-img" />
             <div className="logo-partner-desc">No-code AI tools built specifically for Indian SME operators</div>
           </div>
         </div>
