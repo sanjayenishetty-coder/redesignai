@@ -1,3 +1,26 @@
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';
+
+@keyframes redesign-glow {
+  0%, 100% {
+    box-shadow: 0 0 6px 1px rgba(239, 104, 32, 0.5), 0 0 14px 3px rgba(239, 104, 32, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 12px 3px rgba(239, 104, 32, 0.8), 0 0 28px 8px rgba(239, 104, 32, 0.4);
+  }
+}
+
+.redesign-ai-btn {
+  background: linear-gradient(135deg, #EF6820, #d94f24);
+  color: #fff !important;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 700 !important;
+  animation: redesign-glow 2s ease-in-out infinite;
+  transition: transform 0.15s;
+}
+
+.redesign-ai-btn:hover {
+  transform: scale(1.05);
+}

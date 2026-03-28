@@ -139,9 +139,7 @@ export default function Home() {
                 </button>
                 <button
                   onClick={() => navigate('/redesign-ai')}
-                  className={`text-[20px] md:text-[14px] font-semibold transition-colors cursor-pointer whitespace-nowrap
-                  ${isScrolled ? 'text-[#007787] hover:text-[#1DB2AB]' : 'text-white hover:text-[#92dad7]'}
-                `}
+                  className="redesign-ai-btn text-[20px] md:text-[14px] cursor-pointer whitespace-nowrap"
                 >
                   Redesign AI
                 </button>
@@ -209,7 +207,7 @@ export default function Home() {
               </a>
               <button
                 onClick={() => navigate('/redesign-ai')}
-                className="text-sm font-semibold text-[#007787] hover:text-[#1DB2AB] transition-colors"
+                className="redesign-ai-btn text-sm cursor-pointer"
               >
                 Redesign AI
               </button>
@@ -259,7 +257,7 @@ export default function Home() {
                   navigate('/redesign-ai');
                   setMobileMenuOpen(false);
                 }}
-                className="px-6 py-3 text-sm font-semibold text-[#007787] hover:bg-gray-50 text-left"
+                className="redesign-ai-btn mx-6 my-2 text-sm text-left"
               >
                 Redesign AI
               </button>
