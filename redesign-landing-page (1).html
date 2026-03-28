@@ -1,0 +1,2423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REDESIGN, AI Workshop for Indian SMEs, ISB Hyderabad, April 2026</title>
+<meta name="description" content="A 2-day hands-on AI workshop at ISB Hyderabad for SME owners, distributors and employees. Build working AI workflows, not theory. April 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --teal-900: #061713;
+  --teal-800: #0D2B24;
+  --teal-700: #0F3D33;
+  --teal-600: #145C4A;
+  --teal-500: #1A7A60;
+  --teal-400: #1D9E75;
+  --teal-300: #2EC48F;
+  --teal-200: #6EDBB3;
+  --teal-100: #B2EDD6;
+  --teal-50:  #E4F8F0;
+  --orange:   #E85A32;
+  --orange-light: #FF7A52;
+  --orange-dark:  #C4431F;
+  --cream:    #F8F5EF;
+  --cream-2:  #EEE9DF;
+  --ink:      #111917;
+  --ink-2:    #2A3530;
+  --ink-3:    #4A5E56;
+  --ink-4:    #7A9088;
+  --white:    #FFFFFF;
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-logo: 'Major Mono Display', monospace;
+  --font-body:    'DM Sans', sans-serif;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 24px rgba(0,0,0,0.10);
+  --shadow-lg: 0 16px 56px rgba(0,0,0,0.14);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── SCROLL PROGRESS ─── */
+#scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--orange);
+  z-index: 1000;
+  transition: width 0.1s linear;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 2px; left: 0; right: 0;
+  z-index: 900;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  transition: background 0.3s, backdrop-filter 0.3s, box-shadow 0.3s;
+}
+nav.scrolled {
+  background: rgba(6,23,19,0.92);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.07);
+}
+.nav-logo {
+  font-family: var(--font-logo);
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--white);
+  letter-spacing: 0em;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+.nav-logo span { font-family: var(--font-body); font-size: 10px; font-weight: 500; color: var(--teal-200); letter-spacing: 0.28em; margin-top: 6px; text-transform: uppercase; }
+.nav-center {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--teal-100);
+}
+.nav-center .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--orange); display: inline-block; }
+.nav-center .date-chip {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--white);
+}
+.nav-cta {
+  background: var(--orange);
+  color: var(--white);
+  padding: 10px 22px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-display);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  transition: background 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--orange-dark); transform: translateY(-1px); }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  background: var(--teal-900);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 40px 80px;
+  overflow: hidden;
+}
+
+/* Grid texture */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(45,196,143,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45,196,143,0.07) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 20%, transparent 100%);
+}
+/* Glow orbs */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 500px;
+  background: radial-gradient(ellipse, rgba(29,158,117,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-glow-2 {
+  position: absolute;
+  bottom: 5%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(232,90,50,0.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 860px;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  padding: 7px 16px 7px 10px;
+  border-radius: 100px;
+  font-size: 13px;
+  color: var(--teal-100);
+  margin-bottom: 32px;
+  font-weight: 500;
+}
+.hero-eyebrow .badge {
+  background: var(--orange);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 100px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 7.5vw, 88px);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+  color: var(--white);
+  margin-bottom: 24px;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--teal-300);
+}
+
+.hero-sub {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--teal-100);
+  line-height: 1.6;
+  margin-bottom: 40px;
+  font-weight: 400;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Event meta strip */
+.hero-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.hero-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--white);
+  font-weight: 500;
+}
+.hero-meta-item svg { color: var(--teal-300); flex-shrink: 0; }
+.hero-meta-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255,255,255,0.2);
+}
+
+/* Hero CTAs */
+.hero-ctas {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.btn-primary {
+  background: var(--orange);
+  color: white;
+  padding: 16px 32px;
+  border-radius: 100px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: var(--font-display);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.02em;
+  transition: all 0.2s;
+  box-shadow: 0 0 0 0 rgba(232,90,50,0.4);
+}
+.btn-primary:hover {
+  background: var(--orange-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(232,90,50,0.35);
+}
+.btn-secondary {
+  background: rgba(255,255,255,0.08);
+  color: white;
+  padding: 16px 28px;
+  border-radius: 100px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: var(--font-display);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255,255,255,0.15);
+  letter-spacing: -0.02em;
+  transition: all 0.2s;
+}
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.14);
+  transform: translateY(-2px);
+}
+
+/* Seat counter */
+.seat-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--teal-100);
+}
+.seat-counter .fire-dot {
+  width: 8px; height: 8px;
+  background: var(--orange);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(232,90,50,0.6);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.3); }
+}
+.seat-count-num {
+  font-weight: 700;
+  color: var(--white);
+  font-size: 15px;
+}
+
+/* Hero feature pills */
+.hero-pills {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-top: 52px;
+  width: 100%;
+  max-width: 780px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero-pill {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.11);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  text-align: left;
+  cursor: default;
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+.hero-pill:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(45,196,143,0.35);
+  transform: translateY(-2px);
+}
+/* Last pill spans full width when 5 items in 2-col grid */
+.hero-pill:last-child {
+  grid-column: 1 / -1;
+  max-width: 50%;
+  margin: 0 auto;
+  width: 100%;
+}
+.hero-pill-icon {
+  width: 44px; height: 44px;
+  background: rgba(45,196,143,0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 22px;
+}
+.hero-pill-text strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  margin-bottom: 5px;
+}
+.hero-pill-text span {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.55;
+}
+
+/* ─── LOGO STRIP ─── */
+.logo-strip {
+  background: var(--white);
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+  padding: 0 40px;
+}
+.logo-strip-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1px 1fr 1px 1fr 1px 1fr;
+  align-items: stretch;
+  min-height: 96px;
+}
+.hosted-label-col {
+  display: flex;
+  align-items: center;
+  padding-right: 36px;
+}
+.hosted-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+  white-space: nowrap;
+}
+.logo-strip-divider {
+  background: var(--cream-2);
+  width: 1px;
+  align-self: stretch;
+}
+.logo-partner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 36px;
+  gap: 5px;
+  transition: background 0.15s;
+}
+.logo-partner:hover { background: var(--cream); }
+.logo-partner-name {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+.logo-partner-role {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-4);
+  line-height: 1.4;
+}
+.logo-partner-desc {
+  font-size: 11.5px;
+  color: var(--ink-4);
+  line-height: 1.45;
+  margin-top: 1px;
+}
+
+@media (max-width: 860px) {
+  .logo-strip-inner {
+    grid-template-columns: 1fr;
+    min-height: unset;
+  }
+  .logo-strip-divider { display: none; }
+  .hosted-label-col { padding: 20px 0 4px; }
+  .logo-partner { padding: 16px 0; border-bottom: 1px solid var(--cream-2); }
+  .logo-partner:last-child { border-bottom: none; }
+}
+
+/* ─── SECTIONS COMMON ─── */
+.section {
+  padding: 96px 40px;
+}
+.section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.section-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal-500);
+  margin-bottom: 16px;
+}
+.section-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4.5vw, 52px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.section-sub {
+  font-size: 17px;
+  color: var(--ink-3);
+  line-height: 1.65;
+  max-width: 600px;
+}
+
+/* ─── WHO IS THIS FOR ─── */
+.who-section {
+  background: var(--ink);
+  padding: 96px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.who-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(45,196,143,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45,196,143,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.who-section .section-h2 { color: var(--white); }
+.who-section .section-sub { color: rgba(255,255,255,0.55); }
+.who-section .section-tag { color: var(--teal-300); }
+
+.who-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 52px;
+}
+.who-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: var(--radius-lg);
+  padding: 36px 30px;
+  transition: background 0.2s, border-color 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.who-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--teal-400);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.who-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(45,196,143,0.2); }
+.who-card:hover::before { opacity: 1; }
+.who-card-icon {
+  font-size: 36px;
+  margin-bottom: 20px;
+  display: block;
+  line-height: 1;
+}
+.who-card-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+.who-card-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.who-card-points {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.who-card-points li {
+  font-size: 13px;
+  color: var(--teal-100);
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.5;
+}
+.who-card-points li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--teal-400);
+  font-weight: 700;
+}
+
+/* ─── PROBLEM/SOLUTION ─── */
+.problem-section { background: var(--cream); }
+.problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 52px;
+  align-items: start;
+}
+.problem-left h3 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 28px;
+  letter-spacing: -0.025em;
+}
+.problem-items { display: flex; flex-direction: column; gap: 16px; }
+.problem-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 20px;
+  background: white;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(0,0,0,0.07);
+}
+.x-icon {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: #FEE9E5;
+  color: #D93025;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.problem-item-text strong {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 4px;
+}
+.problem-item-text span {
+  font-size: 13px;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+.solution-card {
+  background: var(--ink);
+  border-radius: var(--radius-xl);
+  padding: 44px 40px;
+  position: sticky;
+  top: 96px;
+}
+.solution-card h3 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.03em;
+  margin-bottom: 10px;
+}
+.solution-card .solution-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--teal-300);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: block;
+}
+.solution-card .build-sprint {
+  font-size: 15px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+.solution-items {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.solution-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.check-icon {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: rgba(46,196,143,0.2);
+  color: var(--teal-300);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.solution-item-text strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 3px;
+}
+.solution-item-text span {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.5;
+}
+
+/* ─── PILLARS ─── */
+.pillars-section { background: var(--white); }
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 52px;
+}
+.pillar-card {
+  border-radius: var(--radius-lg);
+  padding: 36px 30px;
+  border: 1px solid var(--cream-2);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.pillar-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.pillar-num {
+  font-family: var(--font-display);
+  font-size: 72px;
+  font-weight: 800;
+  color: var(--teal-50);
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+.pillar-icon-wrap {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  background: var(--teal-50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 24px;
+}
+.pillar-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 12px;
+  letter-spacing: -0.025em;
+}
+.pillar-desc {
+  font-size: 14px;
+  color: var(--ink-3);
+  line-height: 1.75;
+  margin-bottom: 20px;
+}
+.pillar-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--teal-50);
+  padding: 8px 14px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--teal-600);
+}
+
+/* ─── FACULTY GRID ─── */
+.faculty-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 52px;
+}
+.faculty-card {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.faculty-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(45,196,143,0.2); }
+.faculty-card-ghost { opacity: 0.6; }
+.faculty-avatar-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; flex-shrink: 0; }
+.faculty-avatar {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--teal-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--teal-100);
+  border: 2px solid rgba(255,255,255,0.1);
+  letter-spacing: -0.02em;
+}
+.faculty-lead-badge {
+  background: rgba(232,90,50,0.2);
+  border: 1px solid rgba(232,90,50,0.3);
+  color: var(--orange-light);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+.faculty-name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.faculty-tbd {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.3);
+  font-family: var(--font-body);
+}
+.faculty-role {
+  font-size: 13px;
+  color: var(--teal-200);
+  font-weight: 500;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+.faculty-bio {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.faculty-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+@media (max-width: 860px) {
+  .faculty-grid { grid-template-columns: 1fr; }
+}
+.speaker-section {
+  background: linear-gradient(135deg, var(--teal-800) 0%, var(--teal-900) 100%);
+  padding: 96px 40px;
+}
+.speaker-section .section-h2 { color: var(--white); }
+.speaker-section .section-sub { color: var(--teal-100); }
+.speaker-section .section-tag { color: var(--teal-300); }
+
+.speaker-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 44px;
+  align-items: center;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-xl);
+  padding: 48px;
+  margin-top: 52px;
+}
+.speaker-avatar {
+  width: 120px; height: 120px;
+  border-radius: 50%;
+  background: var(--teal-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--teal-100);
+  flex-shrink: 0;
+  border: 3px solid rgba(255,255,255,0.15);
+}
+.speaker-name {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.025em;
+  margin-bottom: 6px;
+}
+.speaker-role {
+  font-size: 14px;
+  color: var(--teal-200);
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.speaker-bio {
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+.speaker-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.speaker-tag {
+  background: rgba(45,196,143,0.15);
+  border: 1px solid rgba(45,196,143,0.25);
+  color: var(--teal-200);
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* ─── CURRICULUM ─── */
+.curriculum-section { background: var(--cream); }
+.curriculum-tabs {
+  display: flex;
+  gap: 0;
+  background: var(--cream-2);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  margin-bottom: 32px;
+  width: fit-content;
+}
+.tab-btn {
+  padding: 10px 28px;
+  border: none;
+  background: transparent;
+  border-radius: calc(var(--radius-md) - 2px);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--ink-3);
+  transition: all 0.2s;
+  letter-spacing: -0.01em;
+}
+.tab-btn.active {
+  background: var(--white);
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.curriculum-header-card {
+  background: var(--teal-700);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.curriculum-header-card-icon { font-size: 28px; }
+.curriculum-header-card-text strong {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--white);
+  display: block;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+.curriculum-header-card-text span {
+  font-size: 13px;
+  color: var(--teal-200);
+}
+
+.curriculum-sessions { display: flex; flex-direction: column; gap: 2px; }
+.session-item {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: start;
+  gap: 20px;
+  padding: 20px 24px;
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid transparent;
+  transition: border-color 0.2s, background 0.2s;
+}
+.session-item:hover { border-left-color: var(--teal-400); background: var(--cream); }
+.session-time {
+  font-size: 12px;
+  color: var(--ink-4);
+  font-weight: 500;
+  padding-top: 2px;
+}
+.session-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 4px;
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+.session-desc {
+  font-size: 13px;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+/* ─── TESTIMONIALS ─── */
+.testimonials-section { background: var(--white); }
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 52px;
+}
+.testimonial-card {
+  background: var(--cream);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  border: 1px solid var(--cream-2);
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.testimonial-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.testimonial-quote {
+  font-size: 36px;
+  color: var(--teal-300);
+  font-family: Georgia, serif;
+  line-height: 0.8;
+  margin-bottom: 16px;
+  display: block;
+}
+.testimonial-text {
+  font-size: 15px;
+  color: var(--ink-2);
+  line-height: 1.75;
+  margin-bottom: 24px;
+  font-style: italic;
+}
+.testimonial-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.testimonial-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--teal-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--teal-700);
+  flex-shrink: 0;
+}
+.testimonial-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  display: block;
+}
+.testimonial-role {
+  font-size: 12px;
+  color: var(--ink-4);
+}
+.testimonial-stars {
+  color: #F5A623;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* ─── PRICING ─── */
+.pricing-section {
+  background: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+.pricing-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: var(--cream-2);
+}
+
+.pricing-layout {
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: 52px;
+  margin-top: 52px;
+  align-items: start;
+}
+.pricing-left {}
+.roi-block {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  border: 1px solid var(--cream-2);
+  margin-bottom: 24px;
+}
+.roi-block h4 {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+.roi-comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.roi-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--cream-2);
+  font-size: 14px;
+}
+.roi-row:last-child { border-bottom: none; }
+.roi-row-label { color: var(--ink-3); }
+.roi-row-value { font-weight: 600; color: var(--ink); }
+.roi-row-value.strikethrough { text-decoration: line-through; color: var(--ink-4); }
+.roi-row-value.highlight { color: var(--teal-500); }
+.roi-row-value.big { font-size: 18px; color: var(--orange); }
+
+.urgency-block {
+  background: var(--teal-50);
+  border: 1px solid var(--teal-100);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.urgency-icon { font-size: 20px; flex-shrink: 0; }
+.urgency-text strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--teal-700);
+  margin-bottom: 4px;
+}
+.urgency-text span {
+  font-size: 13px;
+  color: var(--teal-600);
+  line-height: 1.5;
+}
+
+.guarantee-block {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  border: 1px solid var(--cream-2);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.guarantee-icon { font-size: 24px; flex-shrink: 0; }
+.guarantee-text strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.guarantee-text span {
+  font-size: 13px;
+  color: var(--ink-3);
+  line-height: 1.6;
+}
+
+/* Pricing card */
+.pricing-card {
+  background: var(--ink);
+  border-radius: var(--radius-xl);
+  padding: 48px 44px;
+  position: sticky;
+  top: 96px;
+  box-shadow: var(--shadow-lg);
+}
+.early-bird-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(232,90,50,0.15);
+  border: 1px solid rgba(232,90,50,0.3);
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--orange-light);
+  margin-bottom: 24px;
+  letter-spacing: 0.02em;
+}
+.pricing-original {
+  font-size: 16px;
+  color: rgba(255,255,255,0.35);
+  text-decoration: line-through;
+  margin-bottom: 4px;
+}
+.pricing-main {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.pricing-main span { font-size: 24px; font-weight: 500; }
+.pricing-taxes {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 8px;
+}
+.early-bird-save {
+  font-size: 14px;
+  color: var(--teal-300);
+  font-weight: 600;
+  margin-bottom: 32px;
+}
+
+/* Countdown */
+.countdown-wrap {
+  background: rgba(255,255,255,0.06);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-bottom: 28px;
+}
+.countdown-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.countdown-timer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.countdown-unit { text-align: center; }
+.countdown-num {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--white);
+  display: block;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.countdown-unit-label {
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.countdown-sep {
+  font-size: 24px;
+  color: rgba(255,255,255,0.3);
+  font-weight: 300;
+  margin-bottom: 8px;
+}
+
+.includes-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 16px;
+}
+.includes-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin-bottom: 32px;
+}
+.includes-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.5;
+}
+.includes-list li::before {
+  content: '✓';
+  color: var(--teal-300);
+  font-weight: 700;
+  flex-shrink: 0;
+  font-size: 13px;
+  margin-top: 1px;
+}
+
+.pricing-cta {
+  display: block;
+  background: var(--orange);
+  color: white;
+  text-align: center;
+  padding: 18px;
+  border-radius: 100px;
+  font-size: 17px;
+  font-weight: 700;
+  font-family: var(--font-display);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  transition: all 0.2s;
+  margin-bottom: 12px;
+}
+.pricing-cta:hover { background: var(--orange-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(232,90,50,0.35); }
+.pricing-fine-print {
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* Seat progress bar */
+.seat-progress-wrap {
+  margin-bottom: 28px;
+}
+.seat-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.seat-progress-label .seats-left { color: var(--orange-light); font-weight: 700; }
+.seat-progress-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 100px;
+  overflow: hidden;
+}
+.seat-progress-fill {
+  height: 100%;
+  width: 68%;
+  background: linear-gradient(90deg, var(--teal-400), var(--orange));
+  border-radius: 100px;
+  transition: width 1s ease;
+}
+
+/* ─── FAQ ─── */
+.faq-section { background: var(--white); }
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 52px;
+}
+.faq-item {
+  border: 1px solid var(--cream-2);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  gap: 16px;
+  transition: background 0.15s;
+}
+.faq-question:hover { background: var(--cream); }
+.faq-chevron {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--cream-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--ink-3);
+  flex-shrink: 0;
+  transition: transform 0.2s, background 0.2s;
+}
+.faq-item.open .faq-chevron { transform: rotate(180deg); background: var(--teal-50); color: var(--teal-600); }
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.faq-answer-inner {
+  padding: 0 24px 20px;
+  font-size: 14px;
+  color: var(--ink-3);
+  line-height: 1.75;
+  border-top: 1px solid var(--cream-2);
+  padding-top: 16px;
+}
+.faq-item.open .faq-answer { max-height: 300px; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--teal-900);
+  padding: 64px 40px 32px;
+}
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 52px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  margin-bottom: 32px;
+}
+.footer-brand-name {
+  font-family: var(--font-logo);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: 0em;
+  margin-bottom: 6px;
+}
+.footer-brand-tagline {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--teal-400);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+.footer-brand-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.7;
+}
+.footer-col-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 20px;
+}
+.footer-col-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-col-items a {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.footer-col-items a:hover { color: var(--white); }
+.footer-col-items li {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.footer-col-items li svg { color: var(--teal-400); flex-shrink: 0; }
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-copy {
+  font-size: 13px;
+  color: rgba(255,255,255,0.3);
+}
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+.footer-links a {
+  font-size: 13px;
+  color: rgba(255,255,255,0.3);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.footer-links a:hover { color: rgba(255,255,255,0.7); }
+
+/* ─── ANIMATIONS ─── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* Stagger delays */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 960px) {
+  nav { padding: 0 24px; }
+  .nav-center { display: none; }
+  .section { padding: 64px 24px; }
+  .who-section { padding: 64px 24px; }
+  .who-cards { grid-template-columns: 1fr; gap: 16px; }
+  .problem-grid { grid-template-columns: 1fr; }
+  .solution-card { position: static; }
+  .pillars-grid { grid-template-columns: 1fr; }
+  .pricing-layout { grid-template-columns: 1fr; }
+  .pricing-card { position: static; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .faq-grid { grid-template-columns: 1fr; }
+  .speaker-card { grid-template-columns: 1fr; gap: 24px; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .hero { padding: 100px 24px 64px; }
+  .hero-pills { flex-direction: column; align-items: center; }
+  .hero-pill { max-width: 100%; width: 100%; }
+  .logo-strip-inner { gap: 32px; }
+  footer { padding: 48px 24px 24px; }
+}
+
+@media (max-width: 600px) {
+  .footer-top { grid-template-columns: 1fr; }
+  .hero-meta { gap: 12px; }
+  .hero-meta-divider { display: none; }
+  .pricing-main { font-size: 44px; }
+  .logo-strip { padding: 0 24px; }
+}
+</style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+
+<!-- ─── NAV ─── -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">
+    REDESIGN
+    <span>Build · Automate · Scale</span>
+  </a>
+  <div class="nav-center">
+    <div class="date-chip">📅 April 2026, Hyderabad</div>
+    <div class="dot"></div>
+    <span>ISB Hyderabad</span>
+    <div class="dot"></div>
+    <span>50 Seats Only</span>
+  </div>
+  <a href="#pricing" class="nav-cta">Reserve My Seat →</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-glow-2"></div>
+  <div class="hero-content">
+
+    <div class="hero-eyebrow fade-up">
+      <span class="badge">April 2026, Hyderabad</span>
+      A 2-Day Hands-On AI Workshop for Indian SMEs
+    </div>
+
+    <h1 class="fade-up delay-1">
+      Stop Reading<br>About <em>AI.</em><br>Start Building With It.
+    </h1>
+
+    <p class="hero-sub fade-up delay-2">
+      AI theory won't grow your business. Implementation will.<br>
+      In 2 days at ISB Hyderabad, you walk out with live systems, not notes.
+    </p>
+
+    <!-- Event meta -->
+    <div class="hero-meta fade-up delay-3">
+      <div class="hero-meta-item">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        A Weekend in April 2026
+      </div>
+      <div class="hero-meta-divider"></div>
+      <div class="hero-meta-item">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        ISB Campus, Gachibowli
+      </div>
+      <div class="hero-meta-divider"></div>
+      <div class="hero-meta-item">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        9:00 AM to 6:00 PM Both Days
+      </div>
+      <div class="hero-meta-divider"></div>
+      <div class="hero-meta-item">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Limited to 50 Participants
+      </div>
+    </div>
+
+    <!-- CTAs -->
+    <div class="hero-ctas fade-up delay-3">
+      <a href="#pricing" class="btn-primary">
+        Reserve My Seat →
+      </a>
+      <a href="#curriculum" class="btn-secondary">
+        View the Curriculum
+      </a>
+    </div>
+
+    <!-- Seat counter -->
+    <div class="seat-counter fade-up delay-4">
+      <span class="fire-dot"></span>
+      <span><span class="seat-count-num" id="hero-seats">14</span> of 50 seats claimed, act fast</span>
+    </div>
+
+    <!-- Feature pills -->
+    <div class="hero-pills fade-up delay-5">
+      <div class="hero-pill">
+        <div class="hero-pill-icon">🤝</div>
+        <div class="hero-pill-text">
+          <strong>Hands-On Execution</strong>
+          <span>Build real systems, not slides. Leave with working AI workflows.</span>
+        </div>
+      </div>
+      <div class="hero-pill">
+        <div class="hero-pill-icon">⚙️</div>
+        <div class="hero-pill-text">
+          <strong>Automate Operations</strong>
+          <span>Eliminate repetitive work in HR, finance, sales and ops.</span>
+        </div>
+      </div>
+      <div class="hero-pill">
+        <div class="hero-pill-icon">📈</div>
+        <div class="hero-pill-text">
+          <strong>Scale Revenue</strong>
+          <span>Deploy AI agents that drive sales while you sleep.</span>
+        </div>
+      </div>
+      <div class="hero-pill">
+        <div class="hero-pill-icon">📊</div>
+        <div class="hero-pill-text">
+          <strong>Monday Morning ROI</strong>
+          <span>Every session ends with something you can deploy the next business day.</span>
+        </div>
+      </div>
+      <div class="hero-pill">
+        <div class="hero-pill-icon">🌐</div>
+        <div class="hero-pill-text">
+          <strong>AI Peer Network</strong>
+          <span>Join 49 other SME operators building with AI. An ongoing community, not a one-day event.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── LOGO STRIP ─── -->
+<div class="logo-strip">
+  <div class="logo-strip-inner">
+
+    <div class="hosted-label-col">
+      <span class="hosted-label">Hosted by</span>
+    </div>
+
+    <div class="logo-strip-divider"></div>
+
+    <div class="logo-partner">
+      <div class="logo-partner-name" style="color:var(--teal-500)">S{cale}ME</div>
+      <div class="logo-partner-role">SME Growth & Operator Community</div>
+      <div class="logo-partner-desc">India's leading community for SME founders and operators</div>
+    </div>
+
+    <div class="logo-strip-divider"></div>
+
+    <div class="logo-partner">
+      <div class="logo-partner-name" style="color:#1a3a7a">ISB <span style="font-size:13px;font-weight:600;letter-spacing:0;color:var(--ink-3)">Centre for Business Innovation</span></div>
+      <div class="logo-partner-role">Indian School of Business · Gachibowli, Hyderabad</div>
+      <div class="logo-partner-desc">India's #1 ranked business school, venue and academic partner</div>
+    </div>
+
+    <div class="logo-strip-divider"></div>
+
+    <div class="logo-partner">
+      <div class="logo-partner-name" style="color:var(--teal-400)">AICoworkers</div>
+      <div class="logo-partner-role">AI Automation for Indian Businesses</div>
+      <div class="logo-partner-desc">No-code AI tools built specifically for Indian SME operators</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ─── WHO IS THIS FOR ─── -->
+<section class="who-section" id="who">
+  <div class="section-inner">
+    <span class="section-tag fade-up">Who this is for</span>
+    <h2 class="section-h2 fade-up delay-1">Built for three types of people.<br>One shared problem.</h2>
+    <p class="section-sub fade-up delay-2">AI is moving fast. Most Indian SMEs are watching from the sidelines. This workshop changes that, whether you own the business, run distribution, or work inside one.</p>
+
+    <div class="who-cards">
+      <div class="who-card fade-up delay-1">
+        <span class="who-card-icon">🏢</span>
+        <div class="who-card-title">SME Owners</div>
+        <div class="who-card-desc">You're running a real business with real costs. You need AI to work in your operations, not in a demo.</div>
+        <ul class="who-card-points">
+          <li>Build workflows that cut your admin overhead by 20+ hours/week</li>
+          <li>Deploy AI sales agents without hiring a team</li>
+          <li>Automate invoice processing, customer support, and data entry</li>
+          <li>Understand P&L impact, not just tech jargon</li>
+        </ul>
+      </div>
+      <div class="who-card fade-up delay-2">
+        <span class="who-card-icon">🚚</span>
+        <div class="who-card-title">Distributors</div>
+        <div class="who-card-desc">Managing channels, vendors and logistics manually is costing you margin. AI fixes the invisible inefficiencies.</div>
+        <ul class="who-card-points">
+          <li>Automate order tracking, vendor comms and demand forecasting</li>
+          <li>Build AI agents for channel management at scale</li>
+          <li>Cut manual data entry from distribution ops</li>
+          <li>Get ahead of your supply chain before your competitors do</li>
+        </ul>
+      </div>
+      <div class="who-card fade-up delay-3">
+        <span class="who-card-icon">👩‍💼</span>
+        <div class="who-card-title">Employees & Managers</div>
+        <div class="who-card-desc">You don't need to fear AI replacing you. You need to be the person who knows how to use it. That person keeps their job and gets promoted.</div>
+        <ul class="who-card-points">
+          <li>Become the AI champion in your organisation</li>
+          <li>Learn no-code and low-code AI tools you can use Monday morning</li>
+          <li>Build skills your competitors' teams don't have yet</li>
+          <li>Attend as a team. Bring 3 and transform your whole department</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROBLEM / SOLUTION ─── -->
+<section class="section problem-section" id="about">
+  <div class="section-inner">
+    <div class="problem-grid">
+      <div class="problem-left">
+        <span class="section-tag fade-up">The problem</span>
+        <h3 class="fade-up delay-1">Is your business actually using AI, or just talking about it?</h3>
+        <div class="problem-items">
+          <div class="problem-item fade-up delay-1">
+            <div class="x-icon">✕</div>
+            <div class="problem-item-text">
+              <strong>Academic lectures give you theories, not tools.</strong>
+              <span>You leave with notes, not a working system. No one shows you how to wire it into your actual operations.</span>
+            </div>
+          </div>
+          <div class="problem-item fade-up delay-2">
+            <div class="x-icon">✕</div>
+            <div class="problem-item-text">
+              <strong>Coding bootcamps are built for engineers, not operators.</strong>
+              <span>You don't need to code. You need to execute. There's a difference, and most workshops miss it.</span>
+            </div>
+          </div>
+          <div class="problem-item fade-up delay-3">
+            <div class="x-icon">✕</div>
+            <div class="problem-item-text">
+              <strong>Generic webinars sell dreams, not results.</strong>
+              <span>No one maps AI to your P&L. No one shows you what it'll cost, save, or earn. You leave inspired and lost.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="solution-card fade-up delay-2">
+        <span class="solution-eyebrow">The fix</span>
+        <h3>Enter REDESIGN.</h3>
+        <p class="build-sprint">This isn't a seminar. It's a build sprint. In 2 days at ISB Hyderabad, you'll walk out with systems running, not slides to read later.</p>
+        <div class="solution-items">
+          <div class="solution-item">
+            <div class="check-icon">✓</div>
+            <div class="solution-item-text">
+              <strong>Live AI workflows tailored to your operations</strong>
+              <span>Built during the workshop, for your specific industry context</span>
+            </div>
+          </div>
+          <div class="solution-item">
+            <div class="check-icon">✓</div>
+            <div class="solution-item-text">
+              <strong>Automation blueprints that cut costs immediately</strong>
+              <span>From HR to finance to customer support, working systems not templates</span>
+            </div>
+          </div>
+          <div class="solution-item">
+            <div class="check-icon">✓</div>
+            <div class="solution-item-text">
+              <strong>Scalable AI agents deployable Monday morning</strong>
+              <span>No coding required. No engineering team. Just you and the tools.</span>
+            </div>
+          </div>
+          <div class="solution-item">
+            <div class="check-icon">✓</div>
+            <div class="solution-item-text">
+              <strong>P&L-focused frameworks for Indian SME realities</strong>
+              <span>Built around Indian business constraints, not Silicon Valley assumptions</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 3 PILLARS ─── -->
+<section class="section pillars-section">
+  <div class="section-inner">
+    <span class="section-tag fade-up">The framework</span>
+    <h2 class="section-h2 fade-up delay-1">Build AI into your business in 3 steps. No tech team needed.</h2>
+    <p class="section-sub fade-up delay-2">The same operator playbook used by 200+ Indian SMEs across manufacturing, retail, services and distribution. Not theory, a repeatable system any business owner can run.</p>
+
+    <div class="pillars-grid">
+      <div class="pillar-card fade-up delay-1">
+        <div class="pillar-num">01</div>
+        <div class="pillar-icon-wrap">🔧</div>
+        <div class="pillar-title">Build.</div>
+        <div class="pillar-desc">Create intelligent workflows specific to your industry. No cookie-cutter templates, just systems that actually match how your business runs, with no-code and low-code tools any operator can use.</div>
+        <div class="pillar-stat">⚡ Day 1 deliverable</div>
+      </div>
+      <div class="pillar-card fade-up delay-2">
+        <div class="pillar-num">02</div>
+        <div class="pillar-icon-wrap">⚙️</div>
+        <div class="pillar-title">Automate.</div>
+        <div class="pillar-desc">Cut administrative overhead in operations, HR, and finance. Reclaim 20+ hours per week with intelligent automation of tasks you're currently doing manually every single day.</div>
+        <div class="pillar-stat">⏱️ 20+ hrs/week saved</div>
+      </div>
+      <div class="pillar-card fade-up delay-3">
+        <div class="pillar-num">03</div>
+        <div class="pillar-icon-wrap">📈</div>
+        <div class="pillar-title">Scale.</div>
+        <div class="pillar-desc">Supercharge your marketing and sales pipeline with autonomous AI agents. Drive revenue while reducing manual effort, so growth doesn't require proportional headcount growth.</div>
+        <div class="pillar-stat">📊 Revenue while you sleep</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SPEAKER ─── -->
+<section class="speaker-section" id="faculty">
+  <div class="section-inner">
+    <span class="section-tag fade-up">Faculty</span>
+    <h2 class="section-h2 fade-up delay-1">Learn from practitioners, not just professors.</h2>
+    <p class="section-sub fade-up delay-2">3 to 4 faculty across ISB academia, AI implementation, and Indian SME operations. Theory in the morning, hands-on build sessions in the afternoon.</p>
+
+    <div class="faculty-grid fade-up delay-2">
+
+      <div class="faculty-card">
+        <div class="faculty-avatar-wrap">
+          <div class="faculty-avatar">ISB</div>
+          <div class="faculty-lead-badge">Opening Masterclass</div>
+        </div>
+        <div class="faculty-info">
+          <div class="faculty-name">ISB Faculty <span class="faculty-tbd">(name to be announced)</span></div>
+          <div class="faculty-role">Professor of Strategy, Indian School of Business, Hyderabad</div>
+          <div class="faculty-bio">Opens the workshop with the strategic AI framework for Indian SMEs. Sets the competitive context, the opportunity map, and the decision criteria for where to deploy AI first in your business.</div>
+          <div class="faculty-tags">
+            <span class="speaker-tag">AI Strategy</span>
+            <span class="speaker-tag">ISB Faculty</span>
+            <span class="speaker-tag">Emerging Markets</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="faculty-card">
+        <div class="faculty-avatar-wrap">
+          <div class="faculty-avatar">AI</div>
+        </div>
+        <div class="faculty-info">
+          <div class="faculty-name">AI Implementation Lead <span class="faculty-tbd">(name to be announced)</span></div>
+          <div class="faculty-role">Practitioner, No-Code and Low-Code AI Systems</div>
+          <div class="faculty-bio">Leads the hands-on build sessions across both days. Walks participants through workflow creation, automation setup, and agent deployment using tools that require zero engineering background.</div>
+          <div class="faculty-tags">
+            <span class="speaker-tag">Workflow Automation</span>
+            <span class="speaker-tag">No-Code AI</span>
+            <span class="speaker-tag">Sales Agents</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="faculty-card">
+        <div class="faculty-avatar-wrap">
+          <div class="faculty-avatar">OPS</div>
+        </div>
+        <div class="faculty-info">
+          <div class="faculty-name">SME Operations Expert <span class="faculty-tbd">(name to be announced)</span></div>
+          <div class="faculty-role">AI Adoption Specialist, Indian Manufacturing and Distribution</div>
+          <div class="faculty-bio">Brings real-world context from deploying AI across Indian SMEs in manufacturing, retail and distribution. Facilitates the P&L modelling session and the 90-day roadmap workshop on Day 2.</div>
+          <div class="faculty-tags">
+            <span class="speaker-tag">Operations</span>
+            <span class="speaker-tag">P&L Impact</span>
+            <span class="speaker-tag">Distribution</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="faculty-card faculty-card-ghost">
+        <div class="faculty-avatar-wrap">
+          <div class="faculty-avatar" style="background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.2);">+1</div>
+        </div>
+        <div class="faculty-info">
+          <div class="faculty-name" style="color:rgba(255,255,255,0.35);">Fourth Faculty Member</div>
+          <div class="faculty-role" style="color:rgba(255,255,255,0.2);">To be announced shortly</div>
+          <div class="faculty-bio" style="color:rgba(255,255,255,0.2);">We're finalising our fourth faculty slot. Follow us or register your interest to be notified when we announce.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── CURRICULUM ─── -->
+<section class="section curriculum-section" id="curriculum">
+  <div class="section-inner">
+    <span class="section-tag fade-up">The curriculum</span>
+    <h2 class="section-h2 fade-up delay-1">The Weekend That Transforms Your Business</h2>
+    <p class="section-sub fade-up delay-2">A comprehensive, hands-on curriculum designed for immediate implementation, not notes that sit in a folder.</p>
+
+    <div style="margin-top:40px" class="fade-up delay-2">
+      <div class="curriculum-header-card">
+        <div class="curriculum-header-card-icon">🎓</div>
+        <div class="curriculum-header-card-text">
+          <strong>Opening Masterclass: Strategic AI Frameworks for Indian SMEs</strong>
+          <span>Delivered by ISB Faculty. Setting the strategic foundation before we build</span>
+        </div>
+      </div>
+
+      <div class="curriculum-tabs">
+        <button class="tab-btn active" onclick="switchTab('day1', this)">Day 1: Redesign & Automate</button>
+        <button class="tab-btn" onclick="switchTab('day2', this)">Day 2: Build & Scale</button>
+      </div>
+
+      <div id="day1" class="tab-content active">
+        <div class="curriculum-sessions">
+          <div class="session-item">
+            <div class="session-time">9:00 – 11:00 AM</div>
+            <div>
+              <div class="session-name">Strategic AI Frameworks for SMEs</div>
+              <div class="session-desc">ISB Professor-led masterclass on AI strategy, competitive advantage, and framework design specifically for Indian business contexts. You'll leave with a strategic AI map for your own company.</div>
+            </div>
+          </div>
+          <div class="session-item">
+            <div class="session-time">11:30 AM – 1:30 PM</div>
+            <div>
+              <div class="session-name">Building Your First AI Workflow</div>
+              <div class="session-desc">Hands-on session: Map your current operations, identify automation opportunities, and build your first intelligent workflow using no-code and low-code tools. No engineering background needed.</div>
+            </div>
+          </div>
+          <div class="session-item">
+            <div class="session-time">2:30 – 5:00 PM</div>
+            <div>
+              <div class="session-name">Automating Operations, HR & Finance</div>
+              <div class="session-desc">Deploy automations for invoice processing, employee onboarding, customer support, and data entry. Walk out of this session with working systems, not mock-ups.</div>
+            </div>
+          </div>
+          <div class="session-item">
+            <div class="session-time">5:00 – 6:00 PM</div>
+            <div>
+              <div class="session-name">Day 1 Debrief & Personalised Feedback</div>
+              <div class="session-desc">Review your progress with expert instructors. Troubleshoot challenges, refine your workflows, and set the build agenda for Day 2 specific to your business.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="day2" class="tab-content">
+        <div class="curriculum-sessions">
+          <div class="session-item">
+            <div class="session-time">9:00 – 11:00 AM</div>
+            <div>
+              <div class="session-name">AI Sales & Marketing Agents</div>
+              <div class="session-desc">Build autonomous agents that qualify leads, follow up with prospects, and generate marketing content at scale. See exactly how these plug into your current sales process.</div>
+            </div>
+          </div>
+          <div class="session-item">
+            <div class="session-time">11:30 AM – 1:30 PM</div>
+            <div>
+              <div class="session-name">Distribution & Supply Chain Automation</div>
+              <div class="session-desc">For distributors and operators: Build AI systems for order tracking, vendor communications, demand forecasting, and channel management. Practical tools for real distribution challenges.</div>
+            </div>
+          </div>
+          <div class="session-item">
+            <div class="session-time">2:30 – 4:30 PM</div>
+            <div>
+              <div class="session-name">Building Your 90-Day AI Roadmap</div>
+              <div class="session-desc">Guided workshop: Map out exactly what you'll build in the 90 days after leaving. P&L modelling, priority sequencing, and resource planning for your specific business situation.</div>
+            </div>
+          </div>
+          <div class="session-item">
+            <div class="session-time">4:30 – 6:00 PM</div>
+            <div>
+              <div class="session-name">Graduation & AI Collective Access</div>
+              <div class="session-desc">Cohort presentations, networking dinner, and onboarding into the ongoing AI Collective, a private community of Indian SME operators building with AI together, long after the weekend ends.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ─── -->
+<section class="section testimonials-section" id="testimonials">
+  <div class="section-inner">
+    <span class="section-tag fade-up">What participants say</span>
+    <h2 class="section-h2 fade-up delay-1">From people who've been in the room.</h2>
+    <p class="section-sub fade-up delay-2">Feedback from attendees of our preview sessions and beta cohort across Hyderabad, Mumbai and Bangalore.</p>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-up delay-1">
+        <span class="testimonial-quote">"</span>
+        <p class="testimonial-text">I came in thinking AI was only for tech-first companies. By Day 2 we had built an actual workflow for our procurement team. This isn't a seminar, it's a build session. I left with something running.</p>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-meta">
+          <div class="testimonial-avatar">DA</div>
+          <div>
+            <span class="testimonial-name">Deepti Agarwal</span>
+            <span class="testimonial-role">Founder, Samatvam Living</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up delay-2">
+        <span class="testimonial-quote">"</span>
+        <p class="testimonial-text">As a founder of a growing tech services company, I needed my team to actually use AI, not just talk about it. The workshop gave us a repeatable framework we went back and implemented the following week.</p>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-meta">
+          <div class="testimonial-avatar">GS</div>
+          <div>
+            <span class="testimonial-name">Gaurav Sharma</span>
+            <span class="testimonial-role">Founder, Proficon Labs</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card fade-up delay-3">
+        <span class="testimonial-quote">"</span>
+        <p class="testimonial-text">From a talent development perspective, this is exactly what our people needed. Practical, grounded, and immediately applicable. The no-code tools they teach mean any manager can run with this, not just IT.</p>
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-meta">
+          <div class="testimonial-avatar">GT</div>
+          <div>
+            <span class="testimonial-name">Gunjann Taneja</span>
+            <span class="testimonial-role">President, Talent Development, Naturals</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ISB endorsement -->
+    <div style="margin-top:40px;background:var(--cream);border-radius:var(--radius-lg);padding:36px;border:1px solid var(--cream-2);display:flex;gap:24px;align-items:flex-start;" class="fade-up delay-3">
+      <div style="font-size:40px;flex-shrink:0">🏛️</div>
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-4);margin-bottom:10px">ISB Centre for Business Innovation</div>
+        <p style="font-size:16px;color:var(--ink-2);line-height:1.75;font-style:italic;margin-bottom:12px">"The REDESIGN workshop represents exactly the kind of practical, operator-focused AI education that Indian SMEs have been waiting for. We're proud to host this cohort on the ISB campus."</p>
+        <div style="font-size:14px;font-weight:600;color:var(--ink)">ISB Centre for Business Innovation, Hyderabad</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRICING ─── -->
+<section class="section pricing-section" id="pricing">
+  <div class="section-inner">
+    <span class="section-tag fade-up">Reserve your seat</span>
+    <h2 class="section-h2 fade-up delay-1">Secure Your Seat in the April Cohort</h2>
+    <p class="section-sub fade-up delay-2">50 seats to ensure every participant gets hands-on support and personalised feedback. Dates to be confirmed shortly, a weekend in April 2026.</p>
+
+    <div class="pricing-layout">
+      <div class="pricing-left">
+
+        <!-- ROI block -->
+        <div class="roi-block fade-up delay-1">
+          <h4>🧮 What this would cost you otherwise</h4>
+          <div class="roi-comparison">
+            <div class="roi-row">
+              <span class="roi-row-label">AI consultant (2 days @ ₹20,000/day)</span>
+              <span class="roi-row-value strikethrough">₹40,000</span>
+            </div>
+            <div class="roi-row">
+              <span class="roi-row-label">No-code automation setup (typical agency)</span>
+              <span class="roi-row-value strikethrough">₹60,000+</span>
+            </div>
+            <div class="roi-row">
+              <span class="roi-row-label">90-day post-support and community access</span>
+              <span class="roi-row-value strikethrough">₹25,000</span>
+            </div>
+            <div class="roi-row" style="border-top:2px solid var(--cream-2);margin-top:4px;padding-top:12px;">
+              <span class="roi-row-label" style="font-weight:700;color:var(--ink)">Equivalent market value</span>
+              <span class="roi-row-value" style="font-size:18px;text-decoration:line-through;color:var(--ink-4)">₹1,25,000+</span>
+            </div>
+            <div class="roi-row">
+              <span class="roi-row-label" style="font-weight:700;color:var(--ink)">Your early bird price</span>
+              <span class="roi-row-value big">₹39,000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Group pricing -->
+        <div class="roi-block fade-up delay-2" style="border-left:3px solid var(--teal-400);">
+          <h4>👥 Bring your team, save more</h4>
+          <p style="font-size:13px;color:var(--ink-3);margin-bottom:20px;line-height:1.6;">Group discounts apply to early bird registrations only. Standard pricing applies after the early bird window closes.</p>
+          <div class="roi-comparison">
+            <div class="roi-row">
+              <span class="roi-row-label">1 person</span>
+              <span class="roi-row-value highlight">₹39,000 per person</span>
+            </div>
+            <div class="roi-row">
+              <span class="roi-row-label">2 people <span style="background:var(--teal-50);color:var(--teal-600);font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:6px;">Save 10%</span></span>
+              <span class="roi-row-value highlight">₹35,100 per person</span>
+            </div>
+            <div class="roi-row" style="border-bottom:none;">
+              <span class="roi-row-label">3 people <span style="background:var(--orange);color:white;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:6px;">Save 15%</span></span>
+              <span class="roi-row-value highlight">₹33,150 per person</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Urgency -->
+        <div class="urgency-block fade-up delay-3">
+          <div class="urgency-icon">⏰</div>
+          <div class="urgency-text">
+            <strong>Early bird pricing ends soon</strong>
+            <span>Once the early bird window closes, the price returns to ₹50,000 and group discounts no longer apply. Reserve your seat now to lock in your rate.</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Pricing card -->
+      <div class="pricing-card fade-up delay-2">
+        <div class="early-bird-badge">
+          🐦 Early Bird, Ends Soon
+        </div>
+        <div class="pricing-original">₹50,000</div>
+        <div class="pricing-main">₹39,000<span> + GST</span></div>
+        <div class="pricing-taxes">Per person, early bird price</div>
+        <div class="early-bird-save">Early Bird Pricing, Save ₹11,000</div>
+
+        <!-- Countdown -->
+        <div class="countdown-wrap">
+          <div class="countdown-label">Early bird offer expires in</div>
+          <div class="countdown-timer">
+            <div class="countdown-unit">
+              <span class="countdown-num" id="cd-days">08</span>
+              <span class="countdown-unit-label">Days</span>
+            </div>
+            <span class="countdown-sep">:</span>
+            <div class="countdown-unit">
+              <span class="countdown-num" id="cd-hours">14</span>
+              <span class="countdown-unit-label">Hours</span>
+            </div>
+            <span class="countdown-sep">:</span>
+            <div class="countdown-unit">
+              <span class="countdown-num" id="cd-mins">33</span>
+              <span class="countdown-unit-label">Mins</span>
+            </div>
+            <span class="countdown-sep">:</span>
+            <div class="countdown-unit">
+              <span class="countdown-num" id="cd-secs">51</span>
+              <span class="countdown-unit-label">Secs</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seat progress -->
+        <div class="seat-progress-wrap">
+          <div class="seat-progress-label">
+            <span>50 total seats</span>
+            <span class="seats-left">36 seats left</span>
+          </div>
+          <div class="seat-progress-bar">
+            <div class="seat-progress-fill" id="seat-fill"></div>
+          </div>
+        </div>
+
+        <div class="includes-label">What's included</div>
+        <ul class="includes-list">
+          <li>2 full days of intensive, hands-on AI training at ISB Hyderabad</li>
+          <li>Opening masterclass by ISB Faculty on Strategic AI Frameworks</li>
+          <li>Build working AI workflows, automation systems, and sales agents</li>
+          <li>Personalised feedback and troubleshooting from expert instructors</li>
+          <li>Comprehensive workshop materials and implementation templates</li>
+          <li>Your personalised 90-day AI action plan</li>
+          <li>Post-workshop support for 90 days via the AI Collective</li>
+          <li>Networking with 49 other ambitious Indian SME operators</li>
+        </ul>
+
+        <a href="https://rzp.io/l/YOURLINK" target="_blank" rel="noopener" class="pricing-cta" id="main-payment-cta">Reserve My Seat →</a>
+        <div class="pricing-fine-print">
+          Instant confirmation on approval. Payment plans available.<br>
+          Approved registrations receive ISB access credentials within 24hrs.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section class="section faq-section" id="faq">
+  <div class="section-inner">
+    <span class="section-tag fade-up">FAQs</span>
+    <h2 class="section-h2 fade-up delay-1">Everything you need to know.</h2>
+    <p class="section-sub fade-up delay-2">Straight answers to the questions we get most.</p>
+
+    <div class="faq-grid fade-up delay-2">
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Do I need to know how to code?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">No coding required, at any point. This workshop is designed specifically for business operators, owners, managers, and distributors who have zero engineering background. Every tool we teach is no-code or low-code, built for people who run businesses, not software teams.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Is this only for tech companies?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">The opposite. This is built specifically for non-tech SMEs, including manufacturing, retail, distribution, professional services, food & beverages, logistics. Tech companies already have engineering teams for this. The gap is in traditional Indian businesses, and that's exactly who we built this for.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What size business is this designed for?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Typically businesses with 5 to 500 employees and annual revenues between ₹50 lakhs and ₹100 crores. The frameworks and tools are calibrated for this range, not enterprise-scale, and not solo freelancers. If you're running a real operation with real team and real costs, this is built for you.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Can I bring my team or employees?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes, and we encourage it. Coming as a team means you can divide and build simultaneously. One person builds the sales agent while another works on HR automation. Team registrations of 3+ get priority on seat allocation. Contact us for group pricing.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What if I can't attend both days?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">We strongly recommend attending both days. The curriculum builds on itself and Day 2 requires the systems built on Day 1. If an unavoidable conflict arises, contact us and we'll do our best to accommodate you in a future cohort at no extra charge.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Will I get ongoing support after the workshop?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Yes. Every participant gets 90-day post-workshop access to expert instructors through the AI Collective, a private community of REDESIGN alumni. You can ask questions, share progress, get code reviews, and access updated templates as new AI tools emerge.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          What do I need to bring?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Just a laptop. All software is browser-based and free-tier accessible. We'll send you a pre-workshop setup guide 5 days before the event, it takes about 30 minutes to complete and ensures you hit the ground running on Day 1.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          How do I know this is worth it?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">Fair question. We ran preview sessions with 40+ SME operators across Hyderabad, Pune, and Mumbai to test every session before building this cohort. The testimonials on this page are from those sessions. Plus, every session has been tested with real SME operators before we built this cohort.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">REDESIGN</div>
+        <div class="footer-brand-tagline">Build · Automate · Scale</div>
+        <div class="footer-brand-desc">The premier AI workshop for Indian SME owners, distributors and employees. Build, automate, and scale your business with hands-on AI training at ISB Hyderabad.</div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-col-items">
+          <li>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            hello@redesignworkshop.in
+          </li>
+          <li>
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.3 19.79 19.79 0 0 1 1.61 2.68 2 2 0 0 1 3.59.5h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.05a16 16 0 0 0 6.06 6.06l.88-.88a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.5 15.5z"/></svg>
+            +91 98765 43210
+          </li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Workshop Details</div>
+        <ul class="footer-col-items">
+          <li>📅 A Weekend in April 2026</li>
+          <li>🕘 9:00 AM – 6:00 PM (Both Days)</li>
+          <li>🏛️ Indian School of Business, Gachibowli, Hyderabad</li>
+          <li>👥 Limited to 50 Participants</li>
+          <li>🏆 For Indian SME Operators</li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Quick Links</div>
+        <ul class="footer-col-items">
+          <li><a href="#who">Who is this for</a></li>
+          <li><a href="#curriculum">Curriculum</a></li>
+          <li><a href="#faculty">Faculty</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQs</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Redesign Workshop. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+        <a href="#">Refund Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ─── RAZORPAY LINK (replace with your actual payment link)
+const RAZORPAY_LINK = 'https://rzp.io/l/YOURLINK';
+
+// ─── SCROLL PROGRESS
+const progress = document.getElementById('scroll-progress');
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  progress.style.width = pct + '%';
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ─── FADE IN OBSERVER
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// ─── TAB SWITCHING
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ─── FAQ TOGGLE
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ─── COUNTDOWN TIMER (to April 4, 2026)
+function updateCountdown() {
+  const target = new Date('2026-04-04T23:59:59').getTime();
+  const now = Date.now();
+  let diff = Math.max(0, target - now);
+  const days = Math.floor(diff / 86400000);
+  diff %= 86400000;
+  const hours = Math.floor(diff / 3600000);
+  diff %= 3600000;
+  const mins = Math.floor(diff / 60000);
+  const secs = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+  document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+  document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
+  document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// ─── SEAT PROGRESS ANIMATE ON VIEW
+const seatObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      setTimeout(() => {
+        document.getElementById('seat-fill').style.width = '28%';
+      }, 400);
+    }
+  });
+}, { threshold: 0.3 });
+const seatFill = document.getElementById('seat-fill');
+if (seatFill) { seatFill.style.width = '0%'; seatObserver.observe(seatFill.closest('.seat-progress-wrap')); }
+</script>
+
+</body>
+</html>

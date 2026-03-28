@@ -1,0 +1,9 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Disallow thank you page from indexing
+Disallow: /thank-you
+
+# Sitemap location
+Sitemap: https://scaleme.in/sitemap.xml
