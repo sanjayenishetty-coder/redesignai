@@ -130,13 +130,20 @@ export default function Home() {
                   About
                 </a>
                 <button
-                  // onClick={() => onNavigate('team')}
                   onClick={() => navigate('/team')}
                   className={`text-[20px] md:text-[14px] font-semibold transition-colors cursor-pointer whitespace-nowrap
                   ${isScrolled ? 'text-[#007787] hover:text-[#1DB2AB]' : 'text-white hover:text-[#92dad7]'}
                 `}
                 >
                   Team
+                </button>
+                <button
+                  onClick={() => navigate('/redesign-ai')}
+                  className={`text-[20px] md:text-[14px] font-semibold transition-colors cursor-pointer whitespace-nowrap
+                  ${isScrolled ? 'text-[#007787] hover:text-[#1DB2AB]' : 'text-white hover:text-[#92dad7]'}
+                `}
+                >
+                  Redesign AI
                 </button>
                 {/* <a
                 //   href="#agenda"
@@ -200,6 +207,12 @@ export default function Home() {
               >
                 Agenda
               </a>
+              <button
+                onClick={() => navigate('/redesign-ai')}
+                className="text-sm font-semibold text-[#007787] hover:text-[#1DB2AB] transition-colors"
+              >
+                Redesign AI
+              </button>
             </nav>
 
             {/* Apply Now Button */}
@@ -234,13 +247,22 @@ export default function Home() {
               >
                 Team
               </button>
-              <a 
-                href="#agenda" 
+              <a
+                href="#agenda"
                 className="px-6 py-3 text-sm font-semibold text-[#007787] hover:bg-gray-50"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Agenda
               </a>
+              <button
+                onClick={() => {
+                  navigate('/redesign-ai');
+                  setMobileMenuOpen(false);
+                }}
+                className="px-6 py-3 text-sm font-semibold text-[#007787] hover:bg-gray-50 text-left"
+              >
+                Redesign AI
+              </button>
             </nav>
           </div>
         )}
