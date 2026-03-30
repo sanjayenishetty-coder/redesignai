@@ -1,5 +1,7 @@
 {
   "rewrites": [
+    { "source": "/redesign-ai", "destination": "/redesign-ai.html" },
+    { "source": "/redesign-ai/(.*)", "destination": "/redesign-ai.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
