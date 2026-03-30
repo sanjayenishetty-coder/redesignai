@@ -213,6 +213,11 @@ export default function RedesignAI() {
           </div>
           <div className="logo-strip-divider" />
           <div className="logo-partner">
+            <img src="/assets/plugin-alliance-logo.png" alt="Plugin Alliance" className="logo-partner-img" />
+            <div className="logo-partner-desc">Accelerating Industry 4.0 & digital manufacturing adoption across India</div>
+          </div>
+          <div className="logo-strip-divider" />
+          <div className="logo-partner">
             <img src="/assets/aicoworkers-logo.png" alt="AICoworkers" className="logo-partner-img" />
             <div className="logo-partner-desc">No-code AI tools built specifically for Indian SME operators</div>
           </div>
