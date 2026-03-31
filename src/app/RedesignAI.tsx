@@ -704,7 +704,7 @@ export default function RedesignAI() {
               <div className="footer-col-title">Workshop Details</div>
               <ul className="footer-col-items">
                 <li>📅 One Weekend in April '26</li>
-                <li>🕘 9:00 AM – 6:00 PM (Both Days)</li>
+                <li>🕘 9:00 AM – 5:00 PM (Both Days)</li>
                 <li>🏛️ Indian School of Business, Gachibowli, Hyderabad</li>
                 <li>👥 Limited to 50 Participants</li>
                 <li>🏆 For Indian SME Operators</li>
