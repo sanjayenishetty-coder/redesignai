@@ -445,17 +445,14 @@ export default function RedesignAI() {
             <div className={`tab-content ${activeTab === "day1" ? "active" : ""}`}>
               <div className="curriculum-sessions">
                 {[
-                  { time: "9:00 – 11:00 AM", name: "Strategic AI Frameworks for SMEs", desc: "ISB Professor-led masterclass on AI strategy, competitive advantage, and framework design specifically for Indian business contexts. You'll leave with a strategic AI map for your own company." },
-                  { time: "11:30 AM – 1:30 PM", name: "Building Your First AI Workflow", desc: "Hands-on session: Map your current operations, identify automation opportunities, and build your first intelligent workflow using no-code and low-code tools. No engineering background needed." },
-                  { time: "2:30 – 5:00 PM", name: "Automating Operations, HR & Finance", desc: "Deploy automations for invoice processing, employee onboarding, customer support, and data entry. Walk out of this session with working systems, not mock-ups." },
-                  { time: "5:00 – 6:00 PM", name: "Day 1 Debrief & Personalised Feedback", desc: "Review your progress with expert instructors. Troubleshoot challenges, refine your workflows, and set the build agenda for Day 2 specific to your business." },
+                  { name: "Strategic AI Frameworks for SMEs", desc: "ISB Professor-led masterclass on AI strategy, competitive advantage, and framework design specifically for Indian business contexts. You'll leave with a strategic AI map for your own company." },
+                  { name: "Building Your First AI Workflow", desc: "Hands-on session: Map your current operations, identify automation opportunities, and build your first intelligent workflow using no-code and low-code tools. No engineering background needed." },
+                  { name: "Automating Operations, HR & Finance", desc: "Deploy automations for invoice processing, employee onboarding, customer support, and data entry. Walk out of this session with working systems, not mock-ups." },
+                  { name: "Day 1 Debrief & Personalised Feedback", desc: "Review your progress with expert instructors. Troubleshoot challenges, refine your workflows, and set the build agenda for Day 2 specific to your business." },
                 ].map((session, i) => (
                   <div className="session-item" key={i}>
-                    <div className="session-time">{session.time}</div>
-                    <div>
-                      <div className="session-name">{session.name}</div>
-                      <div className="session-desc">{session.desc}</div>
-                    </div>
+                    <div className="session-name">{session.name}</div>
+                    <div className="session-desc">{session.desc}</div>
                   </div>
                 ))}
               </div>
@@ -464,17 +461,15 @@ export default function RedesignAI() {
             <div className={`tab-content ${activeTab === "day2" ? "active" : ""}`}>
               <div className="curriculum-sessions">
                 {[
-                  { time: "9:00 – 11:00 AM", name: "AI Sales & Marketing Agents", desc: "Build autonomous agents that qualify leads, follow up with prospects, and generate marketing content at scale. See exactly how these plug into your current sales process." },
-                  { time: "11:30 AM – 1:30 PM", name: "Distribution & Supply Chain Automation", desc: "For distributors and operators: Build AI systems for order tracking, vendor communications, demand forecasting, and channel management. Practical tools for real distribution challenges." },
-                  { time: "2:30 – 4:30 PM", name: "Building Your 90-Day AI Roadmap", desc: "Guided workshop: Map out exactly what you'll build in the 90 days after leaving. P&L modelling, priority sequencing, and resource planning for your specific business situation." },
-                  { time: "4:30 – 6:00 PM", name: "Graduation & AI Collective Access", desc: "Cohort presentations, networking dinner, and onboarding into the ongoing AI Collective, a private community of Indian SME operators building with AI together, long after the weekend ends." },
+                  { name: "Understanding AI Agents: Your New AI Workforce", desc: "The leap beyond chatbots and automations. Learn what AI agents actually are — language models combined with memory, tools, and decision-making — and why they represent a step-change for SME operations." },
+                  { name: "AI Sales & Marketing Agents", desc: "Build autonomous agents that qualify leads, follow up with prospects, and generate marketing content at scale. See exactly how these plug into your current sales process." },
+                  { name: "Distribution & Supply Chain Automation", desc: "For distributors and operators: Build AI systems for order tracking, vendor communications, demand forecasting, and channel management. Practical tools for real distribution challenges." },
+                  { name: "Building Your 90-Day AI Roadmap", desc: "Guided workshop: Map out exactly what you'll build in the 90 days after leaving. P&L modelling, priority sequencing, and resource planning for your specific business situation." },
+                  { name: "Graduation & AI Collective Access", desc: "Cohort presentations, networking dinner, and onboarding into the ongoing AI Collective, a private community of Indian SME operators building with AI together, long after the weekend ends." },
                 ].map((session, i) => (
                   <div className="session-item" key={i}>
-                    <div className="session-time">{session.time}</div>
-                    <div>
-                      <div className="session-name">{session.name}</div>
-                      <div className="session-desc">{session.desc}</div>
-                    </div>
+                    <div className="session-name">{session.name}</div>
+                    <div className="session-desc">{session.desc}</div>
                   </div>
                 ))}
               </div>
