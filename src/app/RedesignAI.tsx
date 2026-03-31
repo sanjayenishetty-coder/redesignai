@@ -254,13 +254,13 @@ export default function RedesignAI() {
                 ],
               },
               {
-                icon: "👩‍💼", title: "Employees & Managers",
-                desc: "You don't need to fear AI replacing you. You need to be the person who knows how to use it. That person keeps their job and gets promoted.",
+                icon: "⚖️", title: "Consulting Firms",
+                desc: "CA, CS, legal, and advisory firms that want to deliver faster, smarter, and at scale — without hiring more people.",
                 points: [
-                  "Become the AI champion in your organisation",
-                  "Learn no-code and low-code AI tools you can use Monday morning",
-                  "Build skills your competitors' teams don't have yet",
-                  "Attend as a team. Bring 3 and transform your whole department",
+                  "Automate client onboarding, compliance checklists, and document review",
+                  "Build AI agents that handle routine queries so your team focuses on high-value work",
+                  "Deliver deeper insights to clients using AI-powered data analysis",
+                  "Future-proof your practice before your competitors do",
                 ],
               },
             ].map((card, i) => (
