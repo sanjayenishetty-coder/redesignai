@@ -556,7 +556,7 @@ export default function RedesignAI() {
               {/* Group Pricing */}
               <div className="roi-block group-pricing-block fade-up delay-2">
                 <h4>👥 Bring your team, save more</h4>
-                <p className="group-pricing-desc">Group discounts apply to early bird registrations only. Standard pricing applies after the early bird window closes.</p>
+                <p className="group-pricing-desc">Group discounts apply to early bird registrations only. Standard pricing applies after April 5th.</p>
                 <div className="roi-comparison">
                   <div className="roi-row">
                     <span className="roi-row-label">1 person</span>
@@ -577,19 +577,19 @@ export default function RedesignAI() {
               <div className="urgency-block fade-up delay-3">
                 <div className="urgency-icon">⏰</div>
                 <div className="urgency-text">
-                  <strong>Early bird pricing ends soon</strong>
-                  <span>Once the early bird window closes, the price returns to ₹50,000 and group discounts no longer apply. Reserve your seat now to lock in your rate.</span>
+                  <strong>Early bird pricing ends April 5th</strong>
+                  <span>After April 5th, the price returns to ₹50,000 and group discounts no longer apply. Reserve your seat now to lock in your rate.</span>
                 </div>
               </div>
             </div>
 
             {/* Pricing Card */}
             <div className="pricing-card fade-up delay-2">
-              <div className="early-bird-badge">🐦 Early Bird, Ends Soon</div>
+              <div className="early-bird-badge">🐦 Early Bird — Ends April 5th</div>
               <div className="pricing-original">₹50,000</div>
               <div className="pricing-main">₹39,000<span> + GST</span></div>
               <div className="pricing-taxes">Per person, early bird price</div>
-              <div className="early-bird-save">Early Bird Pricing, Save ₹11,000</div>
+              <div className="early-bird-save">Early Bird — Save ₹11,000 before April 5th</div>
 
               {/* Countdown */}
               <div className="countdown-wrap">
