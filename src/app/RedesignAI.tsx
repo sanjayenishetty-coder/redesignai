@@ -172,7 +172,7 @@ export default function RedesignAI() {
 
           <div className="seat-counter fade-up delay-4">
             <span className="fire-dot" />
-            <span><span className="seat-count-num">14</span> of 50 seats claimed, act fast</span>
+            <span><span className="seat-count-num">7</span> of 50 seats claimed, act fast</span>
           </div>
 
           <div className="hero-pills fade-up delay-5">
