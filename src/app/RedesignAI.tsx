@@ -254,7 +254,7 @@ export default function RedesignAI() {
                 ],
               },
               {
-                icon: "⚖️", title: "Consulting Firms",
+                icon: "🧑‍💼", title: "Consulting Firms",
                 desc: "CA, CS, legal, and advisory firms that want to deliver faster, smarter, and at scale — without hiring more people.",
                 points: [
                   "Automate client onboarding, compliance checklists, and document review",
