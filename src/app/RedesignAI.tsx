@@ -4,10 +4,84 @@ import "../styles/redesign-ai.css";
 
 const RAZORPAY_LINK = "https://rzp.io/l/YOURLINK";
 
+const industries = [
+  {
+    id: "retail", icon: "🛒", name: "Retail & E-commerce",
+    subtitle: "From kirana stores to D2C brands — margins are thin and competition is fierce. AI helps you sell smarter, stock better, and serve faster.",
+    useCases: [
+      { title: "AI-Powered Inventory & Demand Forecasting", desc: "Stop overstocking or running out. Build an AI system that predicts demand based on seasons, trends, and past sales — so you order exactly what you need." },
+      { title: "Automated Customer Engagement", desc: "Deploy AI chatbots that handle product queries, recommend items, and recover abandoned carts on WhatsApp and your website — 24/7, without hiring staff." },
+      { title: "Smart Pricing & Promotions", desc: "Let AI analyse competitor pricing, customer behaviour, and margins to suggest optimal pricing and personalised offers that boost conversion." },
+    ],
+    idealFor: "Retail chain owners, D2C founders, e-commerce managers, store operators",
+  },
+  {
+    id: "manufacturing", icon: "🏭", name: "Manufacturing",
+    subtitle: "Production delays, quality issues, and rising costs eat into your margins daily. AI brings predictability and precision to your shop floor.",
+    useCases: [
+      { title: "Predictive Maintenance & Downtime Prevention", desc: "Build AI models that monitor machine health data and alert you before breakdowns happen — reducing unplanned downtime by up to 40%." },
+      { title: "AI Quality Inspection", desc: "Use AI-powered visual inspection to catch defects in real-time on the production line — faster and more consistent than manual QC checks." },
+      { title: "Production Planning & Scheduling", desc: "Optimise production schedules using AI that factors in order priorities, machine availability, and raw material stock — maximising throughput." },
+    ],
+    idealFor: "Factory owners, production managers, quality heads, plant supervisors",
+  },
+  {
+    id: "distribution", icon: "🚚", name: "Distribution & Logistics",
+    subtitle: "Managing channels, vendors, and logistics manually is costing you margin. AI fixes the invisible inefficiencies across your supply chain.",
+    useCases: [
+      { title: "AI-Driven Route & Fleet Optimisation", desc: "Automate delivery route planning using AI that factors in traffic, fuel costs, and delivery windows — cutting logistics costs by 15-25%." },
+      { title: "Automated Order & Vendor Management", desc: "Build AI agents that handle order tracking, vendor communications, and demand forecasting — eliminating manual data entry across distribution ops." },
+      { title: "Warehouse Intelligence", desc: "Deploy AI for smart warehouse management — from automated stock counting to pick-path optimisation — reducing errors and speeding up fulfilment." },
+    ],
+    idealFor: "Distributors, logistics company owners, supply chain managers, warehouse operators",
+  },
+  {
+    id: "consulting", icon: "📋", name: "Consulting & Professional Services",
+    subtitle: "CA, CS, legal, and advisory firms — your clients expect faster, smarter delivery. AI lets you scale expertise without scaling headcount.",
+    useCases: [
+      { title: "Automated Client Onboarding & Compliance", desc: "Build AI workflows that handle document collection, KYC verification, and compliance checklists — cutting onboarding time from days to hours." },
+      { title: "AI Research & Report Generation", desc: "Deploy AI agents that draft research reports, analyse financial data, and prepare client presentations — so your team focuses on advisory, not grunt work." },
+      { title: "Intelligent Document Review", desc: "Use AI to review contracts, legal filings, and regulatory documents in minutes — flagging risks and inconsistencies that take humans hours to find." },
+    ],
+    idealFor: "CA/CS firms, legal practices, management consultants, advisory firms, tax professionals",
+  },
+  {
+    id: "healthcare", icon: "🏥", name: "Healthcare & Pharma",
+    subtitle: "Patient volume is rising, admin is drowning your staff, and compliance is non-negotiable. AI handles the repetitive so your team handles the critical.",
+    useCases: [
+      { title: "AI-Powered Patient Scheduling & Follow-ups", desc: "Automate appointment booking, reminders, and post-visit follow-ups using AI agents — reducing no-shows and freeing up front-desk staff." },
+      { title: "Medical Records & Documentation", desc: "Build AI workflows that transcribe consultations, update patient records, and generate discharge summaries — saving doctors 2+ hours daily." },
+      { title: "Pharma Supply Chain & Expiry Management", desc: "Deploy AI to track inventory across locations, flag near-expiry stock, and automate reordering — reducing waste and stockouts in your pharmacy." },
+    ],
+    idealFor: "Clinic owners, hospital administrators, pharma distributors, diagnostic lab managers",
+  },
+  {
+    id: "realestate", icon: "🏗️", name: "Real Estate & Construction",
+    subtitle: "Long sales cycles, project delays, and scattered data across sites. AI helps you close faster, build smarter, and track everything in real time.",
+    useCases: [
+      { title: "AI Lead Qualification & Nurturing", desc: "Build AI agents that qualify incoming leads, respond instantly on WhatsApp, and nurture prospects with personalised follow-ups — converting more site visits to bookings." },
+      { title: "Project Progress & Cost Tracking", desc: "Use AI to consolidate progress reports from multiple sites, flag budget overruns, and predict completion timelines — giving you a real-time dashboard of all projects." },
+      { title: "Document & Agreement Automation", desc: "Automate generation of sale agreements, NOCs, and compliance documents using AI — reducing legal back-and-forth and speeding up closures." },
+    ],
+    idealFor: "Builders, developers, real estate agents, construction project managers, property managers",
+  },
+  {
+    id: "education", icon: "🎓", name: "Education & Training",
+    subtitle: "Every student learns differently, but most institutions teach the same way. AI enables personalised learning at scale — without burning out your faculty.",
+    useCases: [
+      { title: "AI-Powered Personalised Learning", desc: "Build AI tutors that adapt to each student's pace, identify knowledge gaps, and recommend targeted practice — improving outcomes without increasing staff." },
+      { title: "Automated Assessment & Feedback", desc: "Deploy AI to grade assignments, generate detailed feedback, and create question banks — freeing up faculty time for high-impact teaching moments." },
+      { title: "Student Engagement & Retention", desc: "Use AI to identify at-risk students early, automate parent communications, and optimise course schedules — improving retention and satisfaction scores." },
+    ],
+    idealFor: "Institute owners, training companies, edtech founders, academic administrators, coaching centres",
+  },
+];
+
 export default function RedesignAI() {
   const [navScrolled, setNavScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeTab, setActiveTab] = useState<"day1" | "day2">("day1");
+  const [activeIndustry, setActiveIndustry] = useState("retail");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [countdown, setCountdown] = useState({ days: "00", hours: "00", mins: "00", secs: "00" });
   const seatFillRef = useRef<HTMLDivElement>(null);
@@ -228,51 +302,47 @@ export default function RedesignAI() {
       <section className="who-section" id="who">
         <div className="section-inner">
           <span className="section-tag fade-up">Who this is for</span>
-          <h2 className="section-h2 fade-up delay-1">Built for three types of people.<br />One shared problem.</h2>
-          <p className="section-sub fade-up delay-2">AI is moving fast. Most Indian SMEs are watching from the sidelines. This workshop changes that, whether you own the business, run distribution, or work inside one.</p>
+          <h2 className="section-h2 fade-up delay-1">Every industry has an AI advantage.<br />Find yours.</h2>
+          <p className="section-sub fade-up delay-2">Whether you run a factory floor, manage a retail chain, or advise clients — AI can transform how you operate. This workshop gives you the tools to make it happen, tailored to your industry.</p>
 
-          <div className="who-cards">
-            {[
-              {
-                icon: "🏢", title: "SME Owners",
-                desc: "You're running a real business with real costs. You need AI to work in your operations, not in a demo.",
-                points: [
-                  "Build workflows that cut your admin overhead by 20+ hours/week",
-                  "Deploy AI sales agents without hiring a team",
-                  "Automate invoice processing, customer support, and data entry",
-                  "Understand P&L impact, not just tech jargon",
-                ],
-              },
-              {
-                icon: "🚚", title: "Distributors",
-                desc: "Managing channels, vendors and logistics manually is costing you margin. AI fixes the invisible inefficiencies.",
-                points: [
-                  "Automate order tracking, vendor comms and demand forecasting",
-                  "Build AI agents for channel management at scale",
-                  "Cut manual data entry from distribution ops",
-                  "Get ahead of your supply chain before your competitors do",
-                ],
-              },
-              {
-                icon: "🧑‍💼", title: "Consulting Firms",
-                desc: "CA, CS, legal, and advisory firms that want to deliver faster, smarter, and at scale — without hiring more people.",
-                points: [
-                  "Automate client onboarding, compliance checklists, and document review",
-                  "Build AI agents that handle routine queries so your team focuses on high-value work",
-                  "Deliver deeper insights to clients using AI-powered data analysis",
-                  "Future-proof your practice before your competitors do",
-                ],
-              },
-            ].map((card, i) => (
-              <div className={`who-card fade-up delay-${i + 1}`} key={i}>
-                <span className="who-card-icon">{card.icon}</span>
-                <div className="who-card-title">{card.title}</div>
-                <div className="who-card-desc">{card.desc}</div>
-                <ul className="who-card-points">
-                  {card.points.map((p, j) => <li key={j}>{p}</li>)}
-                </ul>
-              </div>
+          <div className="industry-tabs fade-up delay-2">
+            {industries.map((ind) => (
+              <button
+                key={ind.id}
+                className={`industry-tab${activeIndustry === ind.id ? " active" : ""}`}
+                onClick={() => setActiveIndustry(ind.id)}
+              >
+                <span className="industry-tab-icon">{ind.icon}</span> {ind.name}
+              </button>
             ))}
+          </div>
+
+          {industries.map((ind) => (
+            <div key={ind.id} className={`industry-panel${activeIndustry === ind.id ? " active" : ""} fade-up delay-3`}>
+              <div className="industry-panel-header">
+                <div className="industry-panel-icon">{ind.icon}</div>
+                <div>
+                  <h3 className="industry-panel-title">{ind.name}</h3>
+                  <p className="industry-panel-subtitle">{ind.subtitle}</p>
+                </div>
+              </div>
+              <div className="industry-panel-grid">
+                {ind.useCases.map((uc, j) => (
+                  <div className="industry-usecase" key={j}>
+                    <div className="industry-usecase-label">Use Case</div>
+                    <div className="industry-usecase-title">{uc.title}</div>
+                    <p className="industry-usecase-desc">{uc.desc}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="industry-panel-cta">
+                <span className="industry-panel-who">Ideal for:</span> {ind.idealFor}
+              </div>
+            </div>
+          ))}
+
+          <div className="industry-bottom fade-up">
+            <p className="industry-bottom-text">Don't see your industry? This workshop teaches <strong>frameworks, not formulas</strong>. The AI skills you build here apply to any business. <a href="#pricing" className="industry-bottom-link">Claim your seat →</a></p>
           </div>
         </div>
       </section>

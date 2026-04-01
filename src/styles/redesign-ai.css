@@ -504,73 +504,162 @@
 .redesign-page .who-section .section-h2 { color: var(--white); }
 .redesign-page .who-section .section-sub { color: rgba(255,255,255,0.55); }
 .redesign-page .who-section .section-tag { color: var(--teal-300); }
-.redesign-page .who-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 52px;
+/* Industry Tabs */
+.redesign-page .industry-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 40px;
+  justify-content: center;
 }
-.redesign-page .who-card {
+.redesign-page .industry-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.6);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+.redesign-page .industry-tab:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(45,196,143,0.3);
+  color: rgba(255,255,255,0.85);
+}
+.redesign-page .industry-tab.active {
+  background: var(--teal-400);
+  border-color: var(--teal-400);
+  color: var(--white);
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(29,158,117,0.35);
+}
+.redesign-page .industry-tab-icon { font-size: 16px; line-height: 1; }
+
+/* Industry Panels */
+.redesign-page .industry-panel {
+  display: none;
+  margin-top: 36px;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.09);
   border-radius: var(--radius-lg);
-  padding: 36px 30px;
-  transition: background 0.2s, border-color 0.2s;
-  position: relative;
-  overflow: hidden;
+  padding: 40px 36px;
+  animation: panelFadeIn 0.35s ease;
 }
-.redesign-page .who-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: var(--teal-400);
-  opacity: 0;
-  transition: opacity 0.2s;
+.redesign-page .industry-panel.active { display: block; }
+
+@keyframes panelFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-.redesign-page .who-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(45,196,143,0.2); }
-.redesign-page .who-card:hover::before { opacity: 1; }
-.redesign-page .who-card-icon {
-  font-size: 36px;
-  margin-bottom: 20px;
-  display: block;
+
+.redesign-page .industry-panel-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 32px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.redesign-page .industry-panel-icon {
+  font-size: 44px;
   line-height: 1;
+  flex-shrink: 0;
 }
-.redesign-page .who-card-title {
+.redesign-page .industry-panel-title {
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.redesign-page .industry-panel-subtitle {
+  font-size: 15px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+  max-width: 640px;
+}
+
+.redesign-page .industry-panel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.redesign-page .industry-usecase {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-md);
+  padding: 28px 24px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.redesign-page .industry-usecase:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(45,196,143,0.2);
+}
+.redesign-page .industry-usecase-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--teal-400);
+  margin-bottom: 10px;
+}
+.redesign-page .industry-usecase-title {
+  font-family: var(--font-display);
+  font-size: 17px;
   font-weight: 700;
   color: var(--white);
   margin-bottom: 10px;
-  letter-spacing: -0.02em;
+  line-height: 1.35;
 }
-.redesign-page .who-card-desc {
-  font-size: 14px;
+.redesign-page .industry-usecase-desc {
+  font-size: 13.5px;
   color: rgba(255,255,255,0.5);
   line-height: 1.7;
-  margin-bottom: 20px;
 }
-.redesign-page .who-card-points {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 0;
+
+.redesign-page .industry-panel-cta {
+  font-size: 14px;
+  color: rgba(255,255,255,0.45);
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
 }
-.redesign-page .who-card-points li {
-  font-size: 13px;
-  color: var(--teal-100);
-  padding-left: 20px;
-  position: relative;
-  line-height: 1.5;
+.redesign-page .industry-panel-who {
+  color: var(--teal-300);
+  font-weight: 600;
 }
-.redesign-page .who-card-points li::before {
-  content: '\2192';
-  position: absolute;
-  left: 0;
-  color: var(--teal-400);
-  font-weight: 700;
+
+/* Bottom message */
+.redesign-page .industry-bottom {
+  margin-top: 36px;
+  text-align: center;
 }
+.redesign-page .industry-bottom-text {
+  font-size: 15px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.7;
+}
+.redesign-page .industry-bottom-text strong {
+  color: var(--white);
+  font-weight: 600;
+}
+.redesign-page .industry-bottom-link {
+  color: var(--teal-300);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+.redesign-page .industry-bottom-link:hover { color: var(--teal-200); }
 
 /* ─── PROBLEM/SOLUTION ─── */
 .redesign-page .problem-section { background: var(--cream); }
@@ -1487,7 +1576,12 @@
   .redesign-page .nav-center { display: none; }
   .redesign-page .section { padding: 64px 24px; }
   .redesign-page .who-section { padding: 64px 24px; }
-  .redesign-page .who-cards { grid-template-columns: 1fr; gap: 16px; }
+  .redesign-page .industry-tabs { gap: 8px; justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
+  .redesign-page .industry-tab { font-size: 13px; padding: 8px 16px; }
+  .redesign-page .industry-panel { padding: 28px 20px; }
+  .redesign-page .industry-panel-header { flex-direction: column; gap: 12px; }
+  .redesign-page .industry-panel-grid { grid-template-columns: 1fr; gap: 16px; }
+  .redesign-page .industry-panel-title { font-size: 22px; }
   .redesign-page .problem-grid { grid-template-columns: 1fr; }
   .redesign-page .solution-card { position: static; }
   .redesign-page .pillars-grid { grid-template-columns: 1fr; }
