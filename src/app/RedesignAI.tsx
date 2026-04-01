@@ -244,11 +244,6 @@ export default function RedesignAI() {
             </button>
           </div>
 
-          <div className="seat-counter fade-up delay-4">
-            <span className="fire-dot" />
-            <span><span className="seat-count-num">7</span> of 50 seats claimed, act fast</span>
-          </div>
-
           <div className="hero-pills fade-up delay-5">
             {[
               { icon: "🤝", title: "Hands-On Execution", desc: "Build real systems, not slides. Leave with working AI workflows." },
