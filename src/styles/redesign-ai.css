@@ -775,6 +775,14 @@
 .redesign-page .faculty-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(45,196,143,0.2); }
 .redesign-page .faculty-card-ghost { opacity: 0.6; }
 .redesign-page .faculty-avatar-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; flex-shrink: 0; }
+.redesign-page .faculty-avatar-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  border: 3px solid var(--teal-200);
+}
 .redesign-page .faculty-avatar {
   width: 56px; height: 56px;
   border-radius: 50%;

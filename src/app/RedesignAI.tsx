@@ -360,13 +360,13 @@ export default function RedesignAI() {
           <div className="faculty-grid fade-up delay-2">
             <div className="faculty-card">
               <div className="faculty-avatar-wrap">
-                <div className="faculty-avatar">ISB</div>
-                <div className="faculty-lead-badge">Opening Masterclass</div>
+                <img src="/assets/shankar-prakash.jpg" alt="Prof. Shankar Prakash" className="faculty-avatar-img" />
+                <div className="faculty-lead-badge">Opening Masterclass · Day 1</div>
               </div>
               <div className="faculty-info">
-                <div className="faculty-name">ISB Faculty <span className="faculty-tbd">(name to be announced)</span></div>
-                <div className="faculty-role">Professor of Strategy, Indian School of Business, Hyderabad</div>
-                <div className="faculty-bio">Opens the workshop with the strategic AI framework for Indian SMEs. Sets the competitive context, the opportunity map, and the decision criteria for where to deploy AI first in your business.</div>
+                <div className="faculty-name">Prof. Shankar Prakash</div>
+                <div className="faculty-role">Visiting Faculty, ISB &amp; Adjunct Faculty, IIM Udaipur</div>
+                <div className="faculty-bio">Opens the workshop with a strategic AI masterclass built for Indian business leaders. Brings deep academic rigour from ISB and IIM combined with a sharp focus on practical, implementation-ready frameworks that SME operators can act on immediately.</div>
                 <div className="faculty-tags">
                   <span className="speaker-tag">AI Strategy</span>
                   <span className="speaker-tag">ISB Faculty</span>
