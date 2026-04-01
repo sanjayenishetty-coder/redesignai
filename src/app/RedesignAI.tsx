@@ -110,7 +110,7 @@ export default function RedesignAI() {
           <span>Build &middot; Automate &middot; Scale</span>
         </a>
         <div className="nav-center">
-          <div className="date-chip">📅 April 2026, Hyderabad</div>
+          <div className="date-chip">📅 18–19 April 2026, Hyderabad</div>
           <div className="dot" />
           <span>ISB Hyderabad</span>
           <div className="dot" />
@@ -126,7 +126,7 @@ export default function RedesignAI() {
         <div className="hero-glow-2" />
         <div className="hero-content">
           <div className="hero-eyebrow fade-up">
-            <span className="badge">April 2026, Hyderabad</span>
+            <span className="badge">18–19 April 2026, Hyderabad</span>
             A 2-Day Hands-On AI Workshop for Indian SMEs
           </div>
 
@@ -142,7 +142,7 @@ export default function RedesignAI() {
           <div className="hero-meta fade-up delay-3">
             <div className="hero-meta-item">
               <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              One Weekend in April '26
+              18th &amp; 19th April 2026
             </div>
             <div className="hero-meta-divider" />
             <div className="hero-meta-item">
@@ -522,7 +522,7 @@ export default function RedesignAI() {
         <div className="section-inner">
           <span className="section-tag fade-up">Reserve your seat</span>
           <h2 className="section-h2 fade-up delay-1">Secure Your Seat in the April Cohort</h2>
-          <p className="section-sub fade-up delay-2">50 seats to ensure every participant gets hands-on support and personalised feedback. Dates to be confirmed shortly, a weekend in April 2026.</p>
+          <p className="section-sub fade-up delay-2">50 seats to ensure every participant gets hands-on support and personalised feedback. Join us on 18th &amp; 19th April 2026 at ISB Hyderabad.</p>
 
           <div className="pricing-layout">
             <div className="pricing-left">
@@ -703,7 +703,7 @@ export default function RedesignAI() {
             <div>
               <div className="footer-col-title">Workshop Details</div>
               <ul className="footer-col-items">
-                <li>📅 One Weekend in April '26</li>
+                <li>📅 18th &amp; 19th April 2026</li>
                 <li>🕘 9:00 AM – 5:00 PM (Both Days)</li>
                 <li>🏛️ Indian School of Business, Gachibowli, Hyderabad</li>
                 <li>👥 Limited to 50 Participants</li>
