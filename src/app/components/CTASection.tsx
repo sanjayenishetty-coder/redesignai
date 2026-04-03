@@ -41,7 +41,7 @@ export const CTASection = () => {
           className="bg-[#F15A2B] hover:bg-[#d94f24] text-white font-bold text-lg md:text-xl uppercase px-10 md:px-14 py-4 md:py-5 rounded-lg shadow-lg transition-all duration-300 hover:scale-105"
           style={{ fontFamily: 'Montserrat, sans-serif' }}
         >
-          Get Invite
+          Join Network
         </button>
       </div>
     </section>
