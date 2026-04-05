@@ -244,23 +244,6 @@ export default function RedesignAI() {
             </button>
           </div>
 
-          <div className="hero-pills fade-up delay-5">
-            {[
-              { icon: "🤝", title: "Hands-On Execution", desc: "Build real systems, not slides. Leave with working AI workflows." },
-              { icon: "⚙️", title: "Automate Operations", desc: "Eliminate repetitive work in HR, finance, sales and ops." },
-              { icon: "📈", title: "Scale Revenue", desc: "Deploy AI agents that drive sales while you sleep." },
-              { icon: "📊", title: "Monday Morning ROI", desc: "Every session ends with something you can deploy the next business day." },
-              { icon: "🌐", title: "AI Peer Network", desc: "Join 49 other SME operators building with AI. An ongoing community, not a one-day event." },
-            ].map((pill, i) => (
-              <div className="hero-pill" key={i}>
-                <div className="hero-pill-icon">{pill.icon}</div>
-                <div className="hero-pill-text">
-                  <strong>{pill.title}</strong>
-                  <span>{pill.desc}</span>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -368,6 +351,29 @@ export default function RedesignAI() {
                 ))}
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Program Benefits */}
+      <section className="section benefits-section">
+        <div className="section-inner">
+          <div className="hero-pills fade-up">
+            {[
+              { icon: "🤝", title: "Hands-On Execution", desc: "Build real systems, not slides. Leave with working AI workflows." },
+              { icon: "⚙️", title: "Automate Operations", desc: "Eliminate repetitive work in HR, finance, sales and ops." },
+              { icon: "📈", title: "Scale Revenue", desc: "Deploy AI agents that drive sales while you sleep." },
+              { icon: "📊", title: "Monday Morning ROI", desc: "Every session ends with something you can deploy the next business day." },
+              { icon: "🌐", title: "AI Peer Network", desc: "Join 49 other SME operators building with AI. An ongoing community, not a one-day event." },
+            ].map((pill, i) => (
+              <div className="hero-pill" key={i}>
+                <div className="hero-pill-icon">{pill.icon}</div>
+                <div className="hero-pill-text">
+                  <strong>{pill.title}</strong>
+                  <span>{pill.desc}</span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

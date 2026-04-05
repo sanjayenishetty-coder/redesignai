@@ -568,6 +568,13 @@
   }
 }
 
+/* ─── PROGRAM BENEFITS ─── */
+.redesign-page .benefits-section {
+  background: var(--ink);
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+
 /* ─── WHO IS THIS FOR ─── */
 .redesign-page .who-section {
   background: var(--ink);
