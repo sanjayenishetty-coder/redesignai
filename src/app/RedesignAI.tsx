@@ -753,10 +753,6 @@ export default function RedesignAI() {
               </ul>
 
               <a href={RAZORPAY_LINK} target="_blank" rel="noopener noreferrer" className="pricing-cta">Reserve My Seat →</a>
-              <div className="pricing-fine-print">
-                Instant confirmation on approval. Payment plans available.<br />
-                Approved registrations receive ISB access credentials within 24hrs.
-              </div>
             </div>
           </div>
         </div>
