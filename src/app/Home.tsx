@@ -309,11 +309,9 @@ export default function Home() {
                 fontSize: window.innerWidth > 475 ? "80px" : "40px",
                 fontWeight: "500" }}
             >
-              Your ₹25 Cr – ₹100 Cr Playbook 
+              Your ₹25 Cr – ₹100 Cr Playbook
               {window.innerWidth > 475 && <br />}
-               Won't Get You to ₹500 Cr. {window.innerWidth > 475 && <br />}
-              <span className="text-[#92DAD7]">
-                This Summit Will.</span>
+               Won't Get You to ₹500 Cr.
             </h1>
 
             {/* Subtext */}
