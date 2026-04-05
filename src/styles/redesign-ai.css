@@ -1346,7 +1346,26 @@
   font-size: 14px;
   color: var(--teal-300);
   font-weight: 600;
+  margin-bottom: 16px;
+}
+.redesign-page .osmapi-bonus {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, rgba(46,196,143,0.12), rgba(232,90,50,0.08));
+  border: 1px solid rgba(46,196,143,0.25);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
   margin-bottom: 32px;
+}
+.redesign-page .osmapi-bonus-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.redesign-page .osmapi-bonus-text {
+  font-size: 13px;
+  color: var(--teal-100);
+  line-height: 1.5;
 }
 .redesign-page .countdown-wrap {
   background: rgba(255,255,255,0.06);

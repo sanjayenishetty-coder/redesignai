@@ -645,9 +645,13 @@ export default function RedesignAI() {
                     <span className="roi-row-label">90-day post-support and community access</span>
                     <span className="roi-row-value strikethrough">₹25,000</span>
                   </div>
+                  <div className="roi-row">
+                    <span className="roi-row-label">osmAPI platform credits (included free)</span>
+                    <span className="roi-row-value strikethrough">₹20,000</span>
+                  </div>
                   <div className="roi-row" style={{ borderTop: "2px solid var(--cream-2)", marginTop: 4, paddingTop: 12 }}>
                     <span className="roi-row-label" style={{ fontWeight: 700, color: "var(--ink)" }}>Equivalent market value</span>
-                    <span className="roi-row-value" style={{ fontSize: 18, textDecoration: "line-through", color: "var(--ink-4)" }}>₹1,25,000+</span>
+                    <span className="roi-row-value" style={{ fontSize: 18, textDecoration: "line-through", color: "var(--ink-4)" }}>₹1,45,000+</span>
                   </div>
                   <div className="roi-row">
                     <span className="roi-row-label" style={{ fontWeight: 700, color: "var(--ink)" }}>Your early bird price</span>
@@ -693,6 +697,10 @@ export default function RedesignAI() {
               <div className="pricing-main">₹39,000<span> + GST</span></div>
               <div className="pricing-taxes">Per person, early bird price</div>
               <div className="early-bird-save">Early Bird — Save ₹11,000 before April 9th</div>
+              <div className="osmapi-bonus">
+                <span className="osmapi-bonus-icon">🎁</span>
+                <span className="osmapi-bonus-text">Bonus: ₹20,000 worth of <strong>osmAPI</strong> credits included free with every registration</span>
+              </div>
 
               {/* Countdown */}
               <div className="countdown-wrap">
@@ -741,6 +749,7 @@ export default function RedesignAI() {
                 <li>Your personalised 90-day AI action plan</li>
                 <li>Post-workshop support for 90 days via the AI Collective</li>
                 <li>Networking with 49 other ambitious Indian SME operators</li>
+                <li>₹20,000 worth of osmAPI platform credits to power your AI workflows</li>
               </ul>
 
               <a href={RAZORPAY_LINK} target="_blank" rel="noopener noreferrer" className="pricing-cta">Reserve My Seat →</a>
