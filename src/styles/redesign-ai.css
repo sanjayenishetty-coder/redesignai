@@ -485,6 +485,89 @@
   max-width: 600px;
 }
 
+/* ─── AI LANDSCAPE ─── */
+.redesign-page .ai-landscape-section {
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.redesign-page .ai-landscape-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(45,196,143,0.08), transparent),
+    radial-gradient(ellipse 40% 40% at 80% 80%, rgba(232,90,50,0.05), transparent);
+  pointer-events: none;
+}
+.redesign-page .ai-landscape-section .section-tag { color: var(--teal-300); }
+.redesign-page .ai-landscape-section .section-h2 { color: var(--white); }
+.redesign-page .ai-landscape-section .section-sub { color: rgba(255,255,255,0.55); }
+
+.redesign-page .ai-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+.redesign-page .ai-stat-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-md);
+  padding: 32px 24px;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.redesign-page .ai-stat-card:hover {
+  border-color: var(--teal-400);
+  transform: translateY(-4px);
+}
+.redesign-page .ai-stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 700;
+  color: var(--teal-300);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.redesign-page .ai-stat-label {
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+.redesign-page .ai-stat-sub {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.redesign-page .ai-landscape-cta {
+  text-align: center;
+  margin-top: 56px;
+}
+.redesign-page .ai-landscape-cta p {
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 900px) {
+  .redesign-page .ai-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 500px) {
+  .redesign-page .ai-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ─── WHO IS THIS FOR ─── */
 .redesign-page .who-section {
   background: var(--ink);

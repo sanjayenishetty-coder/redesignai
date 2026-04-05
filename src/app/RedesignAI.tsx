@@ -264,6 +264,37 @@ export default function RedesignAI() {
         </div>
       </section>
 
+      {/* AI Opportunity Section */}
+      <section className="section ai-landscape-section">
+        <div className="section-inner">
+          <span className="section-tag fade-up">The AI shift is here</span>
+          <h2 className="section-h2 fade-up delay-1">AI isn't coming. It's already reshaping<br />how businesses compete.</h2>
+          <p className="section-sub fade-up delay-2">The companies adopting AI today aren't just saving costs — they're pulling ahead permanently. Here's what the data says.</p>
+
+          <div className="ai-stats-grid fade-up delay-3">
+            {[
+              { stat: "72%", label: "of Indian SMEs plan to adopt AI by 2027", sub: "But only 8% have started. The gap between intent and action is where opportunity lives." },
+              { stat: "25–40%", label: "cost savings within 6 months", sub: "Companies using AI in operations report dramatic efficiency gains — from supply chain to customer support." },
+              { stat: "₹2.5L Cr", label: "AI's projected impact on Indian GDP by 2030", sub: "Businesses that don't adopt AI workflows will lose market share to those that do. It's not a question of if — it's when." },
+              { stat: "10x", label: "faster execution with AI agents", sub: "Tasks that took teams days — proposals, follow-ups, data analysis — now take minutes. Your competitors already know this." },
+            ].map((item, i) => (
+              <div className="ai-stat-card" key={i}>
+                <div className="ai-stat-number">{item.stat}</div>
+                <div className="ai-stat-label">{item.label}</div>
+                <p className="ai-stat-sub">{item.sub}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="ai-landscape-cta fade-up delay-4">
+            <p>The question isn't whether AI will transform your industry.<br />It's whether you'll lead the change — or react to it.</p>
+            <button className="btn-primary" onClick={() => scrollToSection("pricing")}>
+              Start Building With AI →
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/* Logo Strip */}
       <div className="logo-strip">
         <div className="logo-strip-inner">
@@ -292,6 +323,54 @@ export default function RedesignAI() {
           </div>
         </div>
       </div>
+
+      {/* Problem / Solution */}
+      <section className="section problem-section" id="about">
+        <div className="section-inner">
+          <div className="problem-grid">
+            <div className="problem-left">
+              <span className="section-tag fade-up">The problem</span>
+              <h3 className="fade-up delay-1">Is your business actually using AI, or just talking about it?</h3>
+              <div className="problem-items">
+                {[
+                  { title: "Academic lectures give you theories, not tools.", desc: "You leave with notes, not a working system. No one shows you how to wire it into your actual operations." },
+                  { title: "Coding bootcamps are built for engineers, not operators.", desc: "You don't need to code. You need to execute. There's a difference, and most workshops miss it." },
+                  { title: "Generic webinars sell dreams, not results.", desc: "No one maps AI to your P&L. No one shows you what it'll cost, save, or earn. You leave inspired and lost." },
+                ].map((item, i) => (
+                  <div className={`problem-item fade-up delay-${i + 1}`} key={i}>
+                    <div className="x-icon">✕</div>
+                    <div className="problem-item-text">
+                      <strong>{item.title}</strong>
+                      <span>{item.desc}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="solution-card fade-up delay-2">
+              <span className="solution-eyebrow">The fix</span>
+              <h3>Enter REDESIGN.</h3>
+              <p className="build-sprint">This isn't a seminar. It's a build sprint. In 2 days at ISB Hyderabad, you'll walk out with systems running, not slides to read later.</p>
+              <div className="solution-items">
+                {[
+                  { title: "Live AI workflows tailored to your operations", desc: "Built during the workshop, for your specific industry context" },
+                  { title: "Automation blueprints that cut costs immediately", desc: "From HR to finance to customer support, working systems not templates" },
+                  { title: "Scalable AI agents deployable Monday morning", desc: "No coding required. No engineering team. Just you and the tools." },
+                  { title: "P&L-focused frameworks for Indian SME realities", desc: "Built around Indian business constraints, not Silicon Valley assumptions" },
+                ].map((item, i) => (
+                  <div className="solution-item" key={i}>
+                    <div className="check-icon">✓</div>
+                    <div className="solution-item-text">
+                      <strong>{item.title}</strong>
+                      <span>{item.desc}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Who Is This For */}
       <section className="who-section" id="who">
@@ -338,54 +417,6 @@ export default function RedesignAI() {
 
           <div className="industry-bottom fade-up">
             <p className="industry-bottom-text">Don't see your industry? This workshop teaches <strong>frameworks, not formulas</strong>. The AI skills you build here apply to any business. <a href="#pricing" className="industry-bottom-link">Claim your seat →</a></p>
-          </div>
-        </div>
-      </section>
-
-      {/* Problem / Solution */}
-      <section className="section problem-section" id="about">
-        <div className="section-inner">
-          <div className="problem-grid">
-            <div className="problem-left">
-              <span className="section-tag fade-up">The problem</span>
-              <h3 className="fade-up delay-1">Is your business actually using AI, or just talking about it?</h3>
-              <div className="problem-items">
-                {[
-                  { title: "Academic lectures give you theories, not tools.", desc: "You leave with notes, not a working system. No one shows you how to wire it into your actual operations." },
-                  { title: "Coding bootcamps are built for engineers, not operators.", desc: "You don't need to code. You need to execute. There's a difference, and most workshops miss it." },
-                  { title: "Generic webinars sell dreams, not results.", desc: "No one maps AI to your P&L. No one shows you what it'll cost, save, or earn. You leave inspired and lost." },
-                ].map((item, i) => (
-                  <div className={`problem-item fade-up delay-${i + 1}`} key={i}>
-                    <div className="x-icon">✕</div>
-                    <div className="problem-item-text">
-                      <strong>{item.title}</strong>
-                      <span>{item.desc}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="solution-card fade-up delay-2">
-              <span className="solution-eyebrow">The fix</span>
-              <h3>Enter REDESIGN.</h3>
-              <p className="build-sprint">This isn't a seminar. It's a build sprint. In 2 days at ISB Hyderabad, you'll walk out with systems running, not slides to read later.</p>
-              <div className="solution-items">
-                {[
-                  { title: "Live AI workflows tailored to your operations", desc: "Built during the workshop, for your specific industry context" },
-                  { title: "Automation blueprints that cut costs immediately", desc: "From HR to finance to customer support, working systems not templates" },
-                  { title: "Scalable AI agents deployable Monday morning", desc: "No coding required. No engineering team. Just you and the tools." },
-                  { title: "P&L-focused frameworks for Indian SME realities", desc: "Built around Indian business constraints, not Silicon Valley assumptions" },
-                ].map((item, i) => (
-                  <div className="solution-item" key={i}>
-                    <div className="check-icon">✓</div>
-                    <div className="solution-item-text">
-                      <strong>{item.title}</strong>
-                      <span>{item.desc}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </section>
