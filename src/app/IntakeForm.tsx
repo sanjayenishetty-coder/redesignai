@@ -1,7 +1,7 @@
 import { useState, FormEvent, useEffect } from "react";
 import "../styles/redesign-ai.css";
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzoDQngZXRsuLyOKnfOWVMI2TfxfpGLBdeZAHATYNTpt0Cl0eYry-_eIGz_ZYCP0TVt/exec";
+const API_URL = "https://api.simpo.ai/business/contact";
 
 export default function IntakeForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -49,18 +49,20 @@ export default function IntakeForm() {
     setIsSubmitting(true);
 
     try {
-      await fetch(GOOGLE_SCRIPT_URL, {
+      await fetch(API_URL, {
         method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain" },
-        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.fullName,
+          email: formData.email,
+          message: "REDESIGN Workshop Intake Form",
+          moreInfo: formData,
+        }),
       });
       setSubmitted(true);
       window.scrollTo(0, 0);
     } catch {
-      // With no-cors, opaque response is expected — treat as success
-      setSubmitted(true);
-      window.scrollTo(0, 0);
+      alert("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
