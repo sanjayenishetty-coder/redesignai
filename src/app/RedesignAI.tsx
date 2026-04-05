@@ -479,16 +479,17 @@ export default function RedesignAI() {
 
             <div className="faculty-card">
               <div className="faculty-avatar-wrap">
-                <div className="faculty-avatar">AI</div>
+                <img src="/assets/venkatesh-rajendran.png" alt="Venkatesh Rajendran" className="faculty-avatar-img" />
+                <div className="faculty-lead-badge">AI &amp; Automation · Day 1 &amp; 2</div>
               </div>
               <div className="faculty-info">
-                <div className="faculty-name">AI Implementation Lead <span className="faculty-tbd">(name to be announced)</span></div>
-                <div className="faculty-role">Practitioner, No-Code and Low-Code AI Systems</div>
-                <div className="faculty-bio">Leads the hands-on build sessions across both days. Walks participants through workflow creation, automation setup, and agent deployment using tools that require zero engineering background.</div>
+                <div className="faculty-name">Venkatesh Rajendran</div>
+                <div className="faculty-role">Founder, osmAPI &amp; Simbli.ai | CEO, Dot Com Infoway | Co-Founder, Magzter</div>
+                <div className="faculty-bio">Serial entrepreneur with 26+ years of global experience across 60+ countries. Founder of osmAPI, India's first unified LLM gateway, and Simbli.ai, an AI agentic platform for business automation. Brings deep expertise in turning AI from theory into practical, revenue-driving systems for operators.</div>
                 <div className="faculty-tags">
-                  <span className="speaker-tag">Workflow Automation</span>
-                  <span className="speaker-tag">No-Code AI</span>
-                  <span className="speaker-tag">Sales Agents</span>
+                  <span className="speaker-tag">AI Infrastructure</span>
+                  <span className="speaker-tag">Business Automation</span>
+                  <span className="speaker-tag">Entrepreneurship</span>
                 </div>
               </div>
             </div>
