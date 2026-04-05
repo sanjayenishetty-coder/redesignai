@@ -88,7 +88,9 @@ export default function IntakeForm() {
     <div className="redesign-page">
       <div className="intake-page">
         <div className="intake-header">
-          <div className="intake-logo">REDESIGN</div>
+          <div className="intake-banner">
+            <img src="/assets/redesign-og.jpg" alt="REDESIGN — A 2-Day Hands-On AI Workshop for Indian SMEs" className="intake-banner-img" />
+          </div>
           <h1>Complete Your Profile</h1>
           <p>Welcome aboard! Help us personalise your workshop experience by filling in a few details about you and your business.</p>
         </div>
