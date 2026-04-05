@@ -282,8 +282,8 @@ export default function RedesignAI() {
           </div>
           <div className="logo-strip-divider" />
           <div className="logo-partner">
-            <img src="/assets/plugin-alliance-logo.png" alt="Plugin Alliance" className="logo-partner-img" />
-            <div className="logo-partner-desc">Accelerating Industry 4.0 & digital manufacturing adoption across India</div>
+            <img src="/assets/osmapi-logo.png" alt="osmAPI" className="logo-partner-img" />
+            <div className="logo-partner-desc">One Awesome API for everything AI — route to 14+ LLM providers</div>
           </div>
           <div className="logo-strip-divider" />
           <div className="logo-partner">
