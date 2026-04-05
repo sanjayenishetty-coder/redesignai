@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import "../styles/redesign-ai.css";
 
-const RAZORPAY_LINK = "https://rzp.io/l/YOURLINK";
+const RAZORPAY_LINK = "https://rzp.io/rzp/ce6486z";
 
 const industries = [
   {
