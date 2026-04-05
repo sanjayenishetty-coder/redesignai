@@ -1575,6 +1575,210 @@
 }
 .redesign-page .faq-item.open .faq-answer { max-height: 300px; }
 
+/* ─── INTAKE FORM ─── */
+.redesign-page .intake-page {
+  min-height: 100vh;
+  background: var(--ink);
+  padding: 60px 24px 80px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.redesign-page .intake-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.redesign-page .intake-logo {
+  font-family: var(--font-logo);
+  font-size: 24px;
+  color: var(--teal-300);
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+}
+.redesign-page .intake-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 48px);
+  color: var(--white);
+  margin-bottom: 12px;
+}
+.redesign-page .intake-header p {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+  max-width: 560px;
+  margin: 0 auto;
+}
+.redesign-page .intake-form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.redesign-page .intake-section {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+}
+.redesign-page .intake-section h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--white);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.redesign-page .intake-section-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--teal-600);
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.redesign-page .intake-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.redesign-page .intake-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.redesign-page .intake-field.full-width {
+  grid-column: 1 / -1;
+}
+.redesign-page .intake-field label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.3px;
+}
+.redesign-page .intake-field input,
+.redesign-page .intake-field select,
+.redesign-page .intake-field textarea {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--white);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.redesign-page .intake-field input::placeholder,
+.redesign-page .intake-field textarea::placeholder {
+  color: rgba(255,255,255,0.25);
+}
+.redesign-page .intake-field input:focus,
+.redesign-page .intake-field select:focus,
+.redesign-page .intake-field textarea:focus {
+  border-color: var(--teal-400);
+}
+.redesign-page .intake-field select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+.redesign-page .intake-field select option {
+  background: var(--ink);
+  color: var(--white);
+}
+.redesign-page .intake-field textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+.redesign-page .intake-checkbox-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+.redesign-page .intake-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: border-color 0.2s, background 0.2s;
+}
+.redesign-page .intake-checkbox-label:hover {
+  border-color: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.03);
+}
+.redesign-page .intake-checkbox-label input[type="checkbox"] {
+  margin-top: 2px;
+  accent-color: var(--teal-400);
+  flex-shrink: 0;
+}
+.redesign-page .intake-submit {
+  align-self: center;
+  font-size: 18px;
+  padding: 16px 48px;
+  margin-top: 8px;
+}
+.redesign-page .intake-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Intake Success */
+.redesign-page .intake-success {
+  text-align: center;
+  padding: 120px 24px;
+}
+.redesign-page .intake-success-icon {
+  font-size: 56px;
+  margin-bottom: 24px;
+}
+.redesign-page .intake-success h1 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 52px);
+  color: var(--white);
+  margin-bottom: 16px;
+}
+.redesign-page .intake-success p {
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.redesign-page .intake-success-sub {
+  margin-top: 16px !important;
+  font-size: 15px !important;
+  color: rgba(255,255,255,0.4) !important;
+}
+
+@media (max-width: 600px) {
+  .redesign-page .intake-grid {
+    grid-template-columns: 1fr;
+  }
+  .redesign-page .intake-checkbox-grid {
+    grid-template-columns: 1fr;
+  }
+  .redesign-page .intake-section {
+    padding: 24px 20px;
+  }
+}
+
 /* ─── FOOTER ─── */
 .redesign-page footer {
   background: var(--teal-900);

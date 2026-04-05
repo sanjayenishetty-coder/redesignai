@@ -10,6 +10,7 @@ import ThankYouPage  from "./components/ThankyouPage";
 import FeedbackForm from "./components/Feedback";
 import FeedbackSubmitted from "./FeedbackSubmit";
 import RedesignAI from "./RedesignAI";
+import IntakeForm from "./IntakeForm";
 export default function App() {
   return (
     <Routes>
@@ -24,6 +25,7 @@ export default function App() {
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/feedback-submitted" element={<FeedbackSubmitted />} />
       <Route path="/redesign-ai" element={<RedesignAI />} />
+      <Route path="/redesign-ai/intake" element={<IntakeForm />} />
     </Routes>
   );
 }
