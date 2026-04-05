@@ -1,7 +1,7 @@
 import { useState, FormEvent, useEffect } from "react";
 import "../styles/redesign-ai.css";
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyP1FP7RH08BhIVx5gmblwhdjTNqpiDECYhz0DWj6wzlGK9N8hOgAvfwcd0hasGLgLj/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzoDQngZXRsuLyOKnfOWVMI2TfxfpGLBdeZAHATYNTpt0Cl0eYry-_eIGz_ZYCP0TVt/exec";
 
 export default function IntakeForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
