@@ -1126,7 +1126,7 @@
 }
 
 /* ─── TESTIMONIALS ─── */
-.redesign-page .testimonials-section { background: var(--white); }
+.redesign-page .testimonials-section { background: var(--white); padding-top: 48px; padding-bottom: 48px; }
 .redesign-page .testimonials-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
