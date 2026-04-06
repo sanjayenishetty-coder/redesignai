@@ -121,7 +121,7 @@ export default function RedesignAI() {
         entries.forEach((e) => {
           if (e.isIntersecting && seatFillRef.current) {
             setTimeout(() => {
-              seatFillRef.current!.style.width = "28%";
+              seatFillRef.current!.style.width = "10%";
             }, 400);
           }
         });
@@ -136,7 +136,7 @@ export default function RedesignAI() {
   // Countdown timer
   useEffect(() => {
     const update = () => {
-      const target = new Date("2026-04-09T23:59:59").getTime();
+      const target = new Date("2026-04-10T23:59:59").getTime();
       let diff = Math.max(0, target - Date.now());
       const days = Math.floor(diff / 86400000);
       diff %= 86400000;
@@ -463,7 +463,6 @@ export default function RedesignAI() {
             <div className="faculty-card">
               <div className="faculty-avatar-wrap">
                 <img src="/assets/shankar-prakash.jpg" alt="Prof. Shankar Prakash" className="faculty-avatar-img" />
-                <div className="faculty-lead-badge">Opening Masterclass · Day 1</div>
               </div>
               <div className="faculty-info">
                 <div className="faculty-name">Prof. Shankar Prakash</div>
@@ -480,7 +479,6 @@ export default function RedesignAI() {
             <div className="faculty-card">
               <div className="faculty-avatar-wrap">
                 <img src="/assets/venkatesh-rajendran.png" alt="Venkatesh Rajendran" className="faculty-avatar-img" />
-                <div className="faculty-lead-badge">AI &amp; Automation · Day 1 &amp; 2</div>
               </div>
               <div className="faculty-info">
                 <div className="faculty-name">Venkatesh Rajendran</div>
@@ -497,7 +495,6 @@ export default function RedesignAI() {
             <div className="faculty-card">
               <div className="faculty-avatar-wrap">
                 <img src="/assets/ravi-tanneru.png" alt="Ravi Tanneru" className="faculty-avatar-img" />
-                <div className="faculty-lead-badge">AI CFO &amp; Future of Work · Day 2</div>
               </div>
               <div className="faculty-info">
                 <div className="faculty-name">Ravi Tanneru</div>
@@ -514,7 +511,6 @@ export default function RedesignAI() {
             <div className="faculty-card">
               <div className="faculty-avatar-wrap">
                 <img src="/assets/abhishek-ekbote.png" alt="Abhishek Ekbote" className="faculty-avatar-img" />
-                <div className="faculty-lead-badge">AI Content &amp; Marketing · Day 1</div>
               </div>
               <div className="faculty-info">
                 <div className="faculty-name">Abhishek Ekbote</div>
@@ -643,7 +639,7 @@ export default function RedesignAI() {
               {/* Group Pricing */}
               <div className="roi-block group-pricing-block fade-up delay-2">
                 <h4>👥 Bring your team, save more</h4>
-                <p className="group-pricing-desc">Group discounts apply to early bird registrations only. Standard pricing applies after April 9th.</p>
+                <p className="group-pricing-desc">Group discounts apply to early bird registrations only. Standard pricing applies after April 10th.</p>
                 <div className="roi-comparison">
                   <div className="roi-row">
                     <span className="roi-row-label">1 person</span>
@@ -664,19 +660,19 @@ export default function RedesignAI() {
               <div className="urgency-block fade-up delay-3">
                 <div className="urgency-icon">⏰</div>
                 <div className="urgency-text">
-                  <strong>Early bird pricing ends April 9th</strong>
-                  <span>After April 9th, the price returns to ₹50,000 and group discounts no longer apply. Reserve your seat now to lock in your rate.</span>
+                  <strong>Early bird pricing ends April 10th</strong>
+                  <span>After April 10th, the price returns to ₹50,000 and group discounts no longer apply. Reserve your seat now to lock in your rate.</span>
                 </div>
               </div>
             </div>
 
             {/* Pricing Card */}
             <div className="pricing-card fade-up delay-2">
-              <div className="early-bird-badge">🐦 Early Bird — Ends April 9th</div>
+              <div className="early-bird-badge">🐦 Early Bird — Ends April 10th</div>
               <div className="pricing-original">₹50,000</div>
               <div className="pricing-main">₹39,000<span> + GST</span></div>
               <div className="pricing-taxes">Per person, early bird price</div>
-              <div className="early-bird-save">Early Bird — Save ₹11,000 before April 9th</div>
+              <div className="early-bird-save">Early Bird — Save ₹11,000 before April 10th</div>
               <div className="osmapi-bonus">
                 <span className="osmapi-bonus-icon">🎁</span>
                 <span className="osmapi-bonus-text">Bonus: ₹20,000 worth of <strong>osmAPI</strong> credits included free with every registration</span>
@@ -712,7 +708,7 @@ export default function RedesignAI() {
               <div className="seat-progress-wrap">
                 <div className="seat-progress-label">
                   <span>50 total seats</span>
-                  <span className="seats-left">36 seats left</span>
+                  <span className="seats-left">45 seats left</span>
                 </div>
                 <div className="seat-progress-bar">
                   <div className="seat-progress-fill" ref={seatFillRef} />
