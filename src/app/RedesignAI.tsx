@@ -579,8 +579,19 @@ export default function RedesignAI() {
           </div>
         </div>
       </section>
-
-
+      {/* ISB Endorsement */}
+      <section className="section testimonials-section">
+        <div className="section-inner">
+          <div className="isb-endorsement fade-up delay-3">
+            <div className="isb-endorsement-icon">🏛️</div>
+            <div>
+              <div className="isb-endorsement-label">ISB Centre for Business Innovation</div>
+              <p className="isb-endorsement-quote">"The REDESIGN workshop represents exactly the kind of practical, operator-focused AI education that Indian SMEs have been waiting for. We're proud to host this cohort on the ISB campus."</p>
+              <div className="isb-endorsement-source">ISB Centre for Business Innovation, Hyderabad</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Pricing */}
       <section className="section pricing-section" id="pricing">
