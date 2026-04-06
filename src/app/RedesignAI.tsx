@@ -510,14 +510,20 @@ export default function RedesignAI() {
               </div>
             </div>
 
-            <div className="faculty-card faculty-card-ghost">
+            <div className="faculty-card">
               <div className="faculty-avatar-wrap">
-                <div className="faculty-avatar" style={{ background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.2)" }}>+1</div>
+                <div className="faculty-avatar">AE</div>
+                <div className="faculty-lead-badge">AI Content &amp; Marketing · Day 1 &amp; 2</div>
               </div>
               <div className="faculty-info">
-                <div className="faculty-name" style={{ color: "rgba(255,255,255,0.35)" }}>Fourth Faculty Member</div>
-                <div className="faculty-role" style={{ color: "rgba(255,255,255,0.2)" }}>To be announced shortly</div>
-                <div className="faculty-bio" style={{ color: "rgba(255,255,255,0.2)" }}>We're finalising our fourth faculty slot. Follow us or register your interest to be notified when we announce.</div>
+                <div className="faculty-name">Abhishek Ekbote</div>
+                <div className="faculty-role">Co-Founder, Reclips AI | Serial Entrepreneur | Ex-Founder, VideoForm &amp; GreyMetrics (Acquired)</div>
+                <div className="faculty-bio">Serial entrepreneur and marketer who's built multiple SaaS products from zero. Co-founder of Reclips AI, a platform for AI-powered content creation. Specialises in helping businesses create effective marketing content using AI tools — from product videos to social media at scale. All participants get access to the Reclips platform.</div>
+                <div className="faculty-tags">
+                  <span className="speaker-tag">AI Content Creation</span>
+                  <span className="speaker-tag">Marketing</span>
+                  <span className="speaker-tag">SaaS</span>
+                </div>
               </div>
             </div>
           </div>
@@ -723,6 +729,7 @@ export default function RedesignAI() {
                 <li>Post-workshop support for 90 days via the AI Collective</li>
                 <li>Networking with 49 other ambitious Indian SME operators</li>
                 <li>₹20,000 worth of osmAPI platform credits to power your AI workflows</li>
+                <li>Access to Reclips AI platform for AI-powered content creation</li>
               </ul>
 
               <a href={RAZORPAY_LINK} target="_blank" rel="noopener noreferrer" className="pricing-cta">Reserve My Seat →</a>
