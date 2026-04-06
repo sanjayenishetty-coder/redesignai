@@ -496,16 +496,17 @@ export default function RedesignAI() {
 
             <div className="faculty-card">
               <div className="faculty-avatar-wrap">
-                <div className="faculty-avatar">OPS</div>
+                <img src="/assets/ravi-tanneru.png" alt="Ravi Tanneru" className="faculty-avatar-img" />
+                <div className="faculty-lead-badge">AI CFO &amp; Future of Work · Day 2</div>
               </div>
               <div className="faculty-info">
-                <div className="faculty-name">SME Operations Expert <span className="faculty-tbd">(name to be announced)</span></div>
-                <div className="faculty-role">AI Adoption Specialist, Indian Manufacturing and Distribution</div>
-                <div className="faculty-bio">Brings real-world context from deploying AI across Indian SMEs in manufacturing, retail and distribution. Facilitates the P&amp;L modelling session and the 90-day roadmap workshop on Day 2.</div>
+                <div className="faculty-name">Ravi Tanneru</div>
+                <div className="faculty-role">Founder &amp; CEO, ProFinTech (FinteractAI) | Ex-Deutsche Bank, Bank of America, Citibank</div>
+                <div className="faculty-bio">25+ years in banking and enterprise finance across Citibank, Deutsche Bank, Bank of America and Standard Chartered. Now building FinteractAI — the world's first Agentic-AI Co-Pilot for business leaders. Leads the module on building your AI CFO and how AI is transforming the future of work across finance, operations and strategic decision-making. 100+ enterprise customers across India and the US.</div>
                 <div className="faculty-tags">
-                  <span className="speaker-tag">Operations</span>
-                  <span className="speaker-tag">P&amp;L Impact</span>
-                  <span className="speaker-tag">Distribution</span>
+                  <span className="speaker-tag">AI for Finance</span>
+                  <span className="speaker-tag">Enterprise AI</span>
+                  <span className="speaker-tag">Future of Work</span>
                 </div>
               </div>
             </div>
