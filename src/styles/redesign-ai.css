@@ -1120,9 +1120,29 @@
   letter-spacing: -0.01em;
 }
 .redesign-page .session-desc {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--ink-3);
   line-height: 1.6;
+}
+.redesign-page .hands-on-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--teal-400);
+  margin-right: 8px;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.redesign-page .hands-on-legend {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 24px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-3);
 }
 
 /* ─── TESTIMONIALS ─── */

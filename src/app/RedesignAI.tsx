@@ -543,15 +543,15 @@ export default function RedesignAI() {
             <div className={`tab-content ${activeTab === "day1" ? "active" : ""}`}>
               <div className="curriculum-sessions">
                 {[
-                  { name: "Strategic AI Masterclass", desc: "Reframe your business through an AI-first lens. Understand how AI redesigns value chains, cost structures, and competitive advantage. Learn frameworks to identify high-leverage AI opportunities and operate like an AI-native company." },
-                  { name: "AI CFO / Decision Intelligence (Demo + Q&A)", desc: "Live demonstration of AI-powered financial decision systems. See how AI can analyse costs, simulate scenarios, and generate insights. Followed by interactive Q&A to clarify real-world applications." },
-                  { name: "AI Content Creation at Scale (Demo + Q&A)", desc: "Live demonstration of AI-driven content systems. See how to generate, repurpose, and distribute multilingual content at scale. Followed by Q&A to explore use cases and implementation nuances." },
-                  { name: "Marketing — Getting Found & Remembered (Hands-on Agentic Workflow Build)", desc: "Build an AI-driven marketing engine end-to-end using agentic workflows. Create systems for content generation, distribution, lead capture, and analytics that run continuously with minimal manual effort." },
-                  { name: "Sales — Cold Calls, Qualification & Booking (Hands-on Agentic Workflow Build)", desc: "Build an AI-powered sales pipeline with voice and chat agents. Design workflows for outreach, lead qualification, and appointment booking focused on high-intent prospects." },
-                  { name: "Revenue System Integration (Hands-on Agentic Workflow Build)", desc: "Connect marketing and sales workflows into a unified revenue system. Map lead flow, define conversion stages, and build visibility into pipeline and revenue projections." },
+                  { name: "Strategic AI Masterclass", desc: "Reframe your business through an AI-first lens. Understand how AI redesigns value chains, cost structures, and competitive advantage. Learn frameworks to identify high-leverage AI opportunities and operate like an AI-native company.", handsOn: false },
+                  { name: "AI CFO / Decision Intelligence (Demo + Q&A)", desc: "Live demonstration of AI-powered financial decision systems. See how AI can analyse costs, simulate scenarios, and generate insights. Followed by interactive Q&A to clarify real-world applications.", handsOn: false },
+                  { name: "AI Content Creation at Scale (Demo + Q&A)", desc: "Live demonstration of AI-driven content systems. See how to generate, repurpose, and distribute multilingual content at scale. Followed by Q&A to explore use cases and implementation nuances.", handsOn: false },
+                  { name: "Marketing — Getting Found & Remembered", desc: "Build an AI-driven marketing engine end-to-end using agentic workflows. Create systems for content generation, distribution, lead capture, and analytics that run continuously with minimal manual effort.", handsOn: true },
+                  { name: "Sales — Cold Calls, Qualification & Booking", desc: "Build an AI-powered sales pipeline with voice and chat agents. Design workflows for outreach, lead qualification, and appointment booking focused on high-intent prospects.", handsOn: true },
+                  { name: "Revenue System Integration", desc: "Connect marketing and sales workflows into a unified revenue system. Map lead flow, define conversion stages, and build visibility into pipeline and revenue projections.", handsOn: true },
                 ].map((session, i) => (
                   <div className="session-item" key={i}>
-                    <div className="session-name">{session.name}</div>
+                    <div className="session-name">{session.handsOn && <span className="hands-on-dot" />}{session.name}</div>
                     <div className="session-desc">{session.desc}</div>
                   </div>
                 ))}
@@ -561,17 +561,21 @@ export default function RedesignAI() {
             <div className={`tab-content ${activeTab === "day2" ? "active" : ""}`}>
               <div className="curriculum-sessions">
                 {[
-                  { name: "Tech Strategy & Product Development (Hands-on Agentic Workflow Build)", desc: "Build your AI \"supply chain\" using agentic workflows. Select models, orchestrate tools, and create functional product prototypes without traditional coding." },
-                  { name: "Customer Support That Runs Itself (Hands-on Agentic Workflow Build)", desc: "Build a 24/7 multilingual support system. Design agentic workflows for automated responses, ticket handling, and insight generation." },
-                  { name: "Scaling — Unit Economics & Growth Systems (Hands-on Agentic Workflow Build)", desc: "Build systems to track costs, margins, and growth drivers. Model AI-native unit economics and create workflows that enable scalable, efficient growth." },
-                  { name: "90-Day Execution Plan (Debrief)", desc: "Consolidate all learnings into a clear execution narrative. Align on priorities, identify risks, and define next steps to implement and scale AI-driven systems post-workshop." },
+                  { name: "Tech Strategy & Product Development", desc: "Build your AI \"supply chain\" using agentic workflows. Select models, orchestrate tools, and create functional product prototypes without traditional coding.", handsOn: true },
+                  { name: "Customer Support That Runs Itself", desc: "Build a 24/7 multilingual support system. Design agentic workflows for automated responses, ticket handling, and insight generation.", handsOn: true },
+                  { name: "Scaling — Unit Economics & Growth Systems", desc: "Build systems to track costs, margins, and growth drivers. Model AI-native unit economics and create workflows that enable scalable, efficient growth.", handsOn: true },
+                  { name: "90-Day Execution Plan (Debrief)", desc: "Consolidate all learnings into a clear execution narrative. Align on priorities, identify risks, and define next steps to implement and scale AI-driven systems post-workshop.", handsOn: false },
                 ].map((session, i) => (
                   <div className="session-item" key={i}>
-                    <div className="session-name">{session.name}</div>
+                    <div className="session-name">{session.handsOn && <span className="hands-on-dot" />}{session.name}</div>
                     <div className="session-desc">{session.desc}</div>
                   </div>
                 ))}
               </div>
+            </div>
+
+            <div className="hands-on-legend">
+              <span className="hands-on-dot" /> Hands-on Agentic Workflow Build
             </div>
           </div>
         </div>
