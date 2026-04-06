@@ -523,6 +523,23 @@ export default function RedesignAI() {
                 </div>
               </div>
             </div>
+
+            <div className="faculty-card">
+              <div className="faculty-avatar-wrap">
+                <img src="/assets/arjun-reddy.jpeg" alt="Arjun Reddy" className="faculty-avatar-img" />
+              </div>
+              <div className="faculty-info">
+                <div className="faculty-name">Arjun Reddy</div>
+                <div className="faculty-role">Serial Entrepreneur &amp; AI Systems Architect · Founder of osmAPI, VibeStudio, GuardianLink</div>
+                <div className="faculty-bio">Builder of AI systems that scale. From GuardianLink's $12M Series A to VibeStudio's THRIFT pruning breakthrough (55% model-size reduction), Arjun has architected infrastructure at every frontier of the stack. His ventures have been featured at TechCrunch Disrupt and acquired by global players. Leads the hands-on build sessions — turning AI concepts into working systems you can deploy on Day 2.</div>
+                <div className="faculty-tags">
+                  <span className="speaker-tag">AI Architecture</span>
+                  <span className="speaker-tag">Agentic Systems</span>
+                  <span className="speaker-tag">Serial Entrepreneur</span>
+                  <span className="speaker-tag">Sovereign AI</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
