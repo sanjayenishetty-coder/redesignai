@@ -567,7 +567,7 @@ export default function RedesignAI() {
                   { name: "Understanding AI Agents: Your New AI Workforce", desc: "The leap beyond chatbots and automations. Learn what AI agents actually are — language models combined with memory, tools, and decision-making — and why they represent a step-change for SME operations." },
                   { name: "AI Sales & Marketing Agents", desc: "Build autonomous agents that qualify leads, follow up with prospects, and generate marketing content at scale. See exactly how these plug into your current sales process." },
                   { name: "Building Your 90-Day AI Roadmap", desc: "Guided workshop: Map out exactly what you'll build in the 90 days after leaving. P&L modelling, priority sequencing, and resource planning for your specific business situation." },
-                  { name: "Graduation & AI Collective Access", desc: "Cohort presentations, ISB-CBI co-branded certificate, and onboarding into the ongoing AI Collective — a private community of Indian SME operators building with AI together, long after the weekend ends." },
+                  { name: "Graduation & AI Collective Access", desc: "Cohort presentations and onboarding into the ongoing AI Collective — a private community of Indian SME operators building with AI together, long after the weekend ends." },
                 ].map((session, i) => (
                   <div className="session-item" key={i}>
                     <div className="session-name">{session.name}</div>
