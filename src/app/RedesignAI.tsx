@@ -535,26 +535,20 @@ export default function RedesignAI() {
           <p className="section-sub fade-up delay-2">A comprehensive, hands-on curriculum designed for immediate implementation, not notes that sit in a folder.</p>
 
           <div style={{ marginTop: 40 }} className="fade-up delay-2">
-            <div className="curriculum-header-card">
-              <div className="curriculum-header-card-icon">🎓</div>
-              <div className="curriculum-header-card-text">
-                <strong>Opening Masterclass: Strategic AI Frameworks for Indian SMEs</strong>
-                <span>Delivered by ISB Faculty. Setting the strategic foundation before we build</span>
-              </div>
-            </div>
-
             <div className="curriculum-tabs">
-              <button className={`tab-btn ${activeTab === "day1" ? "active" : ""}`} onClick={() => setActiveTab("day1")}>Day 1: Redesign &amp; Automate</button>
-              <button className={`tab-btn ${activeTab === "day2" ? "active" : ""}`} onClick={() => setActiveTab("day2")}>Day 2: Build &amp; Scale</button>
+              <button className={`tab-btn ${activeTab === "day1" ? "active" : ""}`} onClick={() => setActiveTab("day1")}>Day 1: AI as a Growth Engine</button>
+              <button className={`tab-btn ${activeTab === "day2" ? "active" : ""}`} onClick={() => setActiveTab("day2")}>Day 2: Build, Automate, Scale</button>
             </div>
 
             <div className={`tab-content ${activeTab === "day1" ? "active" : ""}`}>
               <div className="curriculum-sessions">
                 {[
-                  { name: "Strategic AI Frameworks for SMEs", desc: "ISB Professor-led masterclass on AI strategy, competitive advantage, and framework design specifically for Indian business contexts. You'll leave with a strategic AI map for your own company." },
-                  { name: "Building Your First AI Workflow", desc: "Hands-on session: Map your current operations, identify automation opportunities, and build your first intelligent workflow using no-code and low-code tools. No engineering background needed." },
-                  { name: "Automating Operations, HR & Finance", desc: "Deploy automations for invoice processing, employee onboarding, customer support, and data entry. Walk out of this session with working systems, not mock-ups." },
-                  { name: "Day 1 Debrief & Personalised Feedback", desc: "Review your progress with expert instructors. Troubleshoot challenges, refine your workflows, and set the build agenda for Day 2 specific to your business." },
+                  { name: "Strategic AI Masterclass", desc: "Reframe your business through an AI-first lens. Understand how AI redesigns value chains, cost structures, and competitive advantage. Learn frameworks to identify high-leverage AI opportunities and operate like an AI-native company." },
+                  { name: "AI CFO / Decision Intelligence (Demo + Q&A)", desc: "Live demonstration of AI-powered financial decision systems. See how AI can analyse costs, simulate scenarios, and generate insights. Followed by interactive Q&A to clarify real-world applications." },
+                  { name: "AI Content Creation at Scale (Demo + Q&A)", desc: "Live demonstration of AI-driven content systems. See how to generate, repurpose, and distribute multilingual content at scale. Followed by Q&A to explore use cases and implementation nuances." },
+                  { name: "Marketing — Getting Found & Remembered (Hands-on Agentic Workflow Build)", desc: "Build an AI-driven marketing engine end-to-end using agentic workflows. Create systems for content generation, distribution, lead capture, and analytics that run continuously with minimal manual effort." },
+                  { name: "Sales — Cold Calls, Qualification & Booking (Hands-on Agentic Workflow Build)", desc: "Build an AI-powered sales pipeline with voice and chat agents. Design workflows for outreach, lead qualification, and appointment booking focused on high-intent prospects." },
+                  { name: "Revenue System Integration (Hands-on Agentic Workflow Build)", desc: "Connect marketing and sales workflows into a unified revenue system. Map lead flow, define conversion stages, and build visibility into pipeline and revenue projections." },
                 ].map((session, i) => (
                   <div className="session-item" key={i}>
                     <div className="session-name">{session.name}</div>
@@ -567,10 +561,10 @@ export default function RedesignAI() {
             <div className={`tab-content ${activeTab === "day2" ? "active" : ""}`}>
               <div className="curriculum-sessions">
                 {[
-                  { name: "Understanding AI Agents: Your New AI Workforce", desc: "The leap beyond chatbots and automations. Learn what AI agents actually are — language models combined with memory, tools, and decision-making — and why they represent a step-change for SME operations." },
-                  { name: "AI Sales & Marketing Agents", desc: "Build autonomous agents that qualify leads, follow up with prospects, and generate marketing content at scale. See exactly how these plug into your current sales process." },
-                  { name: "Building Your 90-Day AI Roadmap", desc: "Guided workshop: Map out exactly what you'll build in the 90 days after leaving. P&L modelling, priority sequencing, and resource planning for your specific business situation." },
-                  { name: "Graduation & AI Collective Access", desc: "Cohort presentations and onboarding into the ongoing AI Collective — a private community of Indian SME operators building with AI together, long after the weekend ends." },
+                  { name: "Tech Strategy & Product Development (Hands-on Agentic Workflow Build)", desc: "Build your AI \"supply chain\" using agentic workflows. Select models, orchestrate tools, and create functional product prototypes without traditional coding." },
+                  { name: "Customer Support That Runs Itself (Hands-on Agentic Workflow Build)", desc: "Build a 24/7 multilingual support system. Design agentic workflows for automated responses, ticket handling, and insight generation." },
+                  { name: "Scaling — Unit Economics & Growth Systems (Hands-on Agentic Workflow Build)", desc: "Build systems to track costs, margins, and growth drivers. Model AI-native unit economics and create workflows that enable scalable, efficient growth." },
+                  { name: "90-Day Execution Plan (Debrief)", desc: "Consolidate all learnings into a clear execution narrative. Align on priorities, identify risks, and define next steps to implement and scale AI-driven systems post-workshop." },
                 ].map((session, i) => (
                   <div className="session-item" key={i}>
                     <div className="session-name">{session.name}</div>
