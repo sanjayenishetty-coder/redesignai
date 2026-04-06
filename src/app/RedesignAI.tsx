@@ -512,8 +512,8 @@ export default function RedesignAI() {
 
             <div className="faculty-card">
               <div className="faculty-avatar-wrap">
-                <div className="faculty-avatar">AE</div>
-                <div className="faculty-lead-badge">AI Content &amp; Marketing · Day 1 &amp; 2</div>
+                <img src="/assets/abhishek-ekbote.png" alt="Abhishek Ekbote" className="faculty-avatar-img" />
+                <div className="faculty-lead-badge">AI Content &amp; Marketing · Day 1</div>
               </div>
               <div className="faculty-info">
                 <div className="faculty-name">Abhishek Ekbote</div>
