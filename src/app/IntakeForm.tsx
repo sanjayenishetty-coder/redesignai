@@ -88,6 +88,7 @@ export default function IntakeForm() {
     <div className="redesign-page">
       <div className="intake-page">
         <div className="intake-header">
+          <div className="intake-date-badge">📅 18th & 19th April 2026 · ISB Campus, Hyderabad</div>
           <div className="intake-banner">
             <img src="/assets/redesign-og.jpg" alt="REDESIGN — A 2-Day Hands-On AI Workshop for Indian SMEs" className="intake-banner-img" />
           </div>

@@ -1587,6 +1587,20 @@
   text-align: center;
   margin-bottom: 48px;
 }
+.redesign-page .intake-date-badge {
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--teal-100);
+  background: rgba(46,196,143,0.1);
+  border: 1px solid rgba(46,196,143,0.2);
+  border-radius: var(--radius-xl);
+  padding: 10px 24px;
+  display: inline-block;
+  margin-bottom: 20px;
+  letter-spacing: 0.3px;
+}
 .redesign-page .intake-banner {
   margin-bottom: 32px;
   border-radius: var(--radius-lg);
