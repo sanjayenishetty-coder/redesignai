@@ -580,45 +580,7 @@ export default function RedesignAI() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="section testimonials-section" id="testimonials">
-        <div className="section-inner">
-          <span className="section-tag fade-up">What participants say</span>
-          <h2 className="section-h2 fade-up delay-1">From people who've been in the room.</h2>
-          <p className="section-sub fade-up delay-2">Feedback from attendees of our preview sessions and beta cohort across Hyderabad, Mumbai and Bangalore.</p>
 
-          <div className="testimonials-grid">
-            {[
-              { initials: "DA", name: "Deepti Agarwal", role: "Founder, Samatvam Living", text: "I came in thinking AI was only for tech-first companies. By Day 2 we had built an actual workflow for our procurement team. This isn't a seminar, it's a build session. I left with something running." },
-              { initials: "GS", name: "Gaurav Sharma", role: "Founder, Proficon Labs", text: "As a founder of a growing tech services company, I needed my team to actually use AI, not just talk about it. The workshop gave us a repeatable framework we went back and implemented the following week." },
-              { initials: "GT", name: "Gunjann Taneja", role: "President, Talent Development, Naturals", text: "From a talent development perspective, this is exactly what our people needed. Practical, grounded, and immediately applicable. The no-code tools they teach mean any manager can run with this, not just IT." },
-            ].map((t, i) => (
-              <div className={`testimonial-card fade-up delay-${i + 1}`} key={i}>
-                <span className="testimonial-quote">&ldquo;</span>
-                <p className="testimonial-text">{t.text}</p>
-                <div className="testimonial-stars">★★★★★</div>
-                <div className="testimonial-meta">
-                  <div className="testimonial-avatar">{t.initials}</div>
-                  <div>
-                    <span className="testimonial-name">{t.name}</span>
-                    <span className="testimonial-role">{t.role}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* ISB Endorsement */}
-          <div className="isb-endorsement fade-up delay-3">
-            <div className="isb-endorsement-icon">🏛️</div>
-            <div>
-              <div className="isb-endorsement-label">ISB Centre for Business Innovation</div>
-              <p className="isb-endorsement-quote">"The REDESIGN workshop represents exactly the kind of practical, operator-focused AI education that Indian SMEs have been waiting for. We're proud to host this cohort on the ISB campus."</p>
-              <div className="isb-endorsement-source">ISB Centre for Business Innovation, Hyderabad</div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Pricing */}
       <section className="section pricing-section" id="pricing">
