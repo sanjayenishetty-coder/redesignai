@@ -121,7 +121,7 @@ export default function RedesignAI() {
         entries.forEach((e) => {
           if (e.isIntersecting && seatFillRef.current) {
             setTimeout(() => {
-              seatFillRef.current!.style.width = "10%";
+              seatFillRef.current!.style.width = "7%";
             }, 400);
           }
         });
@@ -616,7 +616,7 @@ export default function RedesignAI() {
         <div className="section-inner">
           <span className="section-tag fade-up">Reserve your seat</span>
           <h2 className="section-h2 fade-up delay-1">Secure Your Seat in the April Cohort</h2>
-          <p className="section-sub fade-up delay-2">50 seats to ensure every participant gets hands-on support and personalised feedback. Join us on 18th &amp; 19th April 2026 at ISB Hyderabad.</p>
+          <p className="section-sub fade-up delay-2">70 seats to ensure every participant gets hands-on support and personalised feedback. Join us on 18th &amp; 19th April 2026 at ISB Hyderabad.</p>
 
           <div className="pricing-layout">
             <div className="pricing-left">
@@ -646,7 +646,7 @@ export default function RedesignAI() {
                   </div>
                   <div className="roi-row">
                     <span className="roi-row-label" style={{ fontWeight: 700, color: "var(--ink)" }}>Your early bird price</span>
-                    <span className="roi-row-value big">₹39,000</span>
+                    <span className="roi-row-value big">₹30,000</span>
                   </div>
                 </div>
               </div>
@@ -658,15 +658,15 @@ export default function RedesignAI() {
                 <div className="roi-comparison">
                   <div className="roi-row">
                     <span className="roi-row-label">1 person</span>
-                    <span className="roi-row-value highlight">₹39,000 per person</span>
+                    <span className="roi-row-value highlight">₹30,000 per person</span>
                   </div>
                   <div className="roi-row">
                     <span className="roi-row-label">2 people <span className="save-badge-10">Save 10%</span></span>
-                    <span className="roi-row-value highlight">₹35,100 per person</span>
+                    <span className="roi-row-value highlight">₹27,000 per person</span>
                   </div>
                   <div className="roi-row" style={{ borderBottom: "none" }}>
                     <span className="roi-row-label">3 people <span className="save-badge-15">Save 15%</span></span>
-                    <span className="roi-row-value highlight">₹33,150 per person</span>
+                    <span className="roi-row-value highlight">₹25,500 per person</span>
                   </div>
                 </div>
               </div>
@@ -676,7 +676,7 @@ export default function RedesignAI() {
                 <div className="urgency-icon">⏰</div>
                 <div className="urgency-text">
                   <strong>Early bird pricing ends April 10th</strong>
-                  <span>After April 10th, the price returns to ₹50,000 and group discounts no longer apply. Reserve your seat now to lock in your rate.</span>
+                  <span>After April 10th, the price returns to ₹39,000 and group discounts no longer apply. Reserve your seat now to lock in your rate.</span>
                 </div>
               </div>
             </div>
@@ -684,10 +684,10 @@ export default function RedesignAI() {
             {/* Pricing Card */}
             <div className="pricing-card fade-up delay-2">
               <div className="early-bird-badge">🐦 Early Bird — Ends April 10th</div>
-              <div className="pricing-original">₹50,000</div>
-              <div className="pricing-main">₹39,000<span> + GST</span></div>
+              <div className="pricing-original">₹39,000</div>
+              <div className="pricing-main">₹30,000<span> + GST</span></div>
               <div className="pricing-taxes">Per person, early bird price</div>
-              <div className="early-bird-save">Early Bird — Save ₹11,000 before April 10th</div>
+              <div className="early-bird-save">Early Bird — Save ₹9,000 before April 10th</div>
               <div className="osmapi-bonus">
                 <span className="osmapi-bonus-icon">🎁</span>
                 <span className="osmapi-bonus-text">Bonus: ₹20,000 worth of <strong>osmAPI</strong> credits included free with every registration</span>
@@ -722,8 +722,8 @@ export default function RedesignAI() {
               {/* Seat Progress */}
               <div className="seat-progress-wrap">
                 <div className="seat-progress-label">
-                  <span>50 total seats</span>
-                  <span className="seats-left">45 seats left</span>
+                  <span>70 total seats</span>
+                  <span className="seats-left">65 seats left</span>
                 </div>
                 <div className="seat-progress-bar">
                   <div className="seat-progress-fill" ref={seatFillRef} />
