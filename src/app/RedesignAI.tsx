@@ -121,7 +121,7 @@ export default function RedesignAI() {
         entries.forEach((e) => {
           if (e.isIntersecting && seatFillRef.current) {
             setTimeout(() => {
-              seatFillRef.current!.style.width = "7%";
+              seatFillRef.current!.style.width = "10%";
             }, 400);
           }
         });
@@ -616,7 +616,7 @@ export default function RedesignAI() {
         <div className="section-inner">
           <span className="section-tag fade-up">Reserve your seat</span>
           <h2 className="section-h2 fade-up delay-1">Secure Your Seat in the April Cohort</h2>
-          <p className="section-sub fade-up delay-2">70 seats to ensure every participant gets hands-on support and personalised feedback. Join us on 18th &amp; 19th April 2026 at ISB Hyderabad.</p>
+          <p className="section-sub fade-up delay-2">50 seats to ensure every participant gets hands-on support and personalised feedback. Join us on 18th &amp; 19th April 2026 at ISB Hyderabad.</p>
 
           <div className="pricing-layout">
             <div className="pricing-left">
@@ -722,8 +722,8 @@ export default function RedesignAI() {
               {/* Seat Progress */}
               <div className="seat-progress-wrap">
                 <div className="seat-progress-label">
-                  <span>70 total seats</span>
-                  <span className="seats-left">65 seats left</span>
+                  <span>50 total seats</span>
+                  <span className="seats-left">45 seats left</span>
                 </div>
                 <div className="seat-progress-bar">
                   <div className="seat-progress-fill" ref={seatFillRef} />
