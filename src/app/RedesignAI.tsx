@@ -636,13 +636,9 @@ export default function RedesignAI() {
                     <span className="roi-row-label">90-day post-support and community access</span>
                     <span className="roi-row-value strikethrough">₹30,000</span>
                   </div>
-                  <div className="roi-row">
-                    <span className="roi-row-label">osmAPI platform credits (included free)</span>
-                    <span className="roi-row-value strikethrough">₹20,000</span>
-                  </div>
                   <div className="roi-row" style={{ borderTop: "2px solid var(--cream-2)", marginTop: 4, paddingTop: 12 }}>
                     <span className="roi-row-label" style={{ fontWeight: 700, color: "var(--ink)" }}>Equivalent market value</span>
-                    <span className="roi-row-value" style={{ fontSize: 18, textDecoration: "line-through", color: "var(--ink-4)" }}>₹1,20,000+</span>
+                    <span className="roi-row-value" style={{ fontSize: 18, textDecoration: "line-through", color: "var(--ink-4)" }}>₹1,00,000+</span>
                   </div>
                   <div className="roi-row">
                     <span className="roi-row-label" style={{ fontWeight: 700, color: "var(--ink)" }}>Your early bird price</span>
