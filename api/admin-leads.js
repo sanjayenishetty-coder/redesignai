@@ -2,7 +2,7 @@ const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, x-admin-password");
@@ -38,4 +38,4 @@ module.exports = async function handler(req, res) {
     console.error("Handler error:", err);
     return res.status(500).json({ error: "Internal server error" });
   }
-};
+}
