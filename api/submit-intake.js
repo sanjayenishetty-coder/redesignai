@@ -1,4 +1,4 @@
-import { confirmationEmailHtml } from "./email-template.js";
+import { interestEmailHtml } from "./email-template.js";
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
@@ -94,12 +94,11 @@ export default async function handler(req, res) {
             sender: { name: "REDESIGN", email: "sanjay@scaleme.in" },
             to: [{ email: body.email, name: body.fullName || "" }],
             subject: "Your REDESIGN application is received ✅",
-            htmlContent: confirmationEmailHtml({
+            htmlContent: interestEmailHtml({
               fullName: body.fullName,
               companyName: body.companyName,
               designation: body.designation,
               industry: body.industry,
-              workshopGoals: body.workshopGoals || [],
             }),
           }),
         });
