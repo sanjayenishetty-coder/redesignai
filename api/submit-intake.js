@@ -54,27 +54,35 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: "Failed to save submission" });
     }
 
-    // 2. Send confirmation email (non-blocking — don't fail submission if email fails)
+    // 2. Send confirmation email
     if (RESEND_API_KEY && body.email) {
-      fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${RESEND_API_KEY}`,
-        },
-        body: JSON.stringify({
-          from: "REDESIGN <sanjay@scaleme.in>",
-          to: [body.email],
-          subject: "Your REDESIGN application is received ✅",
-          html: confirmationEmailHtml({
-            fullName: body.fullName,
-            companyName: body.companyName,
-            designation: body.designation,
-            industry: body.industry,
-            workshopGoals: body.workshopGoals || [],
+      try {
+        const emailRes = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${RESEND_API_KEY}`,
+          },
+          body: JSON.stringify({
+            from: "REDESIGN <sanjay@scaleme.in>",
+            to: [body.email],
+            subject: "Your REDESIGN application is received ✅",
+            html: confirmationEmailHtml({
+              fullName: body.fullName,
+              companyName: body.companyName,
+              designation: body.designation,
+              industry: body.industry,
+              workshopGoals: body.workshopGoals || [],
+            }),
           }),
-        }),
-      }).catch((err) => console.error("Email send failed:", err));
+        });
+        if (!emailRes.ok) {
+          const errText = await emailRes.text();
+          console.error("Resend error:", errText);
+        }
+      } catch (err) {
+        console.error("Email send failed:", err);
+      }
     }
 
     return res.status(200).json({ success: true });
