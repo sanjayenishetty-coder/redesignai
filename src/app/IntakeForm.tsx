@@ -1,7 +1,7 @@
 import { useState, FormEvent, useEffect } from "react";
 import "../styles/redesign-ai.css";
 
-const API_URL = "https://script.google.com/macros/s/AKfycbzGQmYKdYnUDe3C5E6GzBG3zmF4d7rzxPtBBtp_aRDwpiPUGfC-BWojhd4JebeNkcWi/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyrVv0gwt45s1DGA4c4qO_xF8oPotuUVTMzBkXxGtDqQZgSZrBXI1yfJaldCkdC-w/exec";
 const RAZORPAY_LINK = "https://rzp.io/rzp/ce6486z";
 const SHARE_URL = "https://www.scaleme.in/redesign-ai";
 
