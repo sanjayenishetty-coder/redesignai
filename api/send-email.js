@@ -33,7 +33,7 @@ export default async function handler(req, res) {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "REDESIGN <sme@scaleme.in>",
+        from: "REDESIGN <sanjay@scaleme.in>",
         to: [email],
         subject: "Your REDESIGN application is received ✅",
         html: confirmationEmailHtml({
