@@ -1,5 +1,8 @@
+import { confirmationEmailHtml } from "./email-template.js";
+
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -17,7 +20,8 @@ export default async function handler(req, res) {
   try {
     const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/redesign_intake`, {
+    // 1. Save to Supabase
+    const dbResponse = await fetch(`${SUPABASE_URL}/rest/v1/redesign_intake`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,10 +48,33 @@ export default async function handler(req, res) {
       }),
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
+    if (!dbResponse.ok) {
+      const errorText = await dbResponse.text();
       console.error("Supabase error:", errorText);
       return res.status(500).json({ error: "Failed to save submission" });
+    }
+
+    // 2. Send confirmation email (non-blocking — don't fail submission if email fails)
+    if (RESEND_API_KEY && body.email) {
+      fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${RESEND_API_KEY}`,
+        },
+        body: JSON.stringify({
+          from: "REDESIGN <hello@sme-scale-me.in>",
+          to: [body.email],
+          subject: "Your REDESIGN application is received ✅",
+          html: confirmationEmailHtml({
+            fullName: body.fullName,
+            companyName: body.companyName,
+            designation: body.designation,
+            industry: body.industry,
+            workshopGoals: body.workshopGoals || [],
+          }),
+        }),
+      }).catch((err) => console.error("Email send failed:", err));
     }
 
     return res.status(200).json({ success: true });

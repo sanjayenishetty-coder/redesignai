@@ -43,6 +43,8 @@ export default function Admin() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [editNotes, setEditNotes] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState<string | null>(null);
+  const [emailSending, setEmailSending] = useState<string | null>(null);
+  const [emailStatus, setEmailStatus] = useState<Record<string, "sent" | "error">>({});
 
   const fetchLeads = useCallback(async (pwd: string) => {
     setLoading(true);
@@ -105,6 +107,34 @@ export default function Admin() {
       body: JSON.stringify({ id, notes }),
     });
     setSaving(null);
+  };
+
+  const handleSendEmail = async (lead: Lead) => {
+    setEmailSending(lead.id);
+    try {
+      const res = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-password": sessionStorage.getItem("adminPwd") || "",
+        },
+        body: JSON.stringify({
+          email: lead.email,
+          fullName: lead.full_name,
+          companyName: lead.company_name,
+          designation: lead.designation,
+          industry: lead.industry,
+          workshopGoals: lead.workshop_goals,
+        }),
+      });
+      setEmailStatus((prev) => ({ ...prev, [lead.id]: res.ok ? "sent" : "error" }));
+      setTimeout(() => setEmailStatus((prev) => { const n = { ...prev }; delete n[lead.id]; return n; }), 3000);
+    } catch {
+      setEmailStatus((prev) => ({ ...prev, [lead.id]: "error" }));
+      setTimeout(() => setEmailStatus((prev) => { const n = { ...prev }; delete n[lead.id]; return n; }), 3000);
+    } finally {
+      setEmailSending(null);
+    }
   };
 
   const filtered = leads.filter((l) => {
@@ -347,13 +377,32 @@ export default function Admin() {
                               }
                               style={styles.notesArea}
                             />
-                            <button
-                              onClick={() => handleSaveNotes(lead.id)}
-                              disabled={saving === lead.id}
-                              style={styles.saveBtn}
-                            >
-                              {saving === lead.id ? "Saving..." : "Save Notes"}
-                            </button>
+                            <div style={{ display: "flex", gap: 10, marginTop: 8, alignItems: "center" }}>
+                              <button
+                                onClick={() => handleSaveNotes(lead.id)}
+                                disabled={saving === lead.id}
+                                style={styles.saveBtn}
+                              >
+                                {saving === lead.id ? "Saving..." : "Save Notes"}
+                              </button>
+                              <button
+                                onClick={() => handleSendEmail(lead)}
+                                disabled={emailSending === lead.id}
+                                style={{
+                                  ...styles.emailBtn,
+                                  ...(emailStatus[lead.id] === "sent" ? styles.emailBtnSent : {}),
+                                  ...(emailStatus[lead.id] === "error" ? styles.emailBtnError : {}),
+                                }}
+                              >
+                                {emailSending === lead.id
+                                  ? "Sending..."
+                                  : emailStatus[lead.id] === "sent"
+                                  ? "✓ Email Sent"
+                                  : emailStatus[lead.id] === "error"
+                                  ? "✗ Failed"
+                                  : "✉ Send Confirmation Email"}
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </td>
@@ -580,4 +629,16 @@ const styles: Record<string, React.CSSProperties> = {
     cursor: "pointer",
   },
   empty: { textAlign: "center", padding: 60, color: "#6b7280", fontSize: 15 },
+  emailBtn: {
+    padding: "7px 18px",
+    background: "#2563eb",
+    color: "white",
+    border: "none",
+    borderRadius: 6,
+    fontSize: 13,
+    fontWeight: 600,
+    cursor: "pointer",
+  },
+  emailBtnSent: { background: "#16a34a" },
+  emailBtnError: { background: "#dc2626" },
 };
