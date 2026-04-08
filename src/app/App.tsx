@@ -11,10 +11,11 @@ import FeedbackForm from "./components/Feedback";
 import FeedbackSubmitted from "./FeedbackSubmit";
 import RedesignAI from "./RedesignAI";
 import IntakeForm from "./IntakeForm";
+import Admin from "./Admin";
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />Í
+      <Route path="/" element={<Home />} />
       {/* <Route path="/" element={<ThankYouPage />} /> */}
       <Route path="/feedback" element={<FeedbackForm />} />
       <Route path="/team" element={<Team />} />
@@ -26,6 +27,7 @@ export default function App() {
       <Route path="/feedback-submitted" element={<FeedbackSubmitted />} />
       <Route path="/redesign-ai" element={<RedesignAI />} />
       <Route path="/redesign-ai/intake" element={<IntakeForm />} />
+      <Route path="/admin" element={<Admin />} />
     </Routes>
   );
 }

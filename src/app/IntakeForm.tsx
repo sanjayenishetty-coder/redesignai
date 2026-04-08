@@ -1,7 +1,7 @@
 import { useState, FormEvent, useEffect } from "react";
 import "../styles/redesign-ai.css";
 
-const API_URL = "https://api.simpo.ai/business/contact";
+const API_URL = "/api/submit-intake";
 const RAZORPAY_LINK = "https://rzp.io/rzp/ce6486z";
 const SHARE_URL = "https://www.scaleme.in/redesign-ai";
 
@@ -51,16 +51,12 @@ export default function IntakeForm() {
     setIsSubmitting(true);
 
     try {
-      await fetch(API_URL, {
+      const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.fullName,
-          email: formData.email,
-          message: "REDESIGN Workshop Intake Form",
-          moreInfo: formData,
-        }),
+        body: JSON.stringify(formData),
       });
+      if (!res.ok) throw new Error("Submission failed");
       window.scrollTo(0, 0);
       setShowShare(true);
     } catch {
