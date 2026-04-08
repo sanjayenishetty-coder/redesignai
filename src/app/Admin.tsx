@@ -109,7 +109,7 @@ export default function Admin() {
     setSaving(null);
   };
 
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyrVv0gwt45s1DGA4c4qO_xF8oPotuUVTMzBkXxGtDqQZgSZrBXI1yfJaldCkdC-w/exec";
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw1fZ9tCPUwFMNDO1Ty21ZhEcmYxyILi7IobL3iLRjdP5s9mEHnkslcc_D28SLSL-Rx/exec";
 
   const handleSendEmail = async (lead: Lead) => {
     setEmailSending(lead.id);
