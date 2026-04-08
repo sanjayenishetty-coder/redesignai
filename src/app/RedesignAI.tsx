@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/redesign-ai.css";
 
 const RAZORPAY_LINK = "https://rzp.io/rzp/ce6486z";
@@ -78,6 +78,7 @@ const industries = [
 ];
 
 export default function RedesignAI() {
+  const navigate = useNavigate();
   const [navScrolled, setNavScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeTab, setActiveTab] = useState<"day1" | "day2">("day1");
@@ -190,8 +191,8 @@ export default function RedesignAI() {
           <div className="dot" />
           <span>50 Seats Only</span>
         </div>
-        <button className="nav-cta" onClick={() => scrollToSection("pricing")}>
-          Reserve My Seat →
+        <button className="nav-cta" onClick={() => navigate("/redesign-ai/intake")}>
+          Apply for Your Seat →
         </button>
       </nav>
 
@@ -236,8 +237,8 @@ export default function RedesignAI() {
           </div>
 
           <div className="hero-ctas fade-up delay-3">
-            <button className="btn-primary" onClick={() => scrollToSection("pricing")}>
-              Reserve My Seat →
+            <button className="btn-primary" onClick={() => navigate("/redesign-ai/intake")}>
+              Apply for Your Seat →
             </button>
             <button className="btn-secondary" onClick={() => scrollToSection("curriculum")}>
               View the Curriculum
@@ -271,7 +272,7 @@ export default function RedesignAI() {
 
           <div className="ai-landscape-cta fade-up delay-4">
             <p>The question isn't whether AI will transform your industry.<br />It's whether you'll lead the change — or react to it.</p>
-            <button className="btn-primary" onClick={() => scrollToSection("pricing")}>
+            <button className="btn-primary" onClick={() => navigate("/redesign-ai/intake")}>
               Start Building With AI →
             </button>
           </div>
@@ -422,7 +423,7 @@ export default function RedesignAI() {
           ))}
 
           <div className="industry-bottom fade-up">
-            <p className="industry-bottom-text">Don't see your industry? This workshop teaches <strong>frameworks, not formulas</strong>. The AI skills you build here apply to any business. <a href="#pricing" className="industry-bottom-link">Claim your seat →</a></p>
+            <p className="industry-bottom-text">Don't see your industry? This workshop teaches <strong>frameworks, not formulas</strong>. The AI skills you build here apply to any business. <a href="#" className="industry-bottom-link" onClick={(e) => { e.preventDefault(); navigate("/redesign-ai/intake"); }}>Apply for your seat →</a></p>
           </div>
         </div>
       </section>
@@ -740,7 +741,7 @@ export default function RedesignAI() {
                 <li>Access to Reclips AI platform for AI-powered content creation</li>
               </ul>
 
-              <a href={RAZORPAY_LINK} target="_blank" rel="noopener noreferrer" className="pricing-cta">Reserve My Seat →</a>
+              <button className="pricing-cta" onClick={() => navigate("/redesign-ai/intake")}>Apply for Your Seat →</button>
             </div>
           </div>
         </div>

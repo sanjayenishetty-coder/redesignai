@@ -2,10 +2,13 @@ import { useState, FormEvent, useEffect } from "react";
 import "../styles/redesign-ai.css";
 
 const API_URL = "https://api.simpo.ai/business/contact";
+const RAZORPAY_LINK = "https://rzp.io/rzp/ce6486z";
+const SHARE_URL = "https://www.scaleme.in/redesign-ai";
 
 export default function IntakeForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [showShare, setShowShare] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -16,13 +19,12 @@ export default function IntakeForm() {
     companyWebsite: "",
     linkedinProfile: "",
     city: "",
-
+    referredBy: "",
     teamSize: "",
     currentAIUsage: "",
     biggestChallenge: "",
     workshopGoals: [] as string[],
     specificTools: "",
-    dietaryRequirements: "",
   });
 
   useEffect(() => {
@@ -59,8 +61,8 @@ export default function IntakeForm() {
           moreInfo: formData,
         }),
       });
-      setSubmitted(true);
       window.scrollTo(0, 0);
+      setShowShare(true);
     } catch {
       alert("Something went wrong. Please try again.");
     } finally {
@@ -68,16 +70,57 @@ export default function IntakeForm() {
     }
   };
 
-  if (submitted) {
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(SHARE_URL);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  };
+
+  const handleWhatsAppShare = () => {
+    const text = encodeURIComponent(
+      `I just applied for REDESIGN — a 2-day hands-on AI workshop at ISB Hyderabad for Indian SME owners.\n\nIf you run a business and want to build real AI workflows (no coding needed), check it out:\n${SHARE_URL}`
+    );
+    window.open(`https://wa.me/?text=${text}`, "_blank");
+  };
+
+  if (showShare) {
     return (
       <div className="redesign-page">
         <div className="intake-page">
           <div className="intake-success">
             <div className="intake-success-icon">✅</div>
-            <h1>You're All Set!</h1>
-            <p>Thank you for completing your profile. Our team will use this to personalise your workshop experience.</p>
-            <p className="intake-success-sub">We'll send you a confirmation email with all the details — venue, schedule, and what to bring — within 24 hours.</p>
-            <a href="/redesign-ai" className="btn-primary" style={{ display: "inline-block", marginTop: 24, textDecoration: "none" }}>Back to REDESIGN</a>
+            <h1>Application Submitted!</h1>
+            <p>Your application is in. You'll complete your seat reservation on the next step.</p>
+
+            <div className="intake-share-box">
+              <p className="intake-share-heading">Know someone who should be in the room?</p>
+              <p className="intake-share-sub">
+                REDESIGN is built for ambitious SME operators. If you know someone running a business who should be building with AI — share this with them.
+              </p>
+              <div className="intake-share-actions">
+                <button className="intake-share-btn whatsapp" onClick={handleWhatsAppShare}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.526 5.845L.057 23.885l6.194-1.623A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.808 9.808 0 01-5.002-1.368l-.36-.213-3.676.964.981-3.595-.235-.369A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+                  Share on WhatsApp
+                </button>
+                <button className="intake-share-btn copy" onClick={handleCopyLink}>
+                  {copied ? (
+                    <>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                      Copy Link
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <a href={RAZORPAY_LINK} className="btn-primary" style={{ display: "inline-block", marginTop: 32, textDecoration: "none" }}>
+              Proceed to Payment →
+            </a>
           </div>
         </div>
       </div>
@@ -92,8 +135,8 @@ export default function IntakeForm() {
           <div className="intake-banner">
             <img src="/assets/redesign-og.jpg" alt="REDESIGN — A 2-Day Hands-On AI Workshop for Indian SMEs" className="intake-banner-img" />
           </div>
-          <h1>Complete Your Profile</h1>
-          <p>Welcome aboard! Help us personalise your workshop experience by filling in a few details about you and your business.</p>
+          <h1>Apply for Your Seat</h1>
+          <p>Tell us about yourself and your business. We use this to personalise your experience — and you'll complete your payment on the next step.</p>
         </div>
 
         <form className="intake-form" onSubmit={handleSubmit}>
@@ -121,6 +164,10 @@ export default function IntakeForm() {
               <div className="intake-field">
                 <label htmlFor="linkedinProfile">LinkedIn Profile</label>
                 <input type="url" id="linkedinProfile" name="linkedinProfile" value={formData.linkedinProfile} onChange={handleChange} placeholder="https://linkedin.com/in/yourprofile" />
+              </div>
+              <div className="intake-field">
+                <label htmlFor="referredBy">Referred by (optional)</label>
+                <input type="text" id="referredBy" name="referredBy" value={formData.referredBy} onChange={handleChange} placeholder="Name of the person who referred you" />
               </div>
             </div>
           </div>
@@ -224,18 +271,8 @@ export default function IntakeForm() {
             </div>
           </div>
 
-          {/* Section 4: Logistics */}
-          <div className="intake-section">
-            <h2><span className="intake-section-num">04</span> Logistics</h2>
-
-            <div className="intake-field full-width">
-              <label htmlFor="dietaryRequirements">Any dietary requirements or accessibility needs?</label>
-              <input type="text" id="dietaryRequirements" name="dietaryRequirements" value={formData.dietaryRequirements} onChange={handleChange} placeholder="e.g. Vegetarian, Vegan, No specific requirements" />
-            </div>
-          </div>
-
           <button type="submit" className="btn-primary intake-submit" disabled={isSubmitting}>
-            {isSubmitting ? "Submitting..." : "Submit & Confirm My Spot"}
+            {isSubmitting ? "Submitting..." : "Submit Application & Proceed to Payment →"}
           </button>
         </form>
       </div>

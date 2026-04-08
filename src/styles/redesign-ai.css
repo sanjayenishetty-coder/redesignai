@@ -1955,3 +1955,59 @@
   .redesign-page .pricing-main { font-size: 44px; }
   .redesign-page .logo-strip { padding: 0 24px; }
 }
+
+/* ─── INTAKE SHARE BOX ─── */
+.redesign-page .intake-share-box {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  padding: 28px 32px;
+  max-width: 520px;
+  margin: 36px auto 0;
+  text-align: left;
+}
+.redesign-page .intake-share-heading {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 10px !important;
+}
+.redesign-page .intake-share-sub {
+  font-size: 14px !important;
+  color: rgba(255,255,255,0.55) !important;
+  line-height: 1.6;
+  margin-bottom: 20px !important;
+  max-width: 100% !important;
+}
+.redesign-page .intake-share-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.redesign-page .intake-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.redesign-page .intake-share-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+.redesign-page .intake-share-btn.whatsapp {
+  background: #25D366;
+  color: white;
+}
+.redesign-page .intake-share-btn.copy {
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.2);
+}
