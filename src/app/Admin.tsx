@@ -109,16 +109,17 @@ export default function Admin() {
     setSaving(null);
   };
 
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGQmYKdYnUDe3C5E6GzBG3zmF4d7rzxPtBBtp_aRDwpiPUGfC-BWojhd4JebeNkcWi/exec";
+
   const handleSendEmail = async (lead: Lead) => {
     setEmailSending(lead.id);
     try {
-      const res = await fetch("/api/send-email", {
+      await fetch(APPS_SCRIPT_URL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-admin-password": sessionStorage.getItem("adminPwd") || "",
-        },
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain" },
         body: JSON.stringify({
+          action: "sendEmail",
           email: lead.email,
           fullName: lead.full_name,
           companyName: lead.company_name,
@@ -127,7 +128,7 @@ export default function Admin() {
           workshopGoals: lead.workshop_goals,
         }),
       });
-      setEmailStatus((prev) => ({ ...prev, [lead.id]: res.ok ? "sent" : "error" }));
+      setEmailStatus((prev) => ({ ...prev, [lead.id]: "sent" }));
       setTimeout(() => setEmailStatus((prev) => { const n = { ...prev }; delete n[lead.id]; return n; }), 3000);
     } catch {
       setEmailStatus((prev) => ({ ...prev, [lead.id]: "error" }));
