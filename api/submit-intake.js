@@ -2,7 +2,7 @@ import { confirmationEmailHtml } from "./email-template.js";
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const BREVO_API_KEY = process.env.BREVO_API_KEY;
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -54,20 +54,47 @@ export default async function handler(req, res) {
       return res.status(500).json({ error: "Failed to save submission" });
     }
 
-    // 2. Send confirmation email
-    if (RESEND_API_KEY && body.email) {
+    // 2. Add contact to Brevo list
+    if (BREVO_API_KEY && body.email) {
       try {
-        const emailRes = await fetch("https://api.resend.com/emails", {
+        const nameParts = (body.fullName || "").trim().split(" ");
+        const firstName = nameParts[0] || "";
+        const lastName = nameParts.slice(1).join(" ") || "";
+
+        await fetch("https://api.brevo.com/v3/contacts", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${RESEND_API_KEY}`,
+            "api-key": BREVO_API_KEY,
           },
           body: JSON.stringify({
-            from: "REDESIGN <sanjay@scaleme.in>",
-            to: [body.email],
+            email: body.email,
+            updateEnabled: true,
+            attributes: {
+              FIRSTNAME: firstName,
+              LASTNAME: lastName,
+              COMPANY: body.companyName || "",
+              SMS: body.phone || "",
+            },
+          }),
+        });
+      } catch (err) {
+        console.error("Brevo contact add failed:", err);
+      }
+
+      // 3. Send confirmation email via Brevo
+      try {
+        const emailRes = await fetch("https://api.brevo.com/v3/smtp/email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": BREVO_API_KEY,
+          },
+          body: JSON.stringify({
+            sender: { name: "REDESIGN", email: "sanjay@scaleme.in" },
+            to: [{ email: body.email, name: body.fullName || "" }],
             subject: "Your REDESIGN application is received ✅",
-            html: confirmationEmailHtml({
+            htmlContent: confirmationEmailHtml({
               fullName: body.fullName,
               companyName: body.companyName,
               designation: body.designation,
@@ -78,10 +105,10 @@ export default async function handler(req, res) {
         });
         if (!emailRes.ok) {
           const errText = await emailRes.text();
-          console.error("Resend error:", errText);
+          console.error("Brevo email error:", errText);
         }
       } catch (err) {
-        console.error("Email send failed:", err);
+        console.error("Brevo email send failed:", err);
       }
     }
 

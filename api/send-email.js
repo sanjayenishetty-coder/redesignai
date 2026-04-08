@@ -1,7 +1,7 @@
 import { confirmationEmailHtml } from "./email-template.js";
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const BREVO_API_KEY = process.env.BREVO_API_KEY;
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-  if (!RESEND_API_KEY) {
+  if (!BREVO_API_KEY) {
     return res.status(500).json({ error: "Email service not configured" });
   }
 
@@ -26,17 +26,17 @@ export default async function handler(req, res) {
 
     if (!email) return res.status(400).json({ error: "Missing email" });
 
-    const response = await fetch("https://api.resend.com/emails", {
+    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${RESEND_API_KEY}`,
+        "api-key": BREVO_API_KEY,
       },
       body: JSON.stringify({
-        from: "REDESIGN <sanjay@scaleme.in>",
-        to: [email],
+        sender: { name: "REDESIGN", email: "sanjay@scaleme.in" },
+        to: [{ email, name: fullName || "" }],
         subject: "Your REDESIGN application is received ✅",
-        html: confirmationEmailHtml({
+        htmlContent: confirmationEmailHtml({
           fullName: fullName || "there",
           companyName: companyName || "",
           designation: designation || "",
@@ -48,7 +48,7 @@ export default async function handler(req, res) {
 
     if (!response.ok) {
       const err = await response.text();
-      console.error("Resend error:", err);
+      console.error("Brevo error:", err);
       return res.status(500).json({ error: "Failed to send email" });
     }
 
