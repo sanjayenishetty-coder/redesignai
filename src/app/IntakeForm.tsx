@@ -1,7 +1,7 @@
 import { useState, FormEvent, useEffect } from "react";
 import "../styles/redesign-ai.css";
 
-const API_URL = "/api/submit-intake";
+const API_URL = "https://script.google.com/macros/s/AKfycbzGQmYKdYnUDe3C5E6GzBG3zmF4d7rzxPtBBtp_aRDwpiPUGfC-BWojhd4JebeNkcWi/exec";
 const RAZORPAY_LINK = "https://rzp.io/rzp/ce6486z";
 const SHARE_URL = "https://www.scaleme.in/redesign-ai";
 
@@ -51,12 +51,12 @@ export default function IntakeForm() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch(API_URL, {
+      await fetch(API_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain" },
         body: JSON.stringify(formData),
       });
-      if (!res.ok) throw new Error("Submission failed");
       window.scrollTo(0, 0);
       setShowShare(true);
     } catch {
