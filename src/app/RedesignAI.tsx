@@ -648,24 +648,41 @@ export default function RedesignAI() {
                 </div>
               </div>
 
-              {/* Group Pricing */}
+              {/* Co-Brand Partner */}
               <div className="roi-block group-pricing-block fade-up delay-2">
-                <h4>👥 Bring your team, save more</h4>
-                <p className="group-pricing-desc">Group discounts apply to early bird registrations only. Standard pricing applies after April 10th.</p>
+                <h4>🤝 Co-Brand Partner Slot</h4>
+                <p className="group-pricing-desc">Gift AI education to your best SME customers — and put your brand on one of the most forward-thinking events of the year.</p>
                 <div className="roi-comparison">
                   <div className="roi-row">
-                    <span className="roi-row-label">1 person</span>
-                    <span className="roi-row-value highlight">₹30,000 per person</span>
+                    <span className="roi-row-label">Seats included</span>
+                    <span className="roi-row-value highlight">5 seats</span>
                   </div>
                   <div className="roi-row">
-                    <span className="roi-row-label">2 people <span className="save-badge-10">Save 10%</span></span>
-                    <span className="roi-row-value highlight">₹27,000 per person</span>
+                    <span className="roi-row-label">Your brand on the event</span>
+                    <span className="roi-row-value highlight">✓ Co-branded</span>
                   </div>
                   <div className="roi-row" style={{ borderBottom: "none" }}>
-                    <span className="roi-row-label">3 people <span className="save-badge-15">Save 15%</span></span>
-                    <span className="roi-row-value highlight">₹25,500 per person</span>
+                    <span className="roi-row-label">Investment</span>
+                    <span className="roi-row-value highlight">₹1,35,000</span>
                   </div>
                 </div>
+                <a
+                  href="mailto:sanjay@scaleme.in?subject=Co-Brand Partner Enquiry — REDESIGN&body=Hi Sanjay, I'm interested in the Co-Brand Partner slot for REDESIGN. Please share more details."
+                  style={{
+                    display: "inline-block",
+                    marginTop: "16px",
+                    background: "#111",
+                    color: "#fff",
+                    padding: "10px 22px",
+                    borderRadius: "8px",
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    textDecoration: "none",
+                    letterSpacing: "0.02em",
+                  }}
+                >
+                  Talk to us →
+                </a>
               </div>
 
               {/* Urgency */}
