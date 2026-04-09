@@ -15,7 +15,7 @@ const EMAIL_CONFIGS = {
     build: (data) => confirmationEmailHtml(data),
   },
   payment_reminder: {
-    subject: "Only 40 seats left — complete your REDESIGN registration",
+    subject: "Your REDESIGN registration is pending — here's why it's worth it",
     build: (data) => paymentReminderEmailHtml(data),
   },
   follow_up: {

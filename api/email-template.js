@@ -93,44 +93,42 @@ export function interestEmailHtml({ fullName, companyName, designation, industry
 }
 
 // Email 2: Sent manually from CRM for "new" leads — payment reminder
-export function paymentReminderEmailHtml({ fullName, companyName, seatsLeft = 40 }) {
+export function paymentReminderEmailHtml({ fullName, companyName }) {
   return emailWrapper(`
     <tr><td style="background:#ffffff;padding:40px 40px 32px;">
-      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">Seats are filling fast — complete your payment</h2>
+      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">This workshop could change how you run your business</h2>
       <p style="margin:0 0 24px;color:#374151;font-size:15px;line-height:1.6;">
         Hi ${fullName},<br><br>
-        You applied for <strong>REDESIGN</strong> but your seat is still not confirmed. We currently have only <strong>${seatsLeft} seats remaining</strong> out of 50 — and registrations are coming in fast.
+        You showed interest in <strong>REDESIGN</strong> — and we think that says something about where you want to take ${companyName ? companyName : "your business"}. Most business owners are still watching AI from the sidelines. You're not.
       </p>
 
-      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
-        <p style="margin:0 0 6px;color:#991b1b;font-size:13px;font-weight:700;">⚠️ Your spot is not reserved yet</p>
-        <p style="margin:0 0 16px;color:#374151;font-size:13px;line-height:1.6;">
-          ${companyName ? `We reserved your application from ${companyName}, but` : "We have your application, but"} payment is the only thing that locks in your seat. Once we're full, we cannot accommodate late registrations.
-        </p>
-        <a href="${PAYMENT_URL}" style="display:inline-block;background:#dc2626;color:#fff;text-decoration:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:700;">Secure My Seat Now →</a>
-      </div>
-
       <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
-        <p style="margin:0 0 12px;color:#6b7280;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;">Event Details</p>
+        <p style="margin:0 0 12px;color:#111;font-size:14px;font-weight:700;">What two days at REDESIGN will actually do for you</p>
         <table width="100%" cellpadding="0" cellspacing="0">
-          <tr>
-            <td style="padding:4px 0;color:#6b7280;font-size:13px;width:80px;">Date</td>
-            <td style="padding:4px 0;color:#111;font-size:13px;font-weight:600;">18th & 19th April 2026</td>
-          </tr>
-          <tr>
-            <td style="padding:4px 0;color:#6b7280;font-size:13px;">Venue</td>
-            <td style="padding:4px 0;color:#111;font-size:13px;font-weight:600;">ISB Campus, Hyderabad</td>
-          </tr>
-          <tr>
-            <td style="padding:4px 0;color:#6b7280;font-size:13px;">Seats left</td>
-            <td style="padding:4px 0;color:#dc2626;font-size:13px;font-weight:700;">${seatsLeft} of 50</td>
-          </tr>
+          <tr><td style="padding:6px 0;color:#374151;font-size:13px;line-height:1.6;">
+            → You'll leave with a <strong>working AI system</strong> built for your specific business — not a concept, a real workflow.
+          </td></tr>
+          <tr><td style="padding:6px 0;color:#374151;font-size:13px;line-height:1.6;">
+            → You'll have a <strong>90-day AI implementation plan</strong> tailored to your industry, your team size, your goals.
+          </td></tr>
+          <tr><td style="padding:6px 0;color:#374151;font-size:13px;line-height:1.6;">
+            → You'll be in a room with <strong>50 SME founders</strong> who are building, not just learning — the conversations alone are worth it.
+          </td></tr>
+          <tr><td style="padding:6px 0;color:#374151;font-size:13px;line-height:1.6;">
+            → No coding. No jargon. Just hands-on AI tools that business operators can actually use from day one.
+          </td></tr>
         </table>
       </div>
 
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
+        <p style="margin:0 0 6px;color:#1d4ed8;font-size:13px;font-weight:700;">18th & 19th April 2026 · ISB Campus, Hyderabad</p>
+        <p style="margin:0 0 16px;color:#374151;font-size:13px;line-height:1.6;">Your registration is pending. Complete your payment to confirm your place in this cohort.</p>
+        <a href="${PAYMENT_URL}" style="display:inline-block;background:#111;color:#fff;text-decoration:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:700;">Complete My Registration →</a>
+      </div>
+
       <p style="margin:0;color:#6b7280;font-size:13px;line-height:1.6;">
-        Questions before paying? Just reply to this email — we're happy to help.<br><br>
-        Hope to see you in Hyderabad,<br>
+        Any questions before you register? Just reply — I personally read every email.<br><br>
+        See you at the REDESIGN Workshop,<br>
         <strong>Sanjay & The REDESIGN Team</strong>
       </p>
     </td></tr>
