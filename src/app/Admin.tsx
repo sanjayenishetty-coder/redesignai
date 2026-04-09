@@ -45,6 +45,7 @@ export default function Admin() {
   const [saving, setSaving] = useState<string | null>(null);
   const [emailSending, setEmailSending] = useState<string | null>(null);
   const [emailStatus, setEmailStatus] = useState<Record<string, "sent" | "error">>({});
+  const [deleting, setDeleting] = useState<string | null>(null);
 
   const fetchLeads = useCallback(async (pwd: string) => {
     setLoading(true);
@@ -134,6 +135,26 @@ export default function Admin() {
       setTimeout(() => setEmailStatus((prev) => { const n = { ...prev }; delete n[lead.id]; return n; }), 3000);
     } finally {
       setEmailSending(null);
+    }
+  };
+
+  const handleDelete = async (id: string, name: string) => {
+    if (!window.confirm(`Delete "${name}"? This cannot be undone.`)) return;
+    setDeleting(id);
+    try {
+      await fetch("/api/delete-lead", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-password": sessionStorage.getItem("adminPwd") || "",
+        },
+        body: JSON.stringify({ id }),
+      });
+      setLeads((prev) => prev.filter((l) => l.id !== id));
+    } catch {
+      alert("Failed to delete. Try again.");
+    } finally {
+      setDeleting(null);
     }
   };
 
@@ -402,6 +423,13 @@ export default function Admin() {
                                   ? "✗ Failed"
                                   : "✉ Send Confirmation Email"}
                               </button>
+                              <button
+                                onClick={() => handleDelete(lead.id, lead.full_name)}
+                                disabled={deleting === lead.id}
+                                style={styles.deleteBtn}
+                              >
+                                {deleting === lead.id ? "Deleting..." : "🗑 Delete"}
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -641,4 +669,14 @@ const styles: Record<string, React.CSSProperties> = {
   },
   emailBtnSent: { background: "#16a34a" },
   emailBtnError: { background: "#dc2626" },
+  deleteBtn: {
+    padding: "7px 18px",
+    background: "white",
+    color: "#dc2626",
+    border: "1.5px solid #dc2626",
+    borderRadius: 6,
+    fontSize: 13,
+    fontWeight: 600,
+    cursor: "pointer",
+  },
 };
