@@ -651,7 +651,7 @@ export default function RedesignAI() {
               {/* Co-Brand Partner */}
               <div className="roi-block group-pricing-block fade-up delay-2">
                 <h4>🤝 Co-Brand Partner Slot</h4>
-                <p className="group-pricing-desc">Gift AI education to your best SME customers — and put your brand on one of the most forward-thinking events of the year.</p>
+                <p className="group-pricing-desc">Give an AI education to your best SME Customers / Channel Partners / Franchisees — and put your brand on one of the most forward-thinking events of the year.</p>
                 <div className="roi-comparison">
                   <div className="roi-row">
                     <span className="roi-row-label">Seats included</span>
