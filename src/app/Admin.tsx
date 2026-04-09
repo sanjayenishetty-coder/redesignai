@@ -46,6 +46,8 @@ export default function Admin() {
   const [emailSending, setEmailSending] = useState<string | null>(null);
   const [emailStatus, setEmailStatus] = useState<Record<string, "sent" | "error">>({});
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [bulkDeleting, setBulkDeleting] = useState(false);
 
   const fetchLeads = useCallback(async (pwd: string) => {
     setLoading(true);
@@ -158,6 +160,41 @@ export default function Admin() {
     }
   };
 
+  const toggleSelect = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
+
+  const toggleSelectAll = (ids: string[]) => {
+    setSelectedIds((prev) => prev.size === ids.length ? new Set() : new Set(ids));
+  };
+
+  const handleBulkDelete = async (ids: string[]) => {
+    if (!window.confirm(`Delete ${ids.length} selected lead${ids.length > 1 ? "s" : ""}? This cannot be undone.`)) return;
+    setBulkDeleting(true);
+    try {
+      await Promise.all(ids.map((id) =>
+        fetch("/api/delete-lead", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "x-admin-password": sessionStorage.getItem("adminPwd") || "",
+          },
+          body: JSON.stringify({ id }),
+        })
+      ));
+      setLeads((prev) => prev.filter((l) => !ids.includes(l.id)));
+      setSelectedIds(new Set());
+    } catch {
+      alert("Some deletions failed. Try again.");
+    } finally {
+      setBulkDeleting(false);
+    }
+  };
+
   const filtered = leads.filter((l) => {
     const matchesSearch =
       search === "" ||
@@ -264,6 +301,15 @@ export default function Admin() {
           ))}
         </select>
         <span style={styles.resultCount}>{filtered.length} result{filtered.length !== 1 ? "s" : ""}</span>
+        {selectedIds.size > 0 && (
+          <button
+            onClick={() => handleBulkDelete(Array.from(selectedIds))}
+            disabled={bulkDeleting}
+            style={styles.bulkDeleteBtn}
+          >
+            {bulkDeleting ? "Deleting..." : `🗑 Delete ${selectedIds.size} selected`}
+          </button>
+        )}
       </div>
 
       {/* Table */}
@@ -276,6 +322,14 @@ export default function Admin() {
           <table style={styles.table}>
             <thead>
               <tr style={styles.thead}>
+                <th style={{ ...styles.th, width: 36, textAlign: "center" }}>
+                  <input
+                    type="checkbox"
+                    checked={selectedIds.size === filtered.length && filtered.length > 0}
+                    onChange={() => toggleSelectAll(filtered.map((l) => l.id))}
+                  />
+                </th>
+                <th style={{ ...styles.th, width: 36, textAlign: "center" }}>#</th>
                 <th style={styles.th}>Name</th>
                 <th style={styles.th}>Contact</th>
                 <th style={styles.th}>Company</th>
@@ -289,15 +343,25 @@ export default function Admin() {
               </tr>
             </thead>
             <tbody>
-              {filtered.map((lead) => (
+              {filtered.map((lead, idx) => (
                 <>
                   <tr
                     key={lead.id}
                     style={{
                       ...styles.row,
-                      background: expandedId === lead.id ? "#f0f4ff" : "white",
+                      background: selectedIds.has(lead.id) ? "#fef9c3" : expandedId === lead.id ? "#f0f4ff" : "white",
                     }}
                   >
+                    <td style={{ ...styles.td, textAlign: "center" }}>
+                      <input
+                        type="checkbox"
+                        checked={selectedIds.has(lead.id)}
+                        onChange={() => toggleSelect(lead.id)}
+                      />
+                    </td>
+                    <td style={{ ...styles.td, textAlign: "center", color: "#9ca3af", fontSize: 12 }}>
+                      {idx + 1}
+                    </td>
                     <td style={styles.td}>
                       <div style={styles.name}>{lead.full_name}</div>
                       <div style={styles.desig}>{lead.designation}</div>
@@ -355,7 +419,7 @@ export default function Admin() {
 
                   {expandedId === lead.id && (
                     <tr key={`${lead.id}-detail`} style={{ background: "#f0f4ff" }}>
-                      <td colSpan={10} style={styles.detailCell}>
+                      <td colSpan={12} style={styles.detailCell}>
                         <div style={styles.detailGrid}>
                           <div style={styles.detailBlock}>
                             <div style={styles.detailLabel}>AI Usage</div>
@@ -678,5 +742,16 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 13,
     fontWeight: 600,
     cursor: "pointer",
+  },
+  bulkDeleteBtn: {
+    padding: "8px 18px",
+    background: "#dc2626",
+    color: "white",
+    border: "none",
+    borderRadius: 6,
+    fontSize: 13,
+    fontWeight: 700,
+    cursor: "pointer",
+    whiteSpace: "nowrap" as const,
   },
 };
