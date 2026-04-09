@@ -13,7 +13,7 @@ function emailWrapper(content) {
         <!-- Header -->
         <tr><td style="background:#0a0a0a;border-radius:12px 12px 0 0;padding:32px 40px;text-align:center;">
           <p style="margin:0 0 4px;color:#9ca3af;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;">ScaleMe × ISB Hyderabad</p>
-          <h1 style="margin:0;color:#ffffff;font-size:28px;font-weight:800;letter-spacing:0.05em;">REDESIGN</h1>
+          <h1 style="margin:0;color:#ffffff;font-size:28px;font-weight:800;letter-spacing:0.05em;">REDESIGN-ai</h1>
           <p style="margin:6px 0 0;color:#6b7280;font-size:13px;">18th & 19th April 2026 · ISB Campus, Hyderabad</p>
         </td></tr>
 
@@ -38,10 +38,10 @@ function emailWrapper(content) {
 export function interestEmailHtml({ fullName, companyName, designation, industry }) {
   return emailWrapper(`
     <tr><td style="background:#ffffff;padding:40px 40px 32px;">
-      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">Thank you for your interest in REDESIGN</h2>
+      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">Thank you for your interest in REDESIGN-ai</h2>
       <p style="margin:0 0 24px;color:#374151;font-size:15px;line-height:1.6;">
         Hi ${fullName},<br><br>
-        We've received your application for <strong>REDESIGN — A 2-Day Hands-On AI Workshop</strong> at ISB Hyderabad on <strong>18th & 19th April 2026</strong>.<br><br>
+        We've received your application for <strong>REDESIGN-ai — A 2-Day Hands-On AI Workshop</strong> at ISB Hyderabad on <strong>18th & 19th April 2026</strong>.<br><br>
         Your spot is <strong>not confirmed yet</strong> — complete your payment to secure your seat. We have limited seats for 50 participants.
       </p>
 
@@ -80,7 +80,7 @@ export function interestEmailHtml({ fullName, companyName, designation, industry
       <!-- Share -->
       <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
         <p style="margin:0 0 6px;color:#166534;font-size:13px;font-weight:700;">Know someone who should be in the room?</p>
-        <p style="margin:0 0 12px;color:#374151;font-size:13px;line-height:1.6;">Share REDESIGN with a founder or business leader who would benefit from this workshop.</p>
+        <p style="margin:0 0 12px;color:#374151;font-size:13px;line-height:1.6;">Share REDESIGN-ai with a founder or business leader who would benefit from this workshop.</p>
         <a href="${SHARE_URL}" style="color:#16a34a;font-size:13px;font-weight:600;text-decoration:none;">${SHARE_URL} →</a>
       </div>
 
@@ -99,11 +99,11 @@ export function paymentReminderEmailHtml({ fullName, companyName }) {
       <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">This workshop could change how you run your business</h2>
       <p style="margin:0 0 24px;color:#374151;font-size:15px;line-height:1.6;">
         Hi ${fullName},<br><br>
-        You showed interest in <strong>REDESIGN</strong> — and we think that says something about where you want to take ${companyName ? companyName : "your business"}. Most business owners are still watching AI from the sidelines. You're not.
+        You showed interest in <strong>REDESIGN-ai</strong> — and we think that says something about where you want to take ${companyName ? companyName : "your business"}. Most business owners are still watching AI from the sidelines. You're not.
       </p>
 
       <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
-        <p style="margin:0 0 12px;color:#111;font-size:14px;font-weight:700;">What two days at REDESIGN will actually do for you</p>
+        <p style="margin:0 0 12px;color:#111;font-size:14px;font-weight:700;">What two days at REDESIGN-ai will actually do for you</p>
         <table width="100%" cellpadding="0" cellspacing="0">
           <tr><td style="padding:6px 0;color:#374151;font-size:13px;line-height:1.6;">
             → You'll leave with a <strong>working AI system</strong> built for your specific business — not a concept, a real workflow.
@@ -128,8 +128,8 @@ export function paymentReminderEmailHtml({ fullName, companyName }) {
 
       <p style="margin:0;color:#6b7280;font-size:13px;line-height:1.6;">
         Any questions before you register? Just reply — I personally read every email.<br><br>
-        See you at the REDESIGN Workshop,<br>
-        <strong>Sanjay & The REDESIGN Team</strong>
+        See you at the REDESIGN-ai Workshop,<br>
+        <strong>Sanjay & The REDESIGN-ai Team</strong>
       </p>
     </td></tr>
   `);
@@ -139,10 +139,10 @@ export function paymentReminderEmailHtml({ fullName, companyName }) {
 export function followUpEmailHtml({ fullName, companyName }) {
   return emailWrapper(`
     <tr><td style="background:#ffffff;padding:40px 40px 32px;">
-      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">Following up on your REDESIGN application</h2>
+      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">Following up on your REDESIGN-ai application</h2>
       <p style="margin:0 0 24px;color:#374151;font-size:15px;line-height:1.6;">
         Hi ${fullName},<br><br>
-        We reached out to you about your application for <strong>REDESIGN</strong> and wanted to follow up. We'd love to have ${companyName ? `someone from ${companyName}` : "you"} at the workshop — it's shaping up to be a great cohort.
+        We reached out to you about your application for <strong>REDESIGN-ai</strong> and wanted to follow up. We'd love to have ${companyName ? `someone from ${companyName}` : "you"} at the workshop — it's shaping up to be a great cohort.
       </p>
 
       <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
@@ -162,7 +162,7 @@ export function followUpEmailHtml({ fullName, companyName }) {
       <p style="margin:0;color:#6b7280;font-size:13px;line-height:1.6;">
         If you have any questions or need more information before deciding, just reply to this email — I'm happy to jump on a quick call.<br><br>
         Warm regards,<br>
-        <strong>Sanjay & The REDESIGN Team</strong>
+        <strong>Sanjay & The REDESIGN-ai Team</strong>
       </p>
     </td></tr>
   `);
@@ -172,24 +172,24 @@ export function followUpEmailHtml({ fullName, companyName }) {
 export function rejectionEmailHtml({ fullName }) {
   return emailWrapper(`
     <tr><td style="background:#ffffff;padding:40px 40px 32px;">
-      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">An update on your REDESIGN application</h2>
+      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">An update on your REDESIGN-ai application</h2>
       <p style="margin:0 0 24px;color:#374151;font-size:15px;line-height:1.6;">
         Hi ${fullName},<br><br>
-        Thank you for applying to <strong>REDESIGN</strong>. We genuinely appreciate your interest and the time you took to fill out your application.<br><br>
+        Thank you for applying to <strong>REDESIGN-ai</strong>. We genuinely appreciate your interest and the time you took to fill out your application.<br><br>
         Unfortunately, we are unable to accommodate your registration for the April 2026 cohort. Given the limited seats and the specific cohort profile we're curating, we had to make some difficult decisions.
       </p>
 
       <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
         <p style="margin:0 0 8px;color:#111;font-size:13px;font-weight:700;">What's next</p>
         <p style="margin:0;color:#374151;font-size:13px;line-height:1.7;">
-          We plan to run future cohorts of REDESIGN. If you'd like to be considered for a future batch, just reply to this email and we'll make sure you're first on the list.
+          We plan to run future cohorts of REDESIGN-ai. If you'd like to be considered for a future batch, just reply to this email and we'll make sure you're first on the list.
         </p>
       </div>
 
       <p style="margin:0;color:#6b7280;font-size:13px;line-height:1.6;">
-        Thank you again for your interest in REDESIGN. We hope to work with you in the future.<br><br>
+        Thank you again for your interest in REDESIGN-ai. We hope to work with you in the future.<br><br>
         Warm regards,<br>
-        <strong>Sanjay & The REDESIGN Team</strong>
+        <strong>Sanjay & The REDESIGN-ai Team</strong>
       </p>
     </td></tr>
   `);
@@ -199,10 +199,10 @@ export function rejectionEmailHtml({ fullName }) {
 export function postEventEmailHtml({ fullName }) {
   return emailWrapper(`
     <tr><td style="background:#ffffff;padding:40px 40px 32px;">
-      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">Thank you for being at REDESIGN 🙏</h2>
+      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">Thank you for being at REDESIGN-ai 🙏</h2>
       <p style="margin:0 0 24px;color:#374151;font-size:15px;line-height:1.6;">
         Hi ${fullName},<br><br>
-        It was incredible having you at <strong>REDESIGN</strong>. Two days, one cohort, and a room full of people serious about building AI into their businesses — it doesn't get better than that.
+        It was incredible having you at <strong>REDESIGN-ai</strong>. Two days, one cohort, and a room full of people serious about building AI into their businesses — it doesn't get better than that.
       </p>
 
       <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
@@ -214,14 +214,14 @@ export function postEventEmailHtml({ fullName }) {
 
       <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
         <p style="margin:0 0 8px;color:#111;font-size:13px;font-weight:700;">Know someone who should have been in the room?</p>
-        <p style="margin:0 0 12px;color:#374151;font-size:13px;line-height:1.6;">Share REDESIGN with them — we'll be announcing the next cohort soon.</p>
+        <p style="margin:0 0 12px;color:#374151;font-size:13px;line-height:1.6;">Share REDESIGN-ai with them — we'll be announcing the next cohort soon.</p>
         <a href="${SHARE_URL}" style="color:#2563eb;font-size:13px;font-weight:600;text-decoration:none;">${SHARE_URL} →</a>
       </div>
 
       <p style="margin:0;color:#6b7280;font-size:13px;line-height:1.6;">
         Thank you for being part of this. Stay in touch.<br><br>
         Warm regards,<br>
-        <strong>Sanjay & The REDESIGN Team</strong>
+        <strong>Sanjay & The REDESIGN-ai Team</strong>
       </p>
     </td></tr>
   `);
@@ -235,10 +235,10 @@ export function confirmationEmailHtml({ fullName, companyName, designation, indu
 
   return emailWrapper(`
     <tr><td style="background:#ffffff;padding:40px 40px 32px;">
-      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">You're confirmed for REDESIGN! 🎉</h2>
+      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">You're confirmed for REDESIGN-ai! 🎉</h2>
       <p style="margin:0 0 24px;color:#374151;font-size:15px;line-height:1.6;">
         Hi ${fullName},<br><br>
-        Your payment is received and your seat is confirmed at <strong>REDESIGN — A 2-Day Hands-On AI Workshop</strong>. We're looking forward to having you with us.
+        Your payment is received and your seat is confirmed at <strong>REDESIGN-ai — A 2-Day Hands-On AI Workshop</strong>. We're looking forward to having you with us.
       </p>
 
       <!-- Event details -->
@@ -278,14 +278,14 @@ export function confirmationEmailHtml({ fullName, companyName, designation, indu
       <!-- Share -->
       <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
         <p style="margin:0 0 6px;color:#166534;font-size:13px;font-weight:700;">Know someone who should be in the room?</p>
-        <p style="margin:0 0 12px;color:#374151;font-size:13px;line-height:1.6;">Share REDESIGN with a founder or business leader who would benefit.</p>
+        <p style="margin:0 0 12px;color:#374151;font-size:13px;line-height:1.6;">Share REDESIGN-ai with a founder or business leader who would benefit.</p>
         <a href="${SHARE_URL}" style="color:#16a34a;font-size:13px;font-weight:600;text-decoration:none;">${SHARE_URL} →</a>
       </div>
 
       <p style="margin:0;color:#6b7280;font-size:13px;line-height:1.6;">
         We'll send you more details closer to the date — venue directions, schedule, and what to bring.<br><br>
         See you in Hyderabad! 🚀<br>
-        <strong>Sanjay & The REDESIGN Team</strong>
+        <strong>Sanjay & The REDESIGN-ai Team</strong>
       </p>
     </td></tr>
   `);

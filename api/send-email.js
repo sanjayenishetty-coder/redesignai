@@ -11,23 +11,23 @@ const BREVO_API_KEY = process.env.BREVO_API_KEY;
 
 const EMAIL_CONFIGS = {
   confirmation: {
-    subject: "You're confirmed for REDESIGN! 🎉",
+    subject: "You're confirmed for REDESIGN-ai! 🎉",
     build: (data) => confirmationEmailHtml(data),
   },
   payment_reminder: {
-    subject: "Your REDESIGN registration is pending — here's why it's worth it",
+    subject: "Your REDESIGN-ai registration is pending — here's why it's worth it",
     build: (data) => paymentReminderEmailHtml(data),
   },
   follow_up: {
-    subject: "Following up on your REDESIGN application",
+    subject: "Following up on your REDESIGN-ai application",
     build: (data) => followUpEmailHtml(data),
   },
   rejection: {
-    subject: "An update on your REDESIGN application",
+    subject: "An update on your REDESIGN-ai application",
     build: (data) => rejectionEmailHtml(data),
   },
   post_event: {
-    subject: "Thank you for being at REDESIGN 🙏",
+    subject: "Thank you for being at REDESIGN-ai 🙏",
     build: (data) => postEventEmailHtml(data),
   },
 };
@@ -73,7 +73,7 @@ export default async function handler(req, res) {
         "api-key": BREVO_API_KEY,
       },
       body: JSON.stringify({
-        sender: { name: "REDESIGN", email: "sanjay@scaleme.in" },
+        sender: { name: "REDESIGN-ai", email: "sanjay@scaleme.in" },
         to: [{ email, name: fullName || "" }],
         subject: config.subject,
         htmlContent,
