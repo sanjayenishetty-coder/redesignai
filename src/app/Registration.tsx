@@ -89,7 +89,7 @@ export default function Registration() {
   ];
 
   const howDidYouHearOptions = [
-    'ISB Network / Alumni',
+    'ISB-CBI Network / Alumni',
     'Referral by Friend / Colleague',
     'Social Media channels',
     'WhatsApp Groups',

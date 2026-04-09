@@ -5,7 +5,7 @@ const speakers = [
  {
   id: 1,
   name: "Prof. Rajendra Srivastava",
-  role: "Executive Director ISB-CBI",
+  role: "Executive Director ISB-CBI_PLACEHOLDER",
   topic: "Accelerating Growth",
   // Use backticks ` ` to allow multi-line text
   desc: `Most SMEs hit a ceiling not because they lack effort, but because they are scaling the wrong thing.

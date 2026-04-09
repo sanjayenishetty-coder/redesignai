@@ -341,14 +341,14 @@ export default function Home() {
 
           {/* Partner Logos Section - At Bottom */}
           <div className="flex flex-row gap-6 md:flex-row md:gap-8 mt-3">
-            {/* ISB Logo */}
+            {/* ISB-CBI Logo */}
             <div>
               <p className="text-[10px] md:text-xs text-white/70 mb-3 uppercase mt-3" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                 In collaboration with
               </p>
               <ImageWithFallback 
                 src="assets/isb-logo.png"
-                alt="ISB Logo" 
+                alt="ISB-CBI Logo" 
                 className="h-10 w-auto"
               />
             </div>
@@ -849,7 +849,7 @@ export default function Home() {
                   className="text-sm font-regular text-[#1DB2AB] mb-3"
                   style={{ fontFamily: 'Montserrat, sans-serif' }}
                 >
-                  Executive Director - ISB-CBI
+                  Executive Director - ISB-CBI_PLACEHOLDER
                 </p>
                 <p 
                   className="mt-8 text-sm text-[#2a2a2a] leading-relaxed"
@@ -1047,7 +1047,7 @@ export default function Home() {
                   className="text-[28px] md:text-[32px] font-medium uppercase leading-tight text-[#1a1a1a]"
                   style={{ fontFamily: 'Bebas Neue, sans-serif' }}
                 >
-                  ISB Hyderabad
+                  ISB-CBI Hyderabad
                 </h3>
                 {/* Address */}
                 <p

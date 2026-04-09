@@ -187,7 +187,7 @@ export default function RedesignAI() {
         <div className="nav-center">
           <div className="date-chip">📅 18–19 April 2026, Hyderabad</div>
           <div className="dot" />
-          <span>ISB Hyderabad</span>
+          <span>ISB-CBI Hyderabad</span>
           <div className="dot" />
           <span>50 Seats Only</span>
         </div>
@@ -222,7 +222,7 @@ export default function RedesignAI() {
             <div className="hero-meta-divider" />
             <div className="hero-meta-item">
               <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-              ISB Campus, Gachibowli
+              ISB-CBI Campus, Gachibowli
             </div>
             <div className="hero-meta-divider" />
             <div className="hero-meta-item">
@@ -292,7 +292,7 @@ export default function RedesignAI() {
           </div>
           <div className="logo-strip-divider" />
           <div className="logo-partner">
-            <img src="/assets/isb-logo.png" alt="ISB Centre for Business Innovation" className="logo-partner-img" />
+            <img src="/assets/isb-logo.png" alt="ISB-CBI Centre for Business Innovation" className="logo-partner-img" />
             <div className="logo-partner-desc">Knowledge Partner</div>
           </div>
           <div className="logo-strip-divider" />
@@ -334,7 +334,7 @@ export default function RedesignAI() {
             <div className="solution-card fade-up delay-2">
               <span className="solution-eyebrow">The fix</span>
               <h3>Enter REDESIGN.</h3>
-              <p className="build-sprint">This isn't a seminar. It's a build sprint. In 2 days at ISB Hyderabad, you'll walk out with systems running, not slides to read later.</p>
+              <p className="build-sprint">This isn't a seminar. It's a build sprint. In 2 days at ISB-CBI Hyderabad, you'll walk out with systems running, not slides to read later.</p>
               <div className="solution-items">
                 {[
                   { title: "Live AI workflows tailored to your operations", desc: "Built during the workshop, for your specific industry context" },
@@ -458,7 +458,7 @@ export default function RedesignAI() {
         <div className="section-inner">
           <span className="section-tag fade-up">Faculty</span>
           <h2 className="section-h2 fade-up delay-1">Learn from practitioners, not from theorists.</h2>
-          <p className="section-sub fade-up delay-2">3 to 4 faculty across ISB academia, AI implementation, and Indian SME operations. Theory in the morning, hands-on build sessions in the afternoon.</p>
+          <p className="section-sub fade-up delay-2">3 to 4 faculty across ISB-CBI academia, AI implementation, and Indian SME operations. Theory in the morning, hands-on build sessions in the afternoon.</p>
 
           <div className="faculty-grid fade-up delay-2">
             <div className="faculty-card">
@@ -467,11 +467,11 @@ export default function RedesignAI() {
               </div>
               <div className="faculty-info">
                 <div className="faculty-name">Prof. Shankar Prakash</div>
-                <div className="faculty-role">Visiting Faculty, ISB &amp; Adjunct Faculty, IIM Udaipur</div>
-                <div className="faculty-bio">Opens the workshop with a strategic AI masterclass built for Indian business leaders. Brings deep academic rigour from ISB and IIM combined with a sharp focus on practical, implementation-ready frameworks that SME operators can act on immediately.</div>
+                <div className="faculty-role">Visiting Faculty, ISB-CBI &amp; Adjunct Faculty, IIM Udaipur</div>
+                <div className="faculty-bio">Opens the workshop with a strategic AI masterclass built for Indian business leaders. Brings deep academic rigour from ISB-CBI and IIM combined with a sharp focus on practical, implementation-ready frameworks that SME operators can act on immediately.</div>
                 <div className="faculty-tags">
                   <span className="speaker-tag">AI Strategy</span>
-                  <span className="speaker-tag">ISB Faculty</span>
+                  <span className="speaker-tag">ISB-CBI Faculty</span>
                   <span className="speaker-tag">Emerging Markets</span>
                 </div>
               </div>
@@ -598,15 +598,15 @@ export default function RedesignAI() {
           </div>
         </div>
       </section>
-      {/* ISB Endorsement */}
+      {/* ISB-CBI Endorsement */}
       <section className="section testimonials-section">
         <div className="section-inner">
           <div className="isb-endorsement fade-up delay-3">
             <div className="isb-endorsement-icon">🏛️</div>
             <div>
-              <div className="isb-endorsement-label">ISB Centre for Business Innovation</div>
-              <p className="isb-endorsement-quote">"The REDESIGN workshop represents exactly the kind of practical, operator-focused AI education that Indian SMEs have been waiting for. We're proud to host this cohort on the ISB campus."</p>
-              <div className="isb-endorsement-source">Anvesh T — Associate Director, ISB-CBI</div>
+              <div className="isb-endorsement-label">ISB-CBI Centre for Business Innovation</div>
+              <p className="isb-endorsement-quote">"The REDESIGN workshop represents exactly the kind of practical, operator-focused AI education that Indian SMEs have been waiting for. We're proud to host this cohort on the ISB-CBI campus."</p>
+              <div className="isb-endorsement-source">Anvesh T — Associate Director, ISB-CBI_PLACEHOLDER</div>
             </div>
           </div>
         </div>
@@ -617,7 +617,7 @@ export default function RedesignAI() {
         <div className="section-inner">
           <span className="section-tag fade-up">Reserve your seat</span>
           <h2 className="section-h2 fade-up delay-1">Secure Your Seat in the April Cohort</h2>
-          <p className="section-sub fade-up delay-2">50 seats to ensure every participant gets hands-on support and personalised feedback. Join us on 18th &amp; 19th April 2026 at ISB Hyderabad.</p>
+          <p className="section-sub fade-up delay-2">50 seats to ensure every participant gets hands-on support and personalised feedback. Join us on 18th &amp; 19th April 2026 at ISB-CBI Hyderabad.</p>
 
           <div className="pricing-layout">
             <div className="pricing-left">
@@ -746,8 +746,8 @@ export default function RedesignAI() {
 
               <div className="includes-label">What's included</div>
               <ul className="includes-list">
-                <li>2 full days of intensive, hands-on AI training at ISB Hyderabad</li>
-                <li>Opening masterclass by ISB Faculty on Strategic AI Frameworks</li>
+                <li>2 full days of intensive, hands-on AI training at ISB-CBI Hyderabad</li>
+                <li>Opening masterclass by ISB-CBI Faculty on Strategic AI Frameworks</li>
                 <li>Build working AI workflows, automation systems, and sales agents</li>
                 <li>Personalised feedback and troubleshooting from expert instructors</li>
                 <li>Comprehensive workshop materials and implementation templates</li>
@@ -803,7 +803,7 @@ export default function RedesignAI() {
             <div>
               <div className="footer-brand-name">REDESIGN</div>
               <div className="footer-brand-tagline">Build &middot; Automate &middot; Scale</div>
-              <div className="footer-brand-desc">The premier AI workshop for Indian SME owners, distributors and employees. Build, automate, and scale your business with hands-on AI training at ISB Hyderabad.</div>
+              <div className="footer-brand-desc">The premier AI workshop for Indian SME owners, distributors and employees. Build, automate, and scale your business with hands-on AI training at ISB-CBI Hyderabad.</div>
             </div>
             <div>
               <div className="footer-col-title">Contact</div>

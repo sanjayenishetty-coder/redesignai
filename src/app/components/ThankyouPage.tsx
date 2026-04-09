@@ -38,7 +38,7 @@ const CONFETTI_COLORS: string[] = [
 
 const STATS: StatItem[] = [
   { value: "1st", label: "SME Summit" },
-  { value: "ISB", label: "Hyderabad"  },
+  { value: "ISB-CBI", label: "Hyderabad"  },
   { value: "21st", label: "Feb 2026"  },
 ];
 
@@ -201,7 +201,7 @@ const ThankYouPage: React.FC<ThankYouPageProps> = () => {
           {/* Event pill */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-400/25 bg-amber-500/10 text-amber-300 text-xs font-medium mb-7">
             <MapPin className="w-3 h-3" />
-            ISB Hyderabad
+            ISB-CBI Hyderabad
             <span className="opacity-40">·</span>
             <Calendar className="w-3 h-3" />
             21st February 2026

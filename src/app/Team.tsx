@@ -44,7 +44,7 @@ export default function Team() {
   const teamMembers = [
     {
        name: "Anvesh T",
-      role: "Associate Director ISB-CBI",
+      role: "Associate Director ISB-CBI_PLACEHOLDER",
       image: "https://d2z9497xp8xb12.cloudfront.net/prod-images/974480c1770404131251anvesh_t.png",
      // description: "Built and scaled Zaggle (IPO 2023) and eYantra. Invested in 47+ startups with focus on scalable, tech-driven businesses."
     },

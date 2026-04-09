@@ -51,7 +51,7 @@ export default function FeedbackSubmitted() {
             className="text-base md:text-lg text-[#6B7280] leading-relaxed mb-8"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
-            We've received your feedback for ScaleME SME Growth Summit '26 at ISB Hyderabad. Your insights are invaluable and will help us shape the next chapter of ScaleMe.
+            We've received your feedback for ScaleME SME Growth Summit '26 at ISB-CBI Hyderabad. Your insights are invaluable and will help us shape the next chapter of ScaleMe.
           </p>
 
           {/* Info Box */}

@@ -12,9 +12,9 @@ function emailWrapper(content) {
 
         <!-- Header -->
         <tr><td style="background:#0a0a0a;border-radius:12px 12px 0 0;padding:32px 40px;text-align:center;">
-          <p style="margin:0 0 4px;color:#9ca3af;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;">ScaleMe × ISB Hyderabad</p>
+          <p style="margin:0 0 4px;color:#9ca3af;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;">ScaleMe × ISB-CBI Hyderabad</p>
           <h1 style="margin:0;color:#ffffff;font-size:28px;font-weight:800;letter-spacing:0.05em;">REDESIGN-ai</h1>
-          <p style="margin:6px 0 0;color:#6b7280;font-size:13px;">18th & 19th April 2026 · ISB Campus, Hyderabad</p>
+          <p style="margin:6px 0 0;color:#6b7280;font-size:13px;">18th & 19th April 2026 · ISB-CBI Campus, Hyderabad</p>
         </td></tr>
 
         ${content}
@@ -23,7 +23,7 @@ function emailWrapper(content) {
         <tr><td style="background:#f9fafb;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 12px 12px;padding:20px 40px;text-align:center;">
           <p style="margin:0;color:#9ca3af;font-size:12px;">
             ScaleMe · <a href="https://www.scaleme.in" style="color:#6b7280;text-decoration:none;">scaleme.in</a><br>
-            18th & 19th April 2026, ISB Hyderabad
+            18th & 19th April 2026, ISB-CBI Hyderabad
           </p>
         </td></tr>
 
@@ -41,7 +41,7 @@ export function interestEmailHtml({ fullName, companyName, designation, industry
       <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">Thank you for your interest in REDESIGN-ai</h2>
       <p style="margin:0 0 24px;color:#374151;font-size:15px;line-height:1.6;">
         Hi ${fullName},<br><br>
-        We've received your application for <strong>REDESIGN-ai — A 2-Day Hands-On AI Workshop</strong> at ISB Hyderabad on <strong>18th & 19th April 2026</strong>.<br><br>
+        We've received your application for <strong>REDESIGN-ai — A 2-Day Hands-On AI Workshop</strong> at ISB-CBI Hyderabad on <strong>18th & 19th April 2026</strong>.<br><br>
         Your spot is <strong>not confirmed yet</strong> — complete your payment to secure your seat. We have limited seats for 50 participants.
       </p>
 
@@ -121,7 +121,7 @@ export function paymentReminderEmailHtml({ fullName, companyName }) {
       </div>
 
       <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
-        <p style="margin:0 0 6px;color:#1d4ed8;font-size:13px;font-weight:700;">18th & 19th April 2026 · ISB Campus, Hyderabad</p>
+        <p style="margin:0 0 6px;color:#1d4ed8;font-size:13px;font-weight:700;">18th & 19th April 2026 · ISB-CBI Campus, Hyderabad</p>
         <p style="margin:0 0 16px;color:#374151;font-size:13px;line-height:1.6;">Your registration is pending. Complete your payment to confirm your place in this cohort.</p>
         <a href="${PAYMENT_URL}" style="display:inline-block;background:#111;color:#fff;text-decoration:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:700;">Complete My Registration →</a>
       </div>
@@ -148,7 +148,7 @@ export function followUpEmailHtml({ fullName, companyName }) {
       <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
         <p style="margin:0 0 6px;color:#1d4ed8;font-size:13px;font-weight:700;">Why founders are registering fast</p>
         <ul style="margin:8px 0 0;padding-left:20px;color:#374151;font-size:13px;line-height:1.9;">
-          <li>2 days at ISB Hyderabad — hands-on, no fluff</li>
+          <li>2 days at ISB-CBI Hyderabad — hands-on, no fluff</li>
           <li>Leave with a working AI system for your business</li>
           <li>Cohort of 50 SME founders — peer learning built in</li>
           <li>No coding required whatsoever</li>
@@ -251,7 +251,7 @@ export function confirmationEmailHtml({ fullName, companyName, designation, indu
           </tr>
           <tr>
             <td style="padding:4px 0;color:#6b7280;font-size:13px;">Venue</td>
-            <td style="padding:4px 0;color:#111;font-size:13px;font-weight:600;">ISB Campus, Hyderabad</td>
+            <td style="padding:4px 0;color:#111;font-size:13px;font-weight:600;">ISB-CBI Campus, Hyderabad</td>
           </tr>
           <tr>
             <td style="padding:4px 0;color:#6b7280;font-size:13px;">Format</td>

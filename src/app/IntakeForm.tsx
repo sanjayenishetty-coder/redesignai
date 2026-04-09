@@ -74,7 +74,7 @@ export default function IntakeForm() {
 
   const handleWhatsAppShare = () => {
     const text = encodeURIComponent(
-      `I just applied for REDESIGN — a 2-day hands-on AI workshop at ISB Hyderabad for Indian SME owners.\n\nIf you run a business and want to build real AI workflows (no coding needed), check it out:\n${SHARE_URL}`
+      `I just applied for REDESIGN — a 2-day hands-on AI workshop at ISB-CBI Hyderabad for Indian SME owners.\n\nIf you run a business and want to build real AI workflows (no coding needed), check it out:\n${SHARE_URL}`
     );
     window.open(`https://wa.me/?text=${text}`, "_blank");
   };
@@ -127,7 +127,7 @@ export default function IntakeForm() {
     <div className="redesign-page">
       <div className="intake-page">
         <div className="intake-header">
-          <div className="intake-date-badge">📅 18th & 19th April 2026 · ISB Campus, Hyderabad</div>
+          <div className="intake-date-badge">📅 18th & 19th April 2026 · ISB-CBI Campus, Hyderabad</div>
           <div className="intake-banner">
             <img src="/assets/redesign-og.jpg" alt="REDESIGN — A 2-Day Hands-On AI Workshop for Indian SMEs" className="intake-banner-img" />
           </div>

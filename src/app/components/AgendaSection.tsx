@@ -19,7 +19,7 @@ const agendaItems = [
     time: "9:45 AM - 10:15 AM",
     title: "Accelerating growth through market capitalisation",
     speaker: "Prof. Rajendra Srivastava",
-    role: "Executive Director, ISB-CBI",
+    role: "Executive Director, ISB-CBI_PLACEHOLDER",
     desc: "Why hard work alone won't scale your business",
     image: "https://d2z9497xp8xb12.cloudfront.net/prod-images/917539c1770390993505Group_1597884391.png",
     type: "session"
@@ -97,7 +97,7 @@ const agendaItems = [
     time: "1:25 PM - 1:30 PM",
     title: "Closing Remarks",
     speaker: "Anvesh T",
-    role: "Associate Director, ISB-CBI",
+    role: "Associate Director, ISB-CBI_PLACEHOLDER",
     image: "https://d2z9497xp8xb12.cloudfront.net/prod-images/549907c1770392068830Group_1597884446.png",
     desc: "Key takeaways and what's next with ScaleMe",
     type: "session"

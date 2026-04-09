@@ -312,7 +312,7 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onBack }) => {
                       {/* event pill */}
                       <div className="inline-flex items-center gap-2 mt-4 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-400/20 text-amber-300 text-xs font-medium">
                           <span className="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block" />
-                          ISB Hyderabad · 21st February 2026
+                          ISB-CBI Hyderabad · 21st February 2026
                       </div>
                   </div>
               </div>

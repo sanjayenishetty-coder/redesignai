@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800;900&display=swap');
+
+  body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background: #0d1f1a;
+    position: relative;
+  }
+
+  /* Grid overlay */
+  .grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* Glow blobs */
+  .blob-1 {
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(32,178,130,0.18) 0%, transparent 70%);
+    top: -100px; left: -100px;
+    border-radius: 50%;
+  }
+  .blob-2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(239,104,32,0.15) 0%, transparent 70%);
+    bottom: -100px; right: 100px;
+    border-radius: 50%;
+  }
+
+  .container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 52px 72px;
+  }
+
+  /* Top row */
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    color: #fff;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+  .logo span {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: #4dd9b8;
+    margin-top: 4px;
+  }
+
+  .badge {
+    background: #EF6820;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 20px;
+    border-radius: 100px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* Middle */
+  .middle {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 0;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 700;
+    color: #4dd9b8;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 72px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+  }
+
+  h1 .highlight {
+    color: #4dd9b8;
+  }
+
+  .sub {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.5;
+    max-width: 680px;
+  }
+
+  /* Bottom */
+  .bottom {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .meta-item .icon {
+    font-size: 17px;
+  }
+
+  .divider {
+    width: 1px;
+    height: 20px;
+    background: rgba(255,255,255,0.2);
+  }
+
+  .scaleme-tag {
+    margin-left: auto;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.05em;
+  }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="blob-1"></div>
+  <div class="blob-2"></div>
+
+  <div class="container">
+    <div class="top">
+      <div class="logo">
+        REDESIGN
+        <span>BUILD · AUTOMATE · SCALE</span>
+      </div>
+      <div class="badge">April 2026 · Hyderabad</div>
+    </div>
+
+    <div class="middle">
+      <div class="eyebrow">A 2-Day Hands-On AI Workshop for Indian SMEs</div>
+      <h1>Stop Reading<br>About <span class="highlight">AI.</span><br>Start Building.</h1>
+      <p class="sub">Walk out with live systems, not notes. Built for SME founders & operators.</p>
+    </div>
+
+    <div class="bottom">
+      <div class="meta-item"><span class="icon">📅</span> One Weekend in April '26</div>
+      <div class="divider"></div>
+      <div class="meta-item"><span class="icon">📍</span> ISB-CBI Campus, Hyderabad</div>
+      <div class="divider"></div>
+      <div class="meta-item"><span class="icon">👥</span> Limited to 50 Seats</div>
+      <div class="scaleme-tag">scaleme.in/redesign-ai</div>
+    </div>
+  </div>
+</body>
+</html>
