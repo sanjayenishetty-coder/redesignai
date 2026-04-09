@@ -45,6 +45,7 @@ export default function Admin() {
   const [saving, setSaving] = useState<string | null>(null);
   const [emailSending, setEmailSending] = useState<string | null>(null);
   const [emailStatus, setEmailStatus] = useState<Record<string, "sent" | "error">>({});
+  const [emailType, setEmailType] = useState<Record<string, string>>({});
   const [deleting, setDeleting] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [bulkDeleting, setBulkDeleting] = useState(false);
@@ -112,7 +113,24 @@ export default function Admin() {
     setSaving(null);
   };
 
+  const DEFAULT_EMAIL_TYPE: Record<string, string> = {
+    new: "payment_reminder",
+    contacted: "follow_up",
+    paid: "confirmation",
+    rejected: "rejection",
+    attended: "post_event",
+  };
+
+  const EMAIL_TYPE_OPTIONS = [
+    { value: "payment_reminder", label: "Payment Reminder" },
+    { value: "follow_up", label: "Follow-up" },
+    { value: "confirmation", label: "Confirmation" },
+    { value: "rejection", label: "Rejection Notice" },
+    { value: "post_event", label: "Post-Event Thank You" },
+  ];
+
   const handleSendEmail = async (lead: Lead) => {
+    const type = emailType[lead.id] || DEFAULT_EMAIL_TYPE[lead.status] || "confirmation";
     setEmailSending(lead.id);
     try {
       const res = await fetch("/api/send-email", {
@@ -128,6 +146,7 @@ export default function Admin() {
           designation: lead.designation,
           industry: lead.industry,
           workshopGoals: lead.workshop_goals,
+          emailType: type,
         }),
       });
       setEmailStatus((prev) => ({ ...prev, [lead.id]: res.ok ? "sent" : "error" }));
@@ -470,6 +489,15 @@ export default function Admin() {
                               >
                                 {saving === lead.id ? "Saving..." : "Save Notes"}
                               </button>
+                              <select
+                                value={emailType[lead.id] || DEFAULT_EMAIL_TYPE[lead.status] || "confirmation"}
+                                onChange={(e) => setEmailType((prev) => ({ ...prev, [lead.id]: e.target.value }))}
+                                style={styles.emailTypeSelect}
+                              >
+                                {EMAIL_TYPE_OPTIONS.map((o) => (
+                                  <option key={o.value} value={o.value}>{o.label}</option>
+                                ))}
+                              </select>
                               <button
                                 onClick={() => handleSendEmail(lead)}
                                 disabled={emailSending === lead.id}
@@ -482,10 +510,10 @@ export default function Admin() {
                                 {emailSending === lead.id
                                   ? "Sending..."
                                   : emailStatus[lead.id] === "sent"
-                                  ? "✓ Email Sent"
+                                  ? "✓ Sent"
                                   : emailStatus[lead.id] === "error"
                                   ? "✗ Failed"
-                                  : "✉ Send Confirmation Email"}
+                                  : "✉ Send"}
                               </button>
                               <button
                                 onClick={() => handleDelete(lead.id, lead.full_name)}
@@ -721,6 +749,15 @@ const styles: Record<string, React.CSSProperties> = {
     cursor: "pointer",
   },
   empty: { textAlign: "center", padding: 60, color: "#6b7280", fontSize: 15 },
+  emailTypeSelect: {
+    padding: "7px 10px",
+    fontSize: 13,
+    border: "1.5px solid #e5e7eb",
+    borderRadius: 6,
+    background: "white",
+    cursor: "pointer",
+    outline: "none",
+  },
   emailBtn: {
     padding: "7px 18px",
     background: "#2563eb",

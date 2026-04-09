@@ -1,7 +1,36 @@
-import { confirmationEmailHtml } from "./email-template.js";
+import {
+  confirmationEmailHtml,
+  paymentReminderEmailHtml,
+  followUpEmailHtml,
+  rejectionEmailHtml,
+  postEventEmailHtml,
+} from "./email-template.js";
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const BREVO_API_KEY = process.env.BREVO_API_KEY;
+
+const EMAIL_CONFIGS = {
+  confirmation: {
+    subject: "You're confirmed for REDESIGN! 🎉",
+    build: (data) => confirmationEmailHtml(data),
+  },
+  payment_reminder: {
+    subject: "Only 40 seats left — complete your REDESIGN registration",
+    build: (data) => paymentReminderEmailHtml(data),
+  },
+  follow_up: {
+    subject: "Following up on your REDESIGN application",
+    build: (data) => followUpEmailHtml(data),
+  },
+  rejection: {
+    subject: "An update on your REDESIGN application",
+    build: (data) => rejectionEmailHtml(data),
+  },
+  post_event: {
+    subject: "Thank you for being at REDESIGN 🙏",
+    build: (data) => postEventEmailHtml(data),
+  },
+};
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -22,9 +51,20 @@ export default async function handler(req, res) {
 
   try {
     const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
-    const { email, fullName, companyName, designation, industry, workshopGoals } = body;
+    const { email, fullName, companyName, designation, industry, workshopGoals, emailType = "confirmation" } = body;
 
     if (!email) return res.status(400).json({ error: "Missing email" });
+
+    const config = EMAIL_CONFIGS[emailType];
+    if (!config) return res.status(400).json({ error: "Invalid email type" });
+
+    const htmlContent = config.build({
+      fullName: fullName || "there",
+      companyName: companyName || "",
+      designation: designation || "",
+      industry: industry || "",
+      workshopGoals: workshopGoals || [],
+    });
 
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
@@ -35,14 +75,8 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         sender: { name: "REDESIGN", email: "sanjay@scaleme.in" },
         to: [{ email, name: fullName || "" }],
-        subject: "Your REDESIGN application is received ✅",
-        htmlContent: confirmationEmailHtml({
-          fullName: fullName || "there",
-          companyName: companyName || "",
-          designation: designation || "",
-          industry: industry || "",
-          workshopGoals: workshopGoals || [],
-        }),
+        subject: config.subject,
+        htmlContent,
       }),
     });
 

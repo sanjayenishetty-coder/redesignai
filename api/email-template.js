@@ -92,7 +92,144 @@ export function interestEmailHtml({ fullName, companyName, designation, industry
   `);
 }
 
-// Email 2: Sent after payment is confirmed via Razorpay webhook
+// Email 2: Sent manually from CRM for "new" leads — payment reminder
+export function paymentReminderEmailHtml({ fullName, companyName, seatsLeft = 40 }) {
+  return emailWrapper(`
+    <tr><td style="background:#ffffff;padding:40px 40px 32px;">
+      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">Seats are filling fast — complete your payment</h2>
+      <p style="margin:0 0 24px;color:#374151;font-size:15px;line-height:1.6;">
+        Hi ${fullName},<br><br>
+        You applied for <strong>REDESIGN</strong> but your seat is still not confirmed. We currently have only <strong>${seatsLeft} seats remaining</strong> out of 50 — and registrations are coming in fast.
+      </p>
+
+      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
+        <p style="margin:0 0 6px;color:#991b1b;font-size:13px;font-weight:700;">⚠️ Your spot is not reserved yet</p>
+        <p style="margin:0 0 16px;color:#374151;font-size:13px;line-height:1.6;">
+          ${companyName ? `We reserved your application from ${companyName}, but` : "We have your application, but"} payment is the only thing that locks in your seat. Once we're full, we cannot accommodate late registrations.
+        </p>
+        <a href="${PAYMENT_URL}" style="display:inline-block;background:#dc2626;color:#fff;text-decoration:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:700;">Secure My Seat Now →</a>
+      </div>
+
+      <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
+        <p style="margin:0 0 12px;color:#6b7280;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;">Event Details</p>
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td style="padding:4px 0;color:#6b7280;font-size:13px;width:80px;">Date</td>
+            <td style="padding:4px 0;color:#111;font-size:13px;font-weight:600;">18th & 19th April 2026</td>
+          </tr>
+          <tr>
+            <td style="padding:4px 0;color:#6b7280;font-size:13px;">Venue</td>
+            <td style="padding:4px 0;color:#111;font-size:13px;font-weight:600;">ISB Campus, Hyderabad</td>
+          </tr>
+          <tr>
+            <td style="padding:4px 0;color:#6b7280;font-size:13px;">Seats left</td>
+            <td style="padding:4px 0;color:#dc2626;font-size:13px;font-weight:700;">${seatsLeft} of 50</td>
+          </tr>
+        </table>
+      </div>
+
+      <p style="margin:0;color:#6b7280;font-size:13px;line-height:1.6;">
+        Questions before paying? Just reply to this email — we're happy to help.<br><br>
+        Hope to see you in Hyderabad,<br>
+        <strong>Sanjay & The REDESIGN Team</strong>
+      </p>
+    </td></tr>
+  `);
+}
+
+// Email 3: Sent manually from CRM for "contacted" leads — follow-up
+export function followUpEmailHtml({ fullName, companyName }) {
+  return emailWrapper(`
+    <tr><td style="background:#ffffff;padding:40px 40px 32px;">
+      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">Following up on your REDESIGN application</h2>
+      <p style="margin:0 0 24px;color:#374151;font-size:15px;line-height:1.6;">
+        Hi ${fullName},<br><br>
+        We reached out to you about your application for <strong>REDESIGN</strong> and wanted to follow up. We'd love to have ${companyName ? `someone from ${companyName}` : "you"} at the workshop — it's shaping up to be a great cohort.
+      </p>
+
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
+        <p style="margin:0 0 6px;color:#1d4ed8;font-size:13px;font-weight:700;">Why founders are registering fast</p>
+        <ul style="margin:8px 0 0;padding-left:20px;color:#374151;font-size:13px;line-height:1.9;">
+          <li>2 days at ISB Hyderabad — hands-on, no fluff</li>
+          <li>Leave with a working AI system for your business</li>
+          <li>Cohort of 50 SME founders — peer learning built in</li>
+          <li>No coding required whatsoever</li>
+        </ul>
+      </div>
+
+      <div style="text-align:center;margin-bottom:28px;">
+        <a href="${PAYMENT_URL}" style="display:inline-block;background:#111;color:#fff;text-decoration:none;padding:14px 32px;border-radius:8px;font-size:14px;font-weight:700;">Register Now →</a>
+      </div>
+
+      <p style="margin:0;color:#6b7280;font-size:13px;line-height:1.6;">
+        If you have any questions or need more information before deciding, just reply to this email — I'm happy to jump on a quick call.<br><br>
+        Warm regards,<br>
+        <strong>Sanjay & The REDESIGN Team</strong>
+      </p>
+    </td></tr>
+  `);
+}
+
+// Email 4: Sent manually from CRM for "rejected" leads
+export function rejectionEmailHtml({ fullName }) {
+  return emailWrapper(`
+    <tr><td style="background:#ffffff;padding:40px 40px 32px;">
+      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">An update on your REDESIGN application</h2>
+      <p style="margin:0 0 24px;color:#374151;font-size:15px;line-height:1.6;">
+        Hi ${fullName},<br><br>
+        Thank you for applying to <strong>REDESIGN</strong>. We genuinely appreciate your interest and the time you took to fill out your application.<br><br>
+        Unfortunately, we are unable to accommodate your registration for the April 2026 cohort. Given the limited seats and the specific cohort profile we're curating, we had to make some difficult decisions.
+      </p>
+
+      <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
+        <p style="margin:0 0 8px;color:#111;font-size:13px;font-weight:700;">What's next</p>
+        <p style="margin:0;color:#374151;font-size:13px;line-height:1.7;">
+          We plan to run future cohorts of REDESIGN. If you'd like to be considered for a future batch, just reply to this email and we'll make sure you're first on the list.
+        </p>
+      </div>
+
+      <p style="margin:0;color:#6b7280;font-size:13px;line-height:1.6;">
+        Thank you again for your interest in REDESIGN. We hope to work with you in the future.<br><br>
+        Warm regards,<br>
+        <strong>Sanjay & The REDESIGN Team</strong>
+      </p>
+    </td></tr>
+  `);
+}
+
+// Email 5: Sent manually from CRM for "attended" leads — post-event
+export function postEventEmailHtml({ fullName }) {
+  return emailWrapper(`
+    <tr><td style="background:#ffffff;padding:40px 40px 32px;">
+      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">Thank you for being at REDESIGN 🙏</h2>
+      <p style="margin:0 0 24px;color:#374151;font-size:15px;line-height:1.6;">
+        Hi ${fullName},<br><br>
+        It was incredible having you at <strong>REDESIGN</strong>. Two days, one cohort, and a room full of people serious about building AI into their businesses — it doesn't get better than that.
+      </p>
+
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
+        <p style="margin:0 0 8px;color:#166534;font-size:13px;font-weight:700;">Your 90-day AI plan starts now</p>
+        <p style="margin:0;color:#374151;font-size:13px;line-height:1.7;">
+          You left with a plan — now it's time to execute. If you hit any roadblocks or have questions as you implement, reply to this email. We're here to help you succeed beyond the workshop.
+        </p>
+      </div>
+
+      <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
+        <p style="margin:0 0 8px;color:#111;font-size:13px;font-weight:700;">Know someone who should have been in the room?</p>
+        <p style="margin:0 0 12px;color:#374151;font-size:13px;line-height:1.6;">Share REDESIGN with them — we'll be announcing the next cohort soon.</p>
+        <a href="${SHARE_URL}" style="color:#2563eb;font-size:13px;font-weight:600;text-decoration:none;">${SHARE_URL} →</a>
+      </div>
+
+      <p style="margin:0;color:#6b7280;font-size:13px;line-height:1.6;">
+        Thank you for being part of this. Stay in touch.<br><br>
+        Warm regards,<br>
+        <strong>Sanjay & The REDESIGN Team</strong>
+      </p>
+    </td></tr>
+  `);
+}
+
+// Email 6: Sent after payment is confirmed via Razorpay webhook
 export function confirmationEmailHtml({ fullName, companyName, designation, industry, workshopGoals = [] }) {
   const goalsHtml = workshopGoals.length > 0
     ? workshopGoals.map(g => `<li style="margin-bottom:6px;">✓ ${g}</li>`).join("")
