@@ -317,7 +317,6 @@ export default function RedesignAI() {
           <div className="logo-strip-divider" />
           <div className="logo-partner">
             <img src="/assets/zaggle-logo.png" alt="Zaggle" className="logo-partner-img copartner-logo" />
-            <div className="logo-partner-desc">Spending Simplified</div>
           </div>
           <div className="logo-strip-divider" />
           <div className="logo-partner">
