@@ -663,7 +663,7 @@ export default function RedesignAI() {
                   </div>
                   <div className="roi-row" style={{ borderBottom: "none" }}>
                     <span className="roi-row-label">Investment</span>
-                    <span className="roi-row-value highlight">₹1,35,000</span>
+                    <span className="roi-row-value highlight">₹1,35,000 + GST</span>
                   </div>
                 </div>
                 <a
