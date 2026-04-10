@@ -49,6 +49,15 @@ export default function Admin() {
   const [deleting, setDeleting] = useState<string | null>(null);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [bulkDeleting, setBulkDeleting] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [csvUploading, setCsvUploading] = useState(false);
+  const [csvResult, setCsvResult] = useState<{ added: number; errors: number } | null>(null);
+  const [addForm, setAddForm] = useState({
+    full_name: "", email: "", phone: "", city: "",
+    company_name: "", designation: "", industry: "",
+    team_size: "", referred_by: "", status: "new", notes: "",
+  });
+  const [addSaving, setAddSaving] = useState(false);
 
   const fetchLeads = useCallback(async (pwd: string) => {
     setLoading(true);
@@ -214,6 +223,69 @@ export default function Admin() {
     }
   };
 
+  const handleAddLead = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAddSaving(true);
+    try {
+      const res = await fetch("/api/add-lead", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-password": sessionStorage.getItem("adminPwd") || "",
+        },
+        body: JSON.stringify(addForm),
+      });
+      if (!res.ok) throw new Error("Failed");
+      const { data } = await res.json();
+      setLeads((prev) => [data[0], ...prev]);
+      setShowAddModal(false);
+      setAddForm({ full_name: "", email: "", phone: "", city: "", company_name: "", designation: "", industry: "", team_size: "", referred_by: "", status: "new", notes: "" });
+    } catch {
+      alert("Failed to add lead. Try again.");
+    } finally {
+      setAddSaving(false);
+    }
+  };
+
+  const handleCsvUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setCsvUploading(true);
+    setCsvResult(null);
+
+    const text = await file.text();
+    const lines = text.trim().split("\n");
+    const headers = lines[0].split(",").map((h) => h.trim().replace(/^"|"$/g, "").toLowerCase().replace(/\s+/g, "_"));
+
+    const rows = lines.slice(1).map((line) => {
+      const values = line.split(",").map((v) => v.trim().replace(/^"|"$/g, ""));
+      const obj: Record<string, string> = {};
+      headers.forEach((h, i) => { obj[h] = values[i] || ""; });
+      return obj;
+    }).filter((r) => r.email);
+
+    let added = 0;
+    let errors = 0;
+    for (const row of rows) {
+      try {
+        const res = await fetch("/api/add-lead", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-admin-password": sessionStorage.getItem("adminPwd") || "",
+          },
+          body: JSON.stringify(row),
+        });
+        if (res.ok) { added++; } else { errors++; }
+      } catch { errors++; }
+    }
+
+    setCsvResult({ added, errors });
+    setCsvUploading(false);
+    e.target.value = "";
+    fetchLeads(sessionStorage.getItem("adminPwd") || "");
+  };
+
   const filtered = leads.filter((l) => {
     const matchesSearch =
       search === "" ||
@@ -274,6 +346,16 @@ export default function Admin() {
           <span style={styles.headerSub}>{leads.length} total applicants</span>
         </div>
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+          <button onClick={() => setShowAddModal(true)} style={styles.addBtn}>+ Add Lead</button>
+          <label style={styles.csvBtn}>
+            {csvUploading ? "Uploading..." : "↑ Upload CSV"}
+            <input type="file" accept=".csv" onChange={handleCsvUpload} style={{ display: "none" }} disabled={csvUploading} />
+          </label>
+          {csvResult && (
+            <span style={{ fontSize: 12, color: csvResult.errors > 0 ? "#dc2626" : "#16a34a" }}>
+              {csvResult.added} added{csvResult.errors > 0 ? `, ${csvResult.errors} failed` : ""}
+            </span>
+          )}
           <button onClick={() => fetchLeads(sessionStorage.getItem("adminPwd") || "")} style={styles.refreshBtn}>
             ↻ Refresh
           </button>
@@ -534,6 +616,70 @@ export default function Admin() {
           </table>
         </div>
       )}
+
+      {/* Add Lead Modal */}
+      {showAddModal && (
+        <div style={styles.modalOverlay}>
+          <div style={styles.modalBox}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+              <h3 style={{ margin: 0, fontSize: 17, fontWeight: 700 }}>Add Lead Manually</h3>
+              <button onClick={() => setShowAddModal(false)} style={{ background: "none", border: "none", fontSize: 20, cursor: "pointer", color: "#6b7280" }}>×</button>
+            </div>
+            <form onSubmit={handleAddLead}>
+              <div style={styles.modalGrid}>
+                {[
+                  { label: "Full Name *", key: "full_name", required: true },
+                  { label: "Email *", key: "email", required: true },
+                  { label: "Phone", key: "phone" },
+                  { label: "City", key: "city" },
+                  { label: "Company Name", key: "company_name" },
+                  { label: "Designation", key: "designation" },
+                  { label: "Industry", key: "industry" },
+                  { label: "Team Size", key: "team_size" },
+                  { label: "Referred By", key: "referred_by" },
+                ].map(({ label, key, required }) => (
+                  <div key={key}>
+                    <label style={styles.modalLabel}>{label}</label>
+                    <input
+                      style={styles.modalInput}
+                      value={(addForm as any)[key]}
+                      onChange={(e) => setAddForm((p) => ({ ...p, [key]: e.target.value }))}
+                      required={required}
+                    />
+                  </div>
+                ))}
+                <div>
+                  <label style={styles.modalLabel}>Status</label>
+                  <select
+                    style={styles.modalInput}
+                    value={addForm.status}
+                    onChange={(e) => setAddForm((p) => ({ ...p, status: e.target.value }))}
+                  >
+                    {STATUS_OPTIONS.map((s) => (
+                      <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div style={{ marginTop: 12 }}>
+                <label style={styles.modalLabel}>Notes</label>
+                <textarea
+                  rows={2}
+                  style={{ ...styles.modalInput, resize: "vertical" as const }}
+                  value={addForm.notes}
+                  onChange={(e) => setAddForm((p) => ({ ...p, notes: e.target.value }))}
+                />
+              </div>
+              <div style={{ display: "flex", gap: 10, marginTop: 20, justifyContent: "flex-end" }}>
+                <button type="button" onClick={() => setShowAddModal(false)} style={styles.logoutBtn}>Cancel</button>
+                <button type="submit" disabled={addSaving} style={styles.addBtn}>
+                  {addSaving ? "Saving..." : "Add Lead"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -779,6 +925,71 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 13,
     fontWeight: 600,
     cursor: "pointer",
+  },
+  addBtn: {
+    padding: "8px 16px",
+    background: "#2563eb",
+    color: "white",
+    border: "none",
+    borderRadius: 6,
+    fontSize: 13,
+    fontWeight: 700,
+    cursor: "pointer",
+    whiteSpace: "nowrap" as const,
+  },
+  csvBtn: {
+    padding: "8px 16px",
+    background: "#f3f4f6",
+    color: "#111",
+    border: "1.5px solid #e5e7eb",
+    borderRadius: 6,
+    fontSize: 13,
+    fontWeight: 600,
+    cursor: "pointer",
+    whiteSpace: "nowrap" as const,
+  },
+  modalOverlay: {
+    position: "fixed" as const,
+    inset: 0,
+    background: "rgba(0,0,0,0.5)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1000,
+  },
+  modalBox: {
+    background: "white",
+    borderRadius: 12,
+    padding: "28px 32px",
+    width: 640,
+    maxWidth: "95vw",
+    maxHeight: "90vh",
+    overflowY: "auto" as const,
+    boxShadow: "0 8px 40px rgba(0,0,0,0.18)",
+  },
+  modalGrid: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "12px 20px",
+  },
+  modalLabel: {
+    display: "block",
+    fontSize: 11,
+    fontWeight: 600,
+    color: "#6b7280",
+    textTransform: "uppercase" as const,
+    letterSpacing: "0.06em",
+    marginBottom: 4,
+  },
+  modalInput: {
+    width: "100%",
+    padding: "8px 10px",
+    fontSize: 13,
+    border: "1.5px solid #e5e7eb",
+    borderRadius: 6,
+    outline: "none",
+    boxSizing: "border-box" as const,
+    fontFamily: "system-ui, sans-serif",
   },
   bulkDeleteBtn: {
     padding: "8px 18px",
