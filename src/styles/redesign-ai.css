@@ -2011,3 +2011,91 @@
   color: white;
   border: 1px solid rgba(255,255,255,0.2);
 }
+
+/* Co-Brand Partners Strip */
+.redesign-page .copartner-strip {
+  background: #fafafa;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 32px 24px;
+}
+.redesign-page .copartner-strip-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.redesign-page .copartner-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9ca3af;
+  white-space: nowrap;
+}
+.redesign-page .copartner-cards {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.redesign-page .copartner-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+.redesign-page .copartner-logo {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(0%);
+  opacity: 0.9;
+}
+.redesign-page .copartner-tagline {
+  font-size: 11px;
+  color: #6b7280;
+  font-weight: 500;
+}
+.redesign-page .copartner-divider {
+  width: 1px;
+  height: 56px;
+  background: #e5e7eb;
+}
+
+/* Footer Partners */
+.redesign-page .footer-partners {
+  padding: 24px 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.redesign-page .footer-partners-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6b7280;
+  white-space: nowrap;
+}
+.redesign-page .footer-partners-logos {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+.redesign-page .footer-partner-logo {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.6;
+}

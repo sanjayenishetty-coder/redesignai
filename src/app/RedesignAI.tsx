@@ -308,6 +308,24 @@ export default function RedesignAI() {
         </div>
       </div>
 
+      {/* Co-Brand Partners */}
+      <div className="copartner-strip">
+        <div className="copartner-strip-inner">
+          <div className="copartner-label">Co-Brand Partners</div>
+          <div className="copartner-cards">
+            <div className="copartner-card">
+              <img src="/assets/zaggle-logo.png" alt="Zaggle" className="copartner-logo" />
+              <div className="copartner-tagline">Gifting 5 seats to their SME customers</div>
+            </div>
+            <div className="copartner-divider" />
+            <div className="copartner-card">
+              <img src="/assets/alliance-pro-logo.png" alt="Alliance Pro" className="copartner-logo" />
+              <div className="copartner-tagline">Gifting 5 seats to their channel partners</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Problem / Solution */}
       <section className="section problem-section" id="about">
         <div className="section-inner">
@@ -834,6 +852,13 @@ export default function RedesignAI() {
                 <li><a href="#pricing" onClick={(e) => { e.preventDefault(); scrollToSection("pricing"); }}>Pricing</a></li>
                 <li><a href="#faq" onClick={(e) => { e.preventDefault(); scrollToSection("faq"); }}>FAQs</a></li>
               </ul>
+            </div>
+          </div>
+          <div className="footer-partners">
+            <div className="footer-partners-label">Co-Brand Partners</div>
+            <div className="footer-partners-logos">
+              <img src="/assets/zaggle-logo.png" alt="Zaggle" className="footer-partner-logo" />
+              <img src="/assets/alliance-pro-logo.png" alt="Alliance Pro" className="footer-partner-logo" />
             </div>
           </div>
           <div className="footer-bottom">
