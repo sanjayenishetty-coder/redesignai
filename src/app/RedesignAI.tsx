@@ -667,7 +667,7 @@ export default function RedesignAI() {
                   </div>
                 </div>
                 <a
-                  href="mailto:sanjay@scaleme.in?subject=Co-Brand Partner Enquiry — REDESIGN&body=Hi Sanjay, I'm interested in the Co-Brand Partner slot for REDESIGN. Please share more details."
+                  href="https://wa.me/919010155595?text=Hi%20Sanjay%2C%20I%27m%20interested%20in%20the%20Co-Brand%20Partner%20slot%20for%20REDESIGN-ai.%20Please%20share%20more%20details."
                   style={{
                     display: "inline-block",
                     marginTop: "16px",
