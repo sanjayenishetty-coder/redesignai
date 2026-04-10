@@ -597,6 +597,16 @@ export default function Admin() {
                                   ? "✗ Failed"
                                   : "✉ Send"}
                               </button>
+                              {lead.phone && (
+                                <a
+                                  href={`https://wa.me/${lead.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(`Hi ${lead.full_name}, this is Sanjay from REDESIGN-ai. `)}`}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  style={styles.whatsappBtn}
+                                >
+                                  💬 WhatsApp
+                                </a>
+                              )}
                               <button
                                 onClick={() => handleDelete(lead.id, lead.full_name)}
                                 disabled={deleting === lead.id}
@@ -916,6 +926,18 @@ const styles: Record<string, React.CSSProperties> = {
   },
   emailBtnSent: { background: "#16a34a" },
   emailBtnError: { background: "#dc2626" },
+  whatsappBtn: {
+    padding: "7px 18px",
+    background: "#25d366",
+    color: "white",
+    border: "none",
+    borderRadius: 6,
+    fontSize: 13,
+    fontWeight: 600,
+    cursor: "pointer",
+    textDecoration: "none",
+    display: "inline-block",
+  },
   deleteBtn: {
     padding: "7px 18px",
     background: "white",
