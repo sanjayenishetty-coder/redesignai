@@ -320,7 +320,6 @@ export default function RedesignAI() {
             <div className="copartner-divider" />
             <div className="copartner-card">
               <img src="/assets/alliance-pro-logo.png" alt="Alliance Pro" className="copartner-logo" />
-              <div className="copartner-tagline">Gifting 5 seats to their channel partners</div>
             </div>
           </div>
         </div>
