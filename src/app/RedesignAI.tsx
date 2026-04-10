@@ -315,7 +315,7 @@ export default function RedesignAI() {
           <div className="copartner-cards">
             <div className="copartner-card">
               <img src="/assets/zaggle-logo.png" alt="Zaggle" className="copartner-logo" />
-              <div className="copartner-tagline">Gifting 5 seats to their SME customers</div>
+              <div className="copartner-tagline">Spending Simplified</div>
             </div>
             <div className="copartner-divider" />
             <div className="copartner-card">
