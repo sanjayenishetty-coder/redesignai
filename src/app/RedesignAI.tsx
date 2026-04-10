@@ -308,19 +308,20 @@ export default function RedesignAI() {
         </div>
       </div>
 
-      {/* Co-Brand Partners */}
-      <div className="copartner-strip">
-        <div className="copartner-strip-inner">
-          <div className="copartner-label">Partners</div>
-          <div className="copartner-cards">
-            <div className="copartner-card">
-              <img src="/assets/zaggle-logo.png" alt="Zaggle" className="copartner-logo" />
-              <div className="copartner-tagline">Spending Simplified</div>
-            </div>
-            <div className="copartner-divider" />
-            <div className="copartner-card">
-              <img src="/assets/alliance-pro-logo.png" alt="Alliance Pro" className="copartner-logo" />
-            </div>
+      {/* Co-Partners */}
+      <div className="logo-strip copartner-strip">
+        <div className="logo-strip-inner">
+          <div className="hosted-label-col">
+            <span className="hosted-label">Co-Partners</span>
+          </div>
+          <div className="logo-strip-divider" />
+          <div className="logo-partner">
+            <img src="/assets/zaggle-logo.png" alt="Zaggle" className="logo-partner-img copartner-logo" />
+            <div className="logo-partner-desc">Spending Simplified</div>
+          </div>
+          <div className="logo-strip-divider" />
+          <div className="logo-partner">
+            <img src="/assets/alliance-pro-logo.png" alt="Alliance Pro" className="logo-partner-img copartner-logo" />
           </div>
         </div>
       </div>

@@ -2012,59 +2012,15 @@
   border: 1px solid rgba(255,255,255,0.2);
 }
 
-/* Co-Brand Partners Strip */
+/* Co-Partners Strip */
 .redesign-page .copartner-strip {
-  background: #fafafa;
-  border-top: 1px solid #e5e7eb;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 32px 24px;
-}
-.redesign-page .copartner-strip-inner {
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.redesign-page .copartner-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #9ca3af;
-  white-space: nowrap;
-}
-.redesign-page .copartner-cards {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.redesign-page .copartner-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  text-align: center;
+  border-top: none;
 }
 .redesign-page .copartner-logo {
-  width: 120px;
-  height: 44px;
+  width: 120px !important;
+  height: 44px !important;
   object-fit: contain;
   opacity: 0.9;
-}
-.redesign-page .copartner-tagline {
-  font-size: 11px;
-  color: #6b7280;
-  font-weight: 500;
-}
-.redesign-page .copartner-divider {
-  width: 1px;
-  height: 56px;
-  background: #e5e7eb;
 }
 
 /* Footer Partners */
