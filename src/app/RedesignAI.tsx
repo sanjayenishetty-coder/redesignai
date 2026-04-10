@@ -339,6 +339,10 @@ export default function RedesignAI() {
           <div className="logo-partner">
             <img src="/assets/plugin-alliance-logo.png" alt="Plugin Alliance" className="logo-partner-img copartner-logo" />
           </div>
+          <div className="logo-strip-divider" />
+          <div className="logo-partner">
+            <img src="/assets/nse-emerge-logo.png" alt="NSE Emerge" className="logo-partner-img copartner-logo" />
+          </div>
         </div>
       </div>
 
