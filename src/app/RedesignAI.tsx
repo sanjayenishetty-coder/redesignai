@@ -325,6 +325,23 @@ export default function RedesignAI() {
         </div>
       </div>
 
+      {/* Ecosystem Partners */}
+      <div className="logo-strip copartner-strip">
+        <div className="logo-strip-inner">
+          <div className="hosted-label-col">
+            <span className="hosted-label">Ecosystem Partners</span>
+          </div>
+          <div className="logo-strip-divider" />
+          <div className="logo-partner">
+            <img src="/assets/ficci-flo-logo.png" alt="FICCI FLO" className="logo-partner-img copartner-logo" />
+          </div>
+          <div className="logo-strip-divider" />
+          <div className="logo-partner">
+            <img src="/assets/plugin-alliance-logo.png" alt="Plugin Alliance" className="logo-partner-img copartner-logo" />
+          </div>
+        </div>
+      </div>
+
       {/* Problem / Solution */}
       <section className="section problem-section" id="about">
         <div className="section-inner">
