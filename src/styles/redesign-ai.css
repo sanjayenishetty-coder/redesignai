@@ -2017,8 +2017,9 @@
   border-top: none;
 }
 .redesign-page .copartner-logo {
-  width: 120px !important;
-  height: 44px !important;
+  height: 44px;
+  width: auto;
+  max-width: 140px;
   object-fit: contain;
   opacity: 0.9;
 }
