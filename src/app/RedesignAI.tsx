@@ -337,6 +337,10 @@ export default function RedesignAI() {
           <div className="logo-partner">
             <img src="/assets/alliance-pro-logo.png" alt="Alliance Pro" className="logo-partner-img copartner-logo" />
           </div>
+          <div className="logo-strip-divider" />
+          <div className="logo-partner">
+            <img src="/assets/finteract-logo.png" alt="Finteract AI" className="logo-partner-img copartner-logo" />
+          </div>
         </div>
       </div>
 
