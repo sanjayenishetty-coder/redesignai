@@ -32,6 +32,14 @@ type Lead = {
   notes: string | null;
 };
 
+type ActivityEntry = {
+  id: string;
+  action: string;
+  details: string | null;
+  performed_by: string;
+  created_at: string;
+};
+
 export default function Admin() {
   const [password, setPassword] = useState(() => sessionStorage.getItem("adminPwd") || "");
   const [authed, setAuthed] = useState(false);
@@ -58,6 +66,9 @@ export default function Admin() {
     team_size: "", referred_by: "", status: "new", notes: "",
   });
   const [addSaving, setAddSaving] = useState(false);
+  const [activeTab, setActiveTab] = useState<"leads" | "analytics">("leads");
+  const [leadActivity, setLeadActivity] = useState<Record<string, ActivityEntry[]>>({});
+  const [activityLoading, setActivityLoading] = useState<string | null>(null);
 
   const fetchLeads = useCallback(async (pwd: string) => {
     setLoading(true);
@@ -105,6 +116,7 @@ export default function Admin() {
       body: JSON.stringify({ id, status }),
     });
     setSaving(null);
+    logActivity(id, leads.find(l => l.id === id)?.full_name || "", "Status changed", `→ ${status}`);
   };
 
   const handleSaveNotes = async (id: string) => {
@@ -120,6 +132,7 @@ export default function Admin() {
       body: JSON.stringify({ id, notes }),
     });
     setSaving(null);
+    logActivity(id, leads.find(l => l.id === id)?.full_name || "", "Notes updated");
   };
 
   const DEFAULT_EMAIL_TYPE: Record<string, string> = {
@@ -159,6 +172,9 @@ export default function Admin() {
         }),
       });
       setEmailStatus((prev) => ({ ...prev, [lead.id]: res.ok ? "sent" : "error" }));
+      if (res.ok) {
+        logActivity(lead.id, lead.full_name, "Email sent", type);
+      }
       setTimeout(() => setEmailStatus((prev) => { const n = { ...prev }; delete n[lead.id]; return n; }), 3000);
     } catch {
       setEmailStatus((prev) => ({ ...prev, [lead.id]: "error" }));
@@ -180,6 +196,7 @@ export default function Admin() {
         },
         body: JSON.stringify({ id }),
       });
+      logActivity(id, name, "Lead deleted");
       setLeads((prev) => prev.filter((l) => l.id !== id));
     } catch {
       alert("Failed to delete. Try again.");
@@ -238,6 +255,7 @@ export default function Admin() {
       if (!res.ok) throw new Error("Failed");
       const { data } = await res.json();
       setLeads((prev) => [data[0], ...prev]);
+      logActivity(data[0].id, data[0].full_name, "Lead added manually");
       setShowAddModal(false);
       setAddForm({ full_name: "", email: "", phone: "", city: "", company_name: "", designation: "", industry: "", team_size: "", referred_by: "", status: "new", notes: "" });
     } catch {
@@ -334,6 +352,31 @@ export default function Admin() {
     setLeads([]);
   };
 
+  const logActivity = async (leadId: string, leadName: string, action: string, details?: string) => {
+    try {
+      await fetch("/api/log-activity", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-admin-password": sessionStorage.getItem("adminPwd") || "" },
+        body: JSON.stringify({ lead_id: leadId, lead_name: leadName, action, details }),
+      });
+    } catch { /* silent */ }
+  };
+
+  const fetchLeadActivity = async (leadId: string) => {
+    setActivityLoading(leadId);
+    try {
+      const res = await fetch(`/api/get-activity?lead_id=${leadId}`, {
+        headers: { "x-admin-password": sessionStorage.getItem("adminPwd") || "" },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setLeadActivity(prev => ({ ...prev, [leadId]: data }));
+      }
+    } finally {
+      setActivityLoading(null);
+    }
+  };
+
   if (!authed) {
     return (
       <div style={styles.loginWrap}>
@@ -404,249 +447,461 @@ export default function Admin() {
         ))}
       </div>
 
-      {/* Filters */}
-      <div style={styles.filters}>
-        <input
-          placeholder="Search by name, email, company, city..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          style={styles.searchInput}
-        />
-        <select
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
-          style={styles.filterSelect}
-        >
-          <option value="all">All Statuses</option>
-          {STATUS_OPTIONS.map((s) => (
-            <option key={s} value={s}>
-              {s.charAt(0).toUpperCase() + s.slice(1)}
-            </option>
-          ))}
-        </select>
-        <span style={styles.resultCount}>{filtered.length} result{filtered.length !== 1 ? "s" : ""}</span>
-        {selectedIds.size > 0 && (
-          <button
-            onClick={() => handleBulkDelete(Array.from(selectedIds))}
-            disabled={bulkDeleting}
-            style={styles.bulkDeleteBtn}
-          >
-            {bulkDeleting ? "Deleting..." : `🗑 Delete ${selectedIds.size} selected`}
+      {/* Tab Navigation */}
+      <div style={styles.tabNav}>
+        {(["leads", "analytics"] as const).map((tab) => (
+          <button key={tab} onClick={() => setActiveTab(tab)} style={{ ...styles.tabBtn, ...(activeTab === tab ? styles.tabBtnActive : {}) }}>
+            {tab === "leads" ? `📋 Leads (${leads.length})` : "📊 Analytics"}
           </button>
-        )}
+        ))}
       </div>
 
-      {/* Table */}
-      {loading ? (
-        <div style={styles.empty}>Loading leads...</div>
-      ) : filtered.length === 0 ? (
-        <div style={styles.empty}>No leads found.</div>
-      ) : (
-        <div style={styles.tableWrap}>
-          <table style={styles.table}>
-            <thead>
-              <tr style={styles.thead}>
-                <th style={{ ...styles.th, width: 36, textAlign: "center" }}>
-                  <input
-                    type="checkbox"
-                    checked={selectedIds.size === filtered.length && filtered.length > 0}
-                    onChange={() => toggleSelectAll(filtered.map((l) => l.id))}
-                  />
-                </th>
-                <th style={{ ...styles.th, width: 36, textAlign: "center" }}>#</th>
-                <th style={styles.th}>Name</th>
-                <th style={styles.th}>Contact</th>
-                <th style={styles.th}>Company</th>
-                <th style={styles.th}>Industry</th>
-                <th style={styles.th}>Team</th>
-                <th style={styles.th}>City</th>
-                <th style={styles.th}>Referred By</th>
-                <th style={styles.th}>Applied</th>
-                <th style={styles.th}>Status</th>
-                <th style={styles.th}>Details</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((lead, idx) => (
-                <>
-                  <tr
-                    key={lead.id}
-                    style={{
-                      ...styles.row,
-                      background: selectedIds.has(lead.id) ? "#fef9c3" : expandedId === lead.id ? "#f0f4ff" : "white",
-                    }}
-                  >
-                    <td style={{ ...styles.td, textAlign: "center" }}>
+      {activeTab === "leads" && (
+        <>
+          {/* Filters */}
+          <div style={styles.filters}>
+            <input
+              placeholder="Search by name, email, company, city..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              style={styles.searchInput}
+            />
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              style={styles.filterSelect}
+            >
+              <option value="all">All Statuses</option>
+              {STATUS_OPTIONS.map((s) => (
+                <option key={s} value={s}>
+                  {s.charAt(0).toUpperCase() + s.slice(1)}
+                </option>
+              ))}
+            </select>
+            <span style={styles.resultCount}>{filtered.length} result{filtered.length !== 1 ? "s" : ""}</span>
+            {selectedIds.size > 0 && (
+              <button
+                onClick={() => handleBulkDelete(Array.from(selectedIds))}
+                disabled={bulkDeleting}
+                style={styles.bulkDeleteBtn}
+              >
+                {bulkDeleting ? "Deleting..." : `🗑 Delete ${selectedIds.size} selected`}
+              </button>
+            )}
+          </div>
+
+          {/* Table */}
+          {loading ? (
+            <div style={styles.empty}>Loading leads...</div>
+          ) : filtered.length === 0 ? (
+            <div style={styles.empty}>No leads found.</div>
+          ) : (
+            <div style={styles.tableWrap}>
+              <table style={styles.table}>
+                <thead>
+                  <tr style={styles.thead}>
+                    <th style={{ ...styles.th, width: 36, textAlign: "center" }}>
                       <input
                         type="checkbox"
-                        checked={selectedIds.has(lead.id)}
-                        onChange={() => toggleSelect(lead.id)}
+                        checked={selectedIds.size === filtered.length && filtered.length > 0}
+                        onChange={() => toggleSelectAll(filtered.map((l) => l.id))}
                       />
-                    </td>
-                    <td style={{ ...styles.td, textAlign: "center", color: "#9ca3af", fontSize: 12 }}>
-                      {idx + 1}
-                    </td>
-                    <td style={styles.td}>
-                      <div style={styles.name}>{lead.full_name}</div>
-                      <div style={styles.desig}>{lead.designation}</div>
-                    </td>
-                    <td style={styles.td}>
-                      <div style={styles.email}>{lead.email}</div>
-                      <div style={styles.phone}>{lead.phone}</div>
-                    </td>
-                    <td style={styles.td}>
-                      <div style={styles.company}>{lead.company_name}</div>
-                      {lead.company_website && (
-                        <a href={lead.company_website} target="_blank" rel="noreferrer" style={styles.link}>
-                          website ↗
-                        </a>
-                      )}
-                    </td>
-                    <td style={styles.td}>{lead.industry}</td>
-                    <td style={styles.td}>{lead.team_size}</td>
-                    <td style={styles.td}>{lead.city}</td>
-                    <td style={styles.td}>{lead.referred_by || "—"}</td>
-                    <td style={styles.td}>
-                      {new Date(lead.created_at).toLocaleDateString("en-IN", {
-                        day: "numeric",
-                        month: "short",
-                        year: "numeric",
-                      })}
-                    </td>
-                    <td style={styles.td}>
-                      <select
-                        value={lead.status}
-                        onChange={(e) => handleStatusChange(lead.id, e.target.value)}
-                        disabled={saving === lead.id}
+                    </th>
+                    <th style={{ ...styles.th, width: 36, textAlign: "center" }}>#</th>
+                    <th style={styles.th}>Name</th>
+                    <th style={styles.th}>Contact</th>
+                    <th style={styles.th}>Company</th>
+                    <th style={styles.th}>Industry</th>
+                    <th style={styles.th}>Team</th>
+                    <th style={styles.th}>City</th>
+                    <th style={styles.th}>Referred By</th>
+                    <th style={styles.th}>Applied</th>
+                    <th style={styles.th}>Status</th>
+                    <th style={styles.th}>Details</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.map((lead, idx) => (
+                    <>
+                      <tr
+                        key={lead.id}
                         style={{
-                          ...styles.statusSelect,
-                          color: STATUS_COLORS[lead.status] || "#111",
-                          borderColor: STATUS_COLORS[lead.status] || "#ccc",
+                          ...styles.row,
+                          background: selectedIds.has(lead.id) ? "#fef9c3" : expandedId === lead.id ? "#f0f4ff" : "white",
                         }}
                       >
-                        {STATUS_OPTIONS.map((s) => (
-                          <option key={s} value={s}>
-                            {s.charAt(0).toUpperCase() + s.slice(1)}
-                          </option>
-                        ))}
-                      </select>
-                    </td>
-                    <td style={styles.td}>
-                      <button
-                        onClick={() => setExpandedId(expandedId === lead.id ? null : lead.id)}
-                        style={styles.expandBtn}
-                      >
-                        {expandedId === lead.id ? "▲ Hide" : "▼ View"}
-                      </button>
-                    </td>
-                  </tr>
-
-                  {expandedId === lead.id && (
-                    <tr key={`${lead.id}-detail`} style={{ background: "#f0f4ff" }}>
-                      <td colSpan={12} style={styles.detailCell}>
-                        <div style={styles.detailGrid}>
-                          <div style={styles.detailBlock}>
-                            <div style={styles.detailLabel}>AI Usage</div>
-                            <div style={styles.detailVal}>{lead.current_ai_usage}</div>
-                          </div>
-                          <div style={styles.detailBlock}>
-                            <div style={styles.detailLabel}>Workshop Goals</div>
-                            <div style={styles.detailVal}>
-                              {lead.workshop_goals?.length > 0
-                                ? lead.workshop_goals.map((g) => (
-                                    <span key={g} style={styles.goalTag}>{g}</span>
-                                  ))
-                                : "—"}
-                            </div>
-                          </div>
-                          <div style={styles.detailBlock}>
-                            <div style={styles.detailLabel}>Biggest Challenge</div>
-                            <div style={styles.detailVal}>{lead.biggest_challenge || "—"}</div>
-                          </div>
-                          <div style={styles.detailBlock}>
-                            <div style={styles.detailLabel}>Specific Tools</div>
-                            <div style={styles.detailVal}>{lead.specific_tools || "—"}</div>
-                          </div>
-                          {lead.linkedin_profile && (
-                            <div style={styles.detailBlock}>
-                              <div style={styles.detailLabel}>LinkedIn</div>
-                              <a href={lead.linkedin_profile} target="_blank" rel="noreferrer" style={styles.link}>
-                                View profile ↗
-                              </a>
-                            </div>
+                        <td style={{ ...styles.td, textAlign: "center" }}>
+                          <input
+                            type="checkbox"
+                            checked={selectedIds.has(lead.id)}
+                            onChange={() => toggleSelect(lead.id)}
+                          />
+                        </td>
+                        <td style={{ ...styles.td, textAlign: "center", color: "#9ca3af", fontSize: 12 }}>
+                          {idx + 1}
+                        </td>
+                        <td style={styles.td}>
+                          <div style={styles.name}>{lead.full_name}</div>
+                          <div style={styles.desig}>{lead.designation}</div>
+                        </td>
+                        <td style={styles.td}>
+                          <div style={styles.email}>{lead.email}</div>
+                          <div style={styles.phone}>{lead.phone}</div>
+                        </td>
+                        <td style={styles.td}>
+                          <div style={styles.company}>{lead.company_name}</div>
+                          {lead.company_website && (
+                            <a href={lead.company_website} target="_blank" rel="noreferrer" style={styles.link}>
+                              website ↗
+                            </a>
                           )}
-                          <div style={{ ...styles.detailBlock, gridColumn: "1 / -1" }}>
-                            <div style={styles.detailLabel}>Internal Notes</div>
-                            <textarea
-                              rows={3}
-                              placeholder="Add notes about this lead..."
-                              value={editNotes[lead.id] ?? lead.notes ?? ""}
-                              onChange={(e) =>
-                                setEditNotes((prev) => ({ ...prev, [lead.id]: e.target.value }))
-                              }
-                              style={styles.notesArea}
-                            />
-                            <div style={{ display: "flex", gap: 10, marginTop: 8, alignItems: "center" }}>
-                              <button
-                                onClick={() => handleSaveNotes(lead.id)}
-                                disabled={saving === lead.id}
-                                style={styles.saveBtn}
-                              >
-                                {saving === lead.id ? "Saving..." : "Save Notes"}
-                              </button>
-                              <select
-                                value={emailType[lead.id] || DEFAULT_EMAIL_TYPE[lead.status] || "confirmation"}
-                                onChange={(e) => setEmailType((prev) => ({ ...prev, [lead.id]: e.target.value }))}
-                                style={styles.emailTypeSelect}
-                              >
-                                {EMAIL_TYPE_OPTIONS.map((o) => (
-                                  <option key={o.value} value={o.value}>{o.label}</option>
-                                ))}
-                              </select>
-                              <button
-                                onClick={() => handleSendEmail(lead)}
-                                disabled={emailSending === lead.id}
-                                style={{
-                                  ...styles.emailBtn,
-                                  ...(emailStatus[lead.id] === "sent" ? styles.emailBtnSent : {}),
-                                  ...(emailStatus[lead.id] === "error" ? styles.emailBtnError : {}),
-                                }}
-                              >
-                                {emailSending === lead.id
-                                  ? "Sending..."
-                                  : emailStatus[lead.id] === "sent"
-                                  ? "✓ Sent"
-                                  : emailStatus[lead.id] === "error"
-                                  ? "✗ Failed"
-                                  : "✉ Send"}
-                              </button>
-                              {lead.phone && (
-                                <a
-                                  href={(() => { const num = lead.phone.replace(/[^0-9]/g, ""); const e164 = num.startsWith("91") && num.length === 12 ? num : num.length === 10 ? `91${num}` : num; return `https://wa.me/${e164}?text=${encodeURIComponent(`Hi ${lead.full_name}, this is Sanjay from REDESIGN-ai. `)}`; })()}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  style={styles.whatsappBtn}
-                                >
-                                  💬 WhatsApp
-                                </a>
+                        </td>
+                        <td style={styles.td}>{lead.industry}</td>
+                        <td style={styles.td}>{lead.team_size}</td>
+                        <td style={styles.td}>{lead.city}</td>
+                        <td style={styles.td}>{lead.referred_by || "—"}</td>
+                        <td style={styles.td}>
+                          {new Date(lead.created_at).toLocaleDateString("en-IN", {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          })}
+                        </td>
+                        <td style={styles.td}>
+                          <select
+                            value={lead.status}
+                            onChange={(e) => handleStatusChange(lead.id, e.target.value)}
+                            disabled={saving === lead.id}
+                            style={{
+                              ...styles.statusSelect,
+                              color: STATUS_COLORS[lead.status] || "#111",
+                              borderColor: STATUS_COLORS[lead.status] || "#ccc",
+                            }}
+                          >
+                            {STATUS_OPTIONS.map((s) => (
+                              <option key={s} value={s}>
+                                {s.charAt(0).toUpperCase() + s.slice(1)}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                        <td style={styles.td}>
+                          <button
+                            onClick={() => {
+                              const newId = expandedId === lead.id ? null : lead.id;
+                              setExpandedId(newId);
+                              if (newId) fetchLeadActivity(newId);
+                            }}
+                            style={styles.expandBtn}
+                          >
+                            {expandedId === lead.id ? "▲ Hide" : "▼ View"}
+                          </button>
+                        </td>
+                      </tr>
+
+                      {expandedId === lead.id && (
+                        <tr key={`${lead.id}-detail`} style={{ background: "#f0f4ff" }}>
+                          <td colSpan={12} style={styles.detailCell}>
+                            <div style={styles.detailGrid}>
+                              <div style={styles.detailBlock}>
+                                <div style={styles.detailLabel}>AI Usage</div>
+                                <div style={styles.detailVal}>{lead.current_ai_usage}</div>
+                              </div>
+                              <div style={styles.detailBlock}>
+                                <div style={styles.detailLabel}>Workshop Goals</div>
+                                <div style={styles.detailVal}>
+                                  {lead.workshop_goals?.length > 0
+                                    ? lead.workshop_goals.map((g) => (
+                                        <span key={g} style={styles.goalTag}>{g}</span>
+                                      ))
+                                    : "—"}
+                                </div>
+                              </div>
+                              <div style={styles.detailBlock}>
+                                <div style={styles.detailLabel}>Biggest Challenge</div>
+                                <div style={styles.detailVal}>{lead.biggest_challenge || "—"}</div>
+                              </div>
+                              <div style={styles.detailBlock}>
+                                <div style={styles.detailLabel}>Specific Tools</div>
+                                <div style={styles.detailVal}>{lead.specific_tools || "—"}</div>
+                              </div>
+                              {lead.linkedin_profile && (
+                                <div style={styles.detailBlock}>
+                                  <div style={styles.detailLabel}>LinkedIn</div>
+                                  <a href={lead.linkedin_profile} target="_blank" rel="noreferrer" style={styles.link}>
+                                    View profile ↗
+                                  </a>
+                                </div>
                               )}
-                              <button
-                                onClick={() => handleDelete(lead.id, lead.full_name)}
-                                disabled={deleting === lead.id}
-                                style={styles.deleteBtn}
-                              >
-                                {deleting === lead.id ? "Deleting..." : "🗑 Delete"}
-                              </button>
+                              <div style={{ ...styles.detailBlock, gridColumn: "1 / -1" }}>
+                                <div style={styles.detailLabel}>Internal Notes</div>
+                                <textarea
+                                  rows={3}
+                                  placeholder="Add notes about this lead..."
+                                  value={editNotes[lead.id] ?? lead.notes ?? ""}
+                                  onChange={(e) =>
+                                    setEditNotes((prev) => ({ ...prev, [lead.id]: e.target.value }))
+                                  }
+                                  style={styles.notesArea}
+                                />
+                                <div style={{ display: "flex", gap: 10, marginTop: 8, alignItems: "center" }}>
+                                  <button
+                                    onClick={() => handleSaveNotes(lead.id)}
+                                    disabled={saving === lead.id}
+                                    style={styles.saveBtn}
+                                  >
+                                    {saving === lead.id ? "Saving..." : "Save Notes"}
+                                  </button>
+                                  <select
+                                    value={emailType[lead.id] || DEFAULT_EMAIL_TYPE[lead.status] || "confirmation"}
+                                    onChange={(e) => setEmailType((prev) => ({ ...prev, [lead.id]: e.target.value }))}
+                                    style={styles.emailTypeSelect}
+                                  >
+                                    {EMAIL_TYPE_OPTIONS.map((o) => (
+                                      <option key={o.value} value={o.value}>{o.label}</option>
+                                    ))}
+                                  </select>
+                                  <button
+                                    onClick={() => handleSendEmail(lead)}
+                                    disabled={emailSending === lead.id}
+                                    style={{
+                                      ...styles.emailBtn,
+                                      ...(emailStatus[lead.id] === "sent" ? styles.emailBtnSent : {}),
+                                      ...(emailStatus[lead.id] === "error" ? styles.emailBtnError : {}),
+                                    }}
+                                  >
+                                    {emailSending === lead.id
+                                      ? "Sending..."
+                                      : emailStatus[lead.id] === "sent"
+                                      ? "✓ Sent"
+                                      : emailStatus[lead.id] === "error"
+                                      ? "✗ Failed"
+                                      : "✉ Send"}
+                                  </button>
+                                  {lead.phone && (
+                                    <a
+                                      href={(() => { const num = lead.phone.replace(/[^0-9]/g, ""); const e164 = num.startsWith("91") && num.length === 12 ? num : num.length === 10 ? `91${num}` : num; return `https://wa.me/${e164}?text=${encodeURIComponent(`Hi ${lead.full_name}, this is Sanjay from REDESIGN-ai. `)}`; })()}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      style={styles.whatsappBtn}
+                                    >
+                                      💬 WhatsApp
+                                    </a>
+                                  )}
+                                  <button
+                                    onClick={() => handleDelete(lead.id, lead.full_name)}
+                                    disabled={deleting === lead.id}
+                                    style={styles.deleteBtn}
+                                  >
+                                    {deleting === lead.id ? "Deleting..." : "🗑 Delete"}
+                                  </button>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                </>
-              ))}
-            </tbody>
-          </table>
+
+                            {/* Activity Timeline */}
+                            <div style={{ marginTop: 20, borderTop: "1px solid #e5e7eb", paddingTop: 16 }}>
+                              <div style={{ fontWeight: 700, fontSize: 12, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 12 }}>Activity Log</div>
+                              {activityLoading === lead.id ? (
+                                <div style={{ color: "#9ca3af", fontSize: 13 }}>Loading...</div>
+                              ) : (leadActivity[lead.id] || []).length === 0 ? (
+                                <div style={{ color: "#9ca3af", fontSize: 13 }}>No activity recorded yet.</div>
+                              ) : (
+                                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                                  {(leadActivity[lead.id] || []).map((entry) => (
+                                    <div key={entry.id} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                                      <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#2563eb", marginTop: 5, flexShrink: 0 }} />
+                                      <div>
+                                        <span style={{ fontSize: 13, fontWeight: 600, color: "#111" }}>{entry.action}</span>
+                                        {entry.details && <span style={{ fontSize: 12, color: "#6b7280", marginLeft: 6 }}>— {entry.details}</span>}
+                                        <div style={{ fontSize: 11, color: "#9ca3af", marginTop: 2 }}>
+                                          {new Date(entry.created_at).toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })} · {entry.performed_by}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </>
+      )}
+
+      {activeTab === "analytics" && (
+        <div style={styles.analyticsWrap}>
+          {/* Metric Cards */}
+          <div style={styles.analyticsCards}>
+            {[
+              { label: "Total Applicants", value: leads.length, color: "#2563eb", icon: "👥" },
+              { label: "Paid", value: leads.filter(l => l.status === "paid").length, color: "#16a34a", icon: "✅" },
+              { label: "Conversion Rate", value: leads.length > 0 ? `${Math.round((leads.filter(l => l.status === "paid").length / leads.length) * 100)}%` : "0%", color: "#7c3aed", icon: "📈" },
+              { label: "Seats Remaining", value: 50 - leads.filter(l => l.status === "paid").length, color: "#d97706", icon: "💺" },
+              { label: "Avg Team Size", value: (() => { const sizes = leads.map(l => parseInt(l.team_size)).filter(n => !isNaN(n)); return sizes.length > 0 ? Math.round(sizes.reduce((a,b)=>a+b,0)/sizes.length) : "—"; })(), color: "#0891b2", icon: "🏢" },
+            ].map((card) => (
+              <div key={card.label} style={styles.analyticsCard}>
+                <div style={{ fontSize: 24, marginBottom: 8 }}>{card.icon}</div>
+                <div style={{ fontSize: 28, fontWeight: 800, color: card.color }}>{card.value}</div>
+                <div style={{ fontSize: 12, color: "#6b7280", marginTop: 4 }}>{card.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Status Funnel */}
+          <div style={styles.analyticsSection}>
+            <div style={styles.analyticsSectionTitle}>Registration Funnel</div>
+            <div style={{ display: "flex", gap: 4, alignItems: "stretch", height: 80 }}>
+              {[
+                { label: "New", key: "new", color: "#2563eb" },
+                { label: "Contacted", key: "contacted", color: "#d97706" },
+                { label: "Paid", key: "paid", color: "#16a34a" },
+                { label: "Attended", key: "attended", color: "#7c3aed" },
+                { label: "Rejected", key: "rejected", color: "#dc2626" },
+              ].map((stage, i) => {
+                const count = leads.filter(l => l.status === stage.key).length;
+                const pct = leads.length > 0 ? Math.round((count / leads.length) * 100) : 0;
+                return (
+                  <div key={stage.key} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                    <div style={{ flex: 1, width: "100%", background: stage.color, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", color: "white", opacity: 0.85 + (i * 0.03) }}>
+                      <div style={{ fontSize: 20, fontWeight: 800 }}>{count}</div>
+                      <div style={{ fontSize: 11 }}>{pct}%</div>
+                    </div>
+                    <div style={{ fontSize: 11, color: "#6b7280", marginTop: 6, textAlign: "center" }}>{stage.label}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+            {/* Industry Breakdown */}
+            <div style={styles.analyticsSection}>
+              <div style={styles.analyticsSectionTitle}>By Industry</div>
+              {(() => {
+                const data = Object.entries(leads.reduce((acc, l) => { if (l.industry) acc[l.industry] = (acc[l.industry]||0)+1; return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]).slice(0,8);
+                const max = Math.max(...data.map(d=>d[1]), 1);
+                return data.map(([label, value]) => (
+                  <div key={label} style={{ marginBottom: 10 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 4 }}>
+                      <span style={{ color: "#374151" }}>{label}</span>
+                      <span style={{ fontWeight: 700, color: "#111" }}>{value}</span>
+                    </div>
+                    <div style={{ background: "#f3f4f6", borderRadius: 4, height: 8 }}>
+                      <div style={{ width: `${(value/max)*100}%`, height: "100%", background: "#2563eb", borderRadius: 4 }} />
+                    </div>
+                  </div>
+                ));
+              })()}
+            </div>
+
+            {/* City Distribution */}
+            <div style={styles.analyticsSection}>
+              <div style={styles.analyticsSectionTitle}>By City</div>
+              {(() => {
+                const data = Object.entries(leads.reduce((acc, l) => { if (l.city) acc[l.city] = (acc[l.city]||0)+1; return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]).slice(0,8);
+                const max = Math.max(...data.map(d=>d[1]), 1);
+                return data.map(([label, value]) => (
+                  <div key={label} style={{ marginBottom: 10 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 4 }}>
+                      <span style={{ color: "#374151" }}>{label}</span>
+                      <span style={{ fontWeight: 700, color: "#111" }}>{value}</span>
+                    </div>
+                    <div style={{ background: "#f3f4f6", borderRadius: 4, height: 8 }}>
+                      <div style={{ width: `${(value/max)*100}%`, height: "100%", background: "#7c3aed", borderRadius: 4 }} />
+                    </div>
+                  </div>
+                ));
+              })()}
+            </div>
+
+            {/* Team Size */}
+            <div style={styles.analyticsSection}>
+              <div style={styles.analyticsSectionTitle}>By Team Size</div>
+              {(() => {
+                const buckets: Record<string,number> = { "1–10": 0, "11–50": 0, "51–200": 0, "200+": 0 };
+                leads.forEach(l => { const n = parseInt(l.team_size); if (!isNaN(n)) { if(n<=10)buckets["1–10"]++; else if(n<=50)buckets["11–50"]++; else if(n<=200)buckets["51–200"]++; else buckets["200+"]++; }});
+                const max = Math.max(...Object.values(buckets), 1);
+                return Object.entries(buckets).map(([label, value]) => (
+                  <div key={label} style={{ marginBottom: 10 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 4 }}>
+                      <span style={{ color: "#374151" }}>{label} employees</span>
+                      <span style={{ fontWeight: 700, color: "#111" }}>{value}</span>
+                    </div>
+                    <div style={{ background: "#f3f4f6", borderRadius: 4, height: 8 }}>
+                      <div style={{ width: `${(value/max)*100}%`, height: "100%", background: "#16a34a", borderRadius: 4 }} />
+                    </div>
+                  </div>
+                ));
+              })()}
+            </div>
+
+            {/* Registrations Over Time */}
+            <div style={styles.analyticsSection}>
+              <div style={styles.analyticsSectionTitle}>Registrations Over Time</div>
+              {(() => {
+                const data = Object.entries(leads.reduce((acc, l) => { const d = new Date(l.created_at).toLocaleDateString("en-IN",{day:"numeric",month:"short"}); acc[d]=(acc[d]||0)+1; return acc; }, {} as Record<string,number>));
+                const max = Math.max(...data.map(d=>d[1]), 1);
+                return data.map(([label, value]) => (
+                  <div key={label} style={{ marginBottom: 10 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 4 }}>
+                      <span style={{ color: "#374151" }}>{label}</span>
+                      <span style={{ fontWeight: 700, color: "#111" }}>{value}</span>
+                    </div>
+                    <div style={{ background: "#f3f4f6", borderRadius: 4, height: 8 }}>
+                      <div style={{ width: `${(value/max)*100}%`, height: "100%", background: "#d97706", borderRadius: 4 }} />
+                    </div>
+                  </div>
+                ));
+              })()}
+            </div>
+
+            {/* AI Usage */}
+            <div style={styles.analyticsSection}>
+              <div style={styles.analyticsSectionTitle}>Current AI Usage Level</div>
+              {(() => {
+                const data = Object.entries(leads.reduce((acc, l) => { if (l.current_ai_usage) acc[l.current_ai_usage] = (acc[l.current_ai_usage]||0)+1; return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]);
+                const max = Math.max(...data.map(d=>d[1]), 1);
+                return data.map(([label, value]) => (
+                  <div key={label} style={{ marginBottom: 10 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 4 }}>
+                      <span style={{ color: "#374151" }}>{label}</span>
+                      <span style={{ fontWeight: 700, color: "#111" }}>{value}</span>
+                    </div>
+                    <div style={{ background: "#f3f4f6", borderRadius: 4, height: 8 }}>
+                      <div style={{ width: `${(value/max)*100}%`, height: "100%", background: "#0891b2", borderRadius: 4 }} />
+                    </div>
+                  </div>
+                ));
+              })()}
+            </div>
+
+            {/* Referral Sources */}
+            <div style={styles.analyticsSection}>
+              <div style={styles.analyticsSectionTitle}>Referral Sources</div>
+              {(() => {
+                const data = Object.entries(leads.reduce((acc, l) => { const r = l.referred_by || "Direct / Unknown"; acc[r]=(acc[r]||0)+1; return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]).slice(0,8);
+                const max = Math.max(...data.map(d=>d[1]), 1);
+                return data.map(([label, value]) => (
+                  <div key={label} style={{ marginBottom: 10 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 4 }}>
+                      <span style={{ color: "#374151" }}>{label}</span>
+                      <span style={{ fontWeight: 700, color: "#111" }}>{value}</span>
+                    </div>
+                    <div style={{ background: "#f3f4f6", borderRadius: 4, height: 8 }}>
+                      <div style={{ width: `${(value/max)*100}%`, height: "100%", background: "#dc2626", borderRadius: 4 }} />
+                    </div>
+                  </div>
+                ));
+              })()}
+            </div>
+          </div>
         </div>
       )}
 
@@ -1057,5 +1312,61 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight: 700,
     cursor: "pointer",
     whiteSpace: "nowrap" as const,
+  },
+  tabNav: {
+    display: "flex",
+    gap: 4,
+    padding: "0 24px",
+    borderBottom: "2px solid #e5e7eb",
+    background: "white",
+  },
+  tabBtn: {
+    padding: "12px 20px",
+    background: "none",
+    border: "none",
+    borderBottom: "2px solid transparent",
+    marginBottom: -2,
+    fontSize: 14,
+    fontWeight: 600,
+    color: "#6b7280",
+    cursor: "pointer",
+  },
+  tabBtnActive: {
+    color: "#2563eb",
+    borderBottomColor: "#2563eb",
+  },
+  analyticsWrap: {
+    padding: "24px",
+    display: "flex",
+    flexDirection: "column" as const,
+    gap: 20,
+  },
+  analyticsCards: {
+    display: "grid",
+    gridTemplateColumns: "repeat(5, 1fr)",
+    gap: 16,
+  },
+  analyticsCard: {
+    background: "white",
+    border: "1px solid #e5e7eb",
+    borderRadius: 12,
+    padding: "20px 16px",
+    textAlign: "center" as const,
+    boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
+  },
+  analyticsSection: {
+    background: "white",
+    border: "1px solid #e5e7eb",
+    borderRadius: 12,
+    padding: "20px",
+    boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
+  },
+  analyticsSectionTitle: {
+    fontWeight: 700,
+    fontSize: 13,
+    color: "#374151",
+    marginBottom: 16,
+    textTransform: "uppercase" as const,
+    letterSpacing: "0.06em",
   },
 };
