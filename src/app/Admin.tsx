@@ -80,6 +80,7 @@ export default function Admin() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [csvUploading, setCsvUploading] = useState(false);
   const [csvResult, setCsvResult] = useState<{ added: number; errors: number } | null>(null);
+  const [dateFilter, setDateFilter] = useState("");
   const [addForm, setAddForm] = useState({
     full_name: "", email: "", phone: "", city: "",
     company_name: "", designation: "", industry: "",
@@ -354,7 +355,8 @@ export default function Admin() {
         .toLowerCase()
         .includes(search.toLowerCase());
     const matchesStatus = statusFilter === "all" || l.status === statusFilter;
-    return matchesSearch && matchesStatus;
+    const matchesDate = dateFilter === "" || new Date(l.created_at).toISOString().slice(0, 10) === dateFilter;
+    return matchesSearch && matchesStatus && matchesDate;
   });
 
   const stats = {
@@ -498,6 +500,16 @@ export default function Admin() {
                 </option>
               ))}
             </select>
+            <input
+              type="date"
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+              style={styles.filterSelect}
+              title="Filter by date"
+            />
+            {dateFilter && (
+              <button onClick={() => setDateFilter("")} style={{ background: "none", border: "none", cursor: "pointer", color: "#6b7280", fontSize: 13 }}>✕ Clear date</button>
+            )}
             <span style={styles.resultCount}>{filtered.length} result{filtered.length !== 1 ? "s" : ""}</span>
             {selectedIds.size > 0 && (
               <button
@@ -581,11 +593,8 @@ export default function Admin() {
                         <td style={styles.td}>{normalizeCity(lead.city)}</td>
                         <td style={styles.td}>{lead.referred_by || "—"}</td>
                         <td style={styles.td}>
-                          {new Date(lead.created_at).toLocaleDateString("en-IN", {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                          })}
+                          <div>{new Date(lead.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</div>
+                          <div style={{ fontSize: 11, color: "#9ca3af", marginTop: 2 }}>{new Date(lead.created_at).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true })}</div>
                         </td>
                         <td style={styles.td}>
                           <select
