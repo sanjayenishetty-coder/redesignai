@@ -286,6 +286,28 @@ export default function Admin() {
     fetchLeads(sessionStorage.getItem("adminPwd") || "");
   };
 
+  const handleDownloadCsv = () => {
+    const cols = [
+      "id", "created_at", "full_name", "email", "phone", "city",
+      "company_name", "designation", "industry", "team_size",
+      "linkedin_profile", "referred_by", "company_website",
+      "current_ai_usage", "workshop_goals", "biggest_challenge",
+      "specific_tools", "status", "notes",
+    ];
+    const escape = (v: unknown) => {
+      const s = Array.isArray(v) ? v.join("; ") : String(v ?? "");
+      return `"${s.replace(/"/g, '""')}"`;
+    };
+    const rows = [cols.join(","), ...leads.map((l) => cols.map((c) => escape(l[c as keyof typeof l])).join(","))];
+    const blob = new Blob([rows.join("\n")], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `redesign-leads-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const filtered = leads.filter((l) => {
     const matchesSearch =
       search === "" ||
@@ -347,6 +369,7 @@ export default function Admin() {
         </div>
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
           <button onClick={() => setShowAddModal(true)} style={styles.addBtn}>+ Add Lead</button>
+          <button onClick={handleDownloadCsv} style={styles.downloadBtn}>↓ Download CSV</button>
           <label style={styles.csvBtn}>
             {csvUploading ? "Uploading..." : "↑ Upload CSV"}
             <input type="file" accept=".csv" onChange={handleCsvUpload} style={{ display: "none" }} disabled={csvUploading} />
@@ -951,6 +974,17 @@ const styles: Record<string, React.CSSProperties> = {
   addBtn: {
     padding: "8px 16px",
     background: "#2563eb",
+    color: "white",
+    border: "none",
+    borderRadius: 6,
+    fontSize: 13,
+    fontWeight: 700,
+    cursor: "pointer",
+    whiteSpace: "nowrap" as const,
+  },
+  downloadBtn: {
+    padding: "8px 16px",
+    background: "#16a34a",
     color: "white",
     border: "none",
     borderRadius: 6,
