@@ -622,7 +622,7 @@ export default function Admin() {
                               </button>
                               {lead.phone && (
                                 <a
-                                  href={`https://wa.me/${lead.phone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(`Hi ${lead.full_name}, this is Sanjay from REDESIGN-ai. `)}`}
+                                  href={(() => { const num = lead.phone.replace(/[^0-9]/g, ""); const e164 = num.startsWith("91") && num.length === 12 ? num : num.length === 10 ? `91${num}` : num; return `https://wa.me/${e164}?text=${encodeURIComponent(`Hi ${lead.full_name}, this is Sanjay from REDESIGN-ai. `)}`; })()}
                                   target="_blank"
                                   rel="noreferrer"
                                   style={styles.whatsappBtn}
