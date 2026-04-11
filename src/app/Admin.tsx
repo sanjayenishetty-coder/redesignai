@@ -2,6 +2,24 @@ import { useState, useEffect, useCallback } from "react";
 
 const STATUS_OPTIONS = ["new", "contacted", "paid", "attended", "rejected"];
 
+const CITY_ALIASES: Record<string, string> = {
+  hyderabad: "Hyderabad", hyd: "Hyderabad", "hyd.": "Hyderabad",
+  secunderabad: "Hyderabad", secundrabad: "Hyderabad",
+  mumbai: "Mumbai", bombay: "Mumbai",
+  bangalore: "Bengaluru", bengaluru: "Bengaluru", blr: "Bengaluru", banglore: "Bengaluru",
+  delhi: "Delhi", "new delhi": "Delhi", "new deli": "Delhi",
+  chennai: "Chennai", madras: "Chennai",
+  pune: "Pune",
+  kolkata: "Kolkata", calcutta: "Kolkata",
+  ahmedabad: "Ahmedabad", ahemdabad: "Ahmedabad",
+};
+
+const normalizeCity = (city: string): string => {
+  if (!city) return city;
+  const key = city.trim().toLowerCase();
+  return CITY_ALIASES[key] || city.trim().replace(/\b\w/g, (c) => c.toUpperCase());
+};
+
 const STATUS_COLORS: Record<string, string> = {
   new: "#2563eb",
   contacted: "#d97706",
@@ -558,7 +576,7 @@ export default function Admin() {
                         </td>
                         <td style={styles.td}>{lead.industry}</td>
                         <td style={styles.td}>{lead.team_size}</td>
-                        <td style={styles.td}>{lead.city}</td>
+                        <td style={styles.td}>{normalizeCity(lead.city)}</td>
                         <td style={styles.td}>{lead.referred_by || "—"}</td>
                         <td style={styles.td}>
                           {new Date(lead.created_at).toLocaleDateString("en-IN", {
@@ -805,7 +823,7 @@ export default function Admin() {
             <div style={styles.analyticsSection}>
               <div style={styles.analyticsSectionTitle}>By City</div>
               {(() => {
-                const data = Object.entries(leads.reduce((acc, l) => { if (l.city) acc[l.city] = (acc[l.city]||0)+1; return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]).slice(0,8);
+                const data = Object.entries(leads.reduce((acc, l) => { if (l.city) { const c = normalizeCity(l.city); acc[c] = (acc[c]||0)+1; } return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]).slice(0,8);
                 const max = Math.max(...data.map(d=>d[1]), 1);
                 return data.map(([label, value]) => (
                   <div key={label} style={{ marginBottom: 10 }}>
