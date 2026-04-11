@@ -348,7 +348,7 @@ export default function RedesignAI() {
           </div>
           <div className="logo-strip-divider" />
           <div className="logo-partner">
-            <img src="/assets/ficci-flo-logo.png" alt="FICCI FLO" className="logo-partner-img copartner-logo" />
+            <img src="/assets/heh-logo.png" alt="Hyderabad Entrepreneur Hub" className="logo-partner-img copartner-logo" />
           </div>
           <div className="logo-strip-divider" />
           <div className="logo-partner">
