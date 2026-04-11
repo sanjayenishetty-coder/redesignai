@@ -152,7 +152,7 @@ export default function RedesignAI() {
   // Countdown timer
   useEffect(() => {
     const update = () => {
-      const target = new Date("2026-04-11T23:59:59").getTime();
+      const target = new Date("2026-04-12T23:59:59").getTime();
       let diff = Math.max(0, target - Date.now());
       const days = Math.floor(diff / 86400000);
       diff %= 86400000;
@@ -746,19 +746,19 @@ export default function RedesignAI() {
               <div className="urgency-block fade-up delay-3">
                 <div className="urgency-icon">⏰</div>
                 <div className="urgency-text">
-                  <strong>Early bird pricing ends April 11th</strong>
-                  <span>After April 11th, the price returns to ₹39,000 and group discounts no longer apply. Reserve your seat now to lock in your rate.</span>
+                  <strong>Early bird pricing ends April 12th</strong>
+                  <span>After April 12th, the price returns to ₹39,000 and group discounts no longer apply. Reserve your seat now to lock in your rate.</span>
                 </div>
               </div>
             </div>
 
             {/* Pricing Card */}
             <div className="pricing-card fade-up delay-2">
-              <div className="early-bird-badge">🐦 Early Bird — Ends April 11th</div>
+              <div className="early-bird-badge">🐦 Early Bird — Ends April 12th</div>
               <div className="pricing-original">₹39,000</div>
               <div className="pricing-main">₹30,000<span> + GST</span></div>
               <div className="pricing-taxes">Per person, early bird price</div>
-              <div className="early-bird-save">Early Bird — Save ₹9,000 before April 11th</div>
+              <div className="early-bird-save">Early Bird — Save ₹9,000 before April 12th</div>
               <div className="osmapi-bonus">
                 <span className="osmapi-bonus-icon">🎁</span>
                 <span className="osmapi-bonus-text">Bonus: ₹20,000 worth of <strong>osmAPI</strong> credits included free with every registration</span>
