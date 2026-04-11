@@ -16,8 +16,10 @@ const CITY_ALIASES: Record<string, string> = {
 
 const normalizeCity = (city: string): string => {
   if (!city) return city;
-  const key = city.trim().toLowerCase();
-  return CITY_ALIASES[key] || city.trim().replace(/\b\w/g, (c) => c.toUpperCase());
+  // Strip suffixes like ", India", ", Telangana", ", Maharashtra", etc.
+  const stripped = city.trim().replace(/,\s*(india|telangana|maharashtra|karnataka|tamil nadu|gujarat|rajasthan|up|delhi|wb|ap|andhra pradesh|west bengal|uttar pradesh)$/i, "").trim();
+  const key = stripped.toLowerCase();
+  return CITY_ALIASES[key] || stripped.replace(/\b\w/g, (c) => c.toUpperCase());
 };
 
 const STATUS_COLORS: Record<string, string> = {
