@@ -136,7 +136,7 @@ export default function RedesignAI() {
         entries.forEach((e) => {
           if (e.isIntersecting && seatFillRef.current) {
             setTimeout(() => {
-              seatFillRef.current!.style.width = "46%";
+              seatFillRef.current!.style.width = "60%";
             }, 400);
           }
         });
@@ -742,7 +742,7 @@ export default function RedesignAI() {
               <div className="seat-progress-wrap">
                 <div className="seat-progress-label">
                   <span>50 total seats</span>
-                  <span className="seats-left">27 seats left</span>
+                  <span className="seats-left">20 seats left</span>
                 </div>
                 <div className="seat-progress-bar">
                   <div className="seat-progress-fill" ref={seatFillRef} />
