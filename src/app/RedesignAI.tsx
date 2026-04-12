@@ -639,7 +639,10 @@ export default function RedesignAI() {
             <div>
               <div className="isb-endorsement-label">ISB-CBI Centre for Business Innovation</div>
               <p className="isb-endorsement-quote">"The REDESIGN workshop represents exactly the kind of practical, operator-focused AI education that Indian SMEs have been waiting for. We're proud to host this cohort on the ISB-CBI campus."</p>
-              <div className="isb-endorsement-source">Anvesh T — Associate Director, ISB-CBI_PLACEHOLDER</div>
+              <div className="isb-endorsement-source">
+                Anvesh T — Associate Director,&nbsp;
+                <img src="/assets/isb-logo.png" alt="ISB-CBI" style={{ height: 20, verticalAlign: "middle", display: "inline-block" }} />
+              </div>
             </div>
           </div>
         </div>
