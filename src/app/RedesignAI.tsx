@@ -721,7 +721,6 @@ export default function RedesignAI() {
                 <li>Post-workshop support for 90 days via the AI Collective</li>
                 <li>Networking with 49 other ambitious Indian SME operators</li>
                 <li>₹20,000 worth of osmAPI platform credits to power your AI workflows</li>
-                <li>Access to Reclips AI platform for AI-powered content creation</li>
               </ul>
             </div>
           </div>
