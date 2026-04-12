@@ -1743,7 +1743,10 @@
 .redesign-page .cobrand-detail-row:last-child { border-bottom: none; padding-bottom: 0; }
 .redesign-page .cobrand-detail-row strong { color: #fff; font-weight: 700; }
 .redesign-page .cobrand-cta {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   background: var(--orange);
   color: #fff;
   text-align: center;
