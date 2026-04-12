@@ -766,6 +766,35 @@ export default function RedesignAI() {
               <button className="pricing-cta" onClick={() => navigate("/redesign-ai/intake")}>Apply for Your Seat →</button>
             </div>
           </div>
+
+          {/* Group Pricing Strip */}
+          <div className="group-pricing-strip fade-up">
+            <div className="group-pricing-strip-header">
+              <span className="group-pricing-strip-title">Coming with colleagues? Save more as a group.</span>
+              <span className="group-pricing-strip-sub">Missed early bird? Bring your team and get back to early bird pricing per head.</span>
+            </div>
+            <div className="group-pricing-strip-cards">
+              {/* Duo */}
+              <div className="group-plan-card">
+                <div className="group-plan-label">Duo</div>
+                <div className="group-plan-people">2 people</div>
+                <div className="group-plan-price">₹70,000<span> + GST</span></div>
+                <div className="group-plan-per">₹35,000 per person</div>
+                <div className="group-plan-saving">Save ₹4,000 per person</div>
+                <button className="group-plan-cta" onClick={() => navigate("/redesign-ai/intake")}>Register as Duo →</button>
+              </div>
+              {/* Trio */}
+              <div className="group-plan-card group-plan-card--featured">
+                <div className="group-plan-best">⭐ Best Value</div>
+                <div className="group-plan-label">Trio</div>
+                <div className="group-plan-people">3 people</div>
+                <div className="group-plan-price">₹90,000<span> + GST</span></div>
+                <div className="group-plan-per">₹30,000 per person</div>
+                <div className="group-plan-saving">Save ₹9,000 per person — early bird price per head</div>
+                <button className="group-plan-cta" onClick={() => navigate("/redesign-ai/intake")}>Register as Trio →</button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
