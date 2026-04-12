@@ -656,7 +656,6 @@ export default function RedesignAI() {
           <div className="pack-cards-row fade-up delay-1">
             {/* Solo */}
             <div className="pack-card">
-              <div className="pack-sold-badge">🚫 Early Bird ₹30,000 — Sold Out</div>
               <div className="pack-name">Solo</div>
               <div className="pack-people">1 person</div>
               <div className="pack-price">₹39,000<span> + GST</span></div>
