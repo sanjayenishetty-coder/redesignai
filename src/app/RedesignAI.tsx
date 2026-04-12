@@ -652,94 +652,47 @@ export default function RedesignAI() {
           <h2 className="section-h2 fade-up delay-1">Secure Your Seat in the April Cohort</h2>
           <p className="section-sub fade-up delay-2">50 seats to ensure every participant gets hands-on support and personalised feedback. Join us on 18th &amp; 19th April 2026 at ISB-CBI Hyderabad.</p>
 
-          <div className="pricing-layout">
-            <div className="pricing-left">
-              {/* ROI Block */}
-              <div className="roi-block fade-up delay-1">
-                <h4>🧮 What this would cost you otherwise</h4>
-                <div className="roi-comparison">
-                  <div className="roi-row">
-                    <span className="roi-row-label">AI consultant (2 days @ ₹20,000/day)</span>
-                    <span className="roi-row-value strikethrough">₹40,000</span>
-                  </div>
-                  <div className="roi-row">
-                    <span className="roi-row-label">No-code automation setup (typical agency)</span>
-                    <span className="roi-row-value strikethrough">₹30,000+</span>
-                  </div>
-                  <div className="roi-row">
-                    <span className="roi-row-label">90-day post-support and community access</span>
-                    <span className="roi-row-value strikethrough">₹30,000</span>
-                  </div>
-                  <div className="roi-row" style={{ borderTop: "2px solid var(--cream-2)", marginTop: 4, paddingTop: 12 }}>
-                    <span className="roi-row-label" style={{ fontWeight: 700, color: "var(--ink)" }}>Equivalent market value</span>
-                    <span className="roi-row-value" style={{ fontSize: 18, textDecoration: "line-through", color: "var(--ink-4)" }}>₹1,00,000+</span>
-                  </div>
-                  <div className="roi-row">
-                    <span className="roi-row-label" style={{ fontWeight: 700, color: "var(--ink)" }}>Your seat price</span>
-                    <span className="roi-row-value big">₹39,000</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Co-Brand Partner */}
-              <div className="roi-block group-pricing-block fade-up delay-2">
-                <h4>🤝 Co-Brand Partner Slot</h4>
-                <p className="group-pricing-desc">Give an AI education to your best SME Customers / Channel Partners / Franchisees — and put your brand on one of the most forward-thinking events of the year.</p>
-                <div className="roi-comparison">
-                  <div className="roi-row">
-                    <span className="roi-row-label">Seats included</span>
-                    <span className="roi-row-value highlight">5 seats</span>
-                  </div>
-                  <div className="roi-row">
-                    <span className="roi-row-label">Your brand on the event</span>
-                    <span className="roi-row-value highlight">✓ Co-branded</span>
-                  </div>
-                  <div className="roi-row" style={{ borderBottom: "none" }}>
-                    <span className="roi-row-label">Investment</span>
-                    <span className="roi-row-value highlight">₹1,35,000 + GST</span>
-                  </div>
-                </div>
-                <a
-                  href="https://wa.me/919010155595?text=Hi%20Sanjay%2C%20I%27m%20interested%20in%20the%20Co-Brand%20Partner%20slot%20for%20REDESIGN-ai.%20Please%20share%20more%20details."
-                  style={{
-                    display: "inline-block",
-                    marginTop: "16px",
-                    background: "#111",
-                    color: "#fff",
-                    padding: "10px 22px",
-                    borderRadius: "8px",
-                    fontSize: "13px",
-                    fontWeight: 700,
-                    textDecoration: "none",
-                    letterSpacing: "0.02em",
-                  }}
-                >
-                  Talk to us →
-                </a>
-              </div>
-
-              {/* Urgency */}
-              <div className="urgency-block fade-up delay-3">
-                <div className="urgency-icon">🔥</div>
-                <div className="urgency-text">
-                  <strong>Early Bird ₹30,000 seats are sold out</strong>
-                  <span>The early bird window has closed. Remaining seats are available at ₹39,000. Limited spots left — secure yours before the workshop fills up.</span>
-                </div>
-              </div>
+          {/* 3 Pricing Cards */}
+          <div className="pack-cards-row fade-up delay-1">
+            {/* Solo */}
+            <div className="pack-card">
+              <div className="pack-sold-badge">🚫 Early Bird ₹30,000 — Sold Out</div>
+              <div className="pack-name">Solo</div>
+              <div className="pack-people">1 person</div>
+              <div className="pack-price">₹39,000<span> + GST</span></div>
+              <div className="pack-per">Per person</div>
+              <div className="pack-saving-spacer" />
+              <button className="pack-cta" onClick={() => navigate("/redesign-ai/intake")}>Apply for Your Seat →</button>
             </div>
+            {/* Duo */}
+            <div className="pack-card">
+              <div className="pack-name">Duo</div>
+              <div className="pack-people">2 people</div>
+              <div className="pack-price">₹70,000<span> + GST</span></div>
+              <div className="pack-per">₹35,000 per person</div>
+              <div className="pack-saving">Save ₹4,000 per person</div>
+              <button className="pack-cta" onClick={() => navigate("/redesign-ai/intake")}>Register as Duo →</button>
+            </div>
+            {/* Trio */}
+            <div className="pack-card pack-card--featured">
+              <div className="pack-best">⭐ Best Value</div>
+              <div className="pack-name">Trio</div>
+              <div className="pack-people">3 people</div>
+              <div className="pack-price">₹90,000<span> + GST</span></div>
+              <div className="pack-per">₹30,000 per person</div>
+              <div className="pack-saving">Save ₹9,000/person — back to early bird price</div>
+              <button className="pack-cta" onClick={() => navigate("/redesign-ai/intake")}>Register as Trio →</button>
+            </div>
+          </div>
 
-            {/* Pricing Card */}
-            <div className="pricing-card fade-up delay-2">
-              <div className="early-bird-badge" style={{ background: "#e53935", color: "#fff" }}>🚫 Early Bird ₹30,000 — Sold Out</div>
-              <div className="pricing-main">₹39,000<span> + GST</span></div>
-              <div className="pricing-taxes">Per person</div>
-              <div className="osmapi-bonus">
+          {/* Shared Details */}
+          <div className="pricing-details fade-up delay-2">
+            <div className="pricing-details-left">
+              <div className="osmapi-bonus osmapi-bonus--light">
                 <span className="osmapi-bonus-icon">🎁</span>
-                <span className="osmapi-bonus-text">Bonus: ₹20,000 worth of <strong>osmAPI</strong> credits included free with every registration</span>
+                <span className="osmapi-bonus-text osmapi-bonus-text--dark">Bonus: ₹20,000 worth of <strong>osmAPI</strong> credits included free with every registration</span>
               </div>
-
-              {/* Seat Progress */}
-              <div className="seat-progress-wrap">
+              <div className="seat-progress-wrap" style={{ marginTop: 20 }}>
                 <div className="seat-progress-label">
                   <span>50 total seats</span>
                   <span className="seats-left">20 seats left</span>
@@ -748,9 +701,17 @@ export default function RedesignAI() {
                   <div className="seat-progress-fill" ref={seatFillRef} />
                 </div>
               </div>
-
-              <div className="includes-label">What's included</div>
-              <ul className="includes-list">
+              <div className="urgency-block" style={{ marginTop: 20 }}>
+                <div className="urgency-icon">🔥</div>
+                <div className="urgency-text">
+                  <strong>Early Bird ₹30,000 seats are sold out</strong>
+                  <span>Remaining seats at ₹39,000 — or bring colleagues to save more.</span>
+                </div>
+              </div>
+            </div>
+            <div className="pricing-details-right">
+              <div className="includes-label">What's included in every seat</div>
+              <ul className="includes-list includes-list--light">
                 <li>2 full days of intensive, hands-on AI training at ISB-CBI Hyderabad</li>
                 <li>Opening masterclass by ISB-CBI Faculty on Strategic AI Frameworks</li>
                 <li>Build working AI workflows, automation systems, and sales agents</li>
@@ -762,37 +723,39 @@ export default function RedesignAI() {
                 <li>₹20,000 worth of osmAPI platform credits to power your AI workflows</li>
                 <li>Access to Reclips AI platform for AI-powered content creation</li>
               </ul>
-
-              <button className="pricing-cta" onClick={() => navigate("/redesign-ai/intake")}>Apply for Your Seat →</button>
             </div>
           </div>
 
-          {/* Group Pricing Strip */}
-          <div className="group-pricing-strip fade-up">
-            <div className="group-pricing-strip-header">
-              <span className="group-pricing-strip-title">Coming with colleagues? Save more as a group.</span>
-              <span className="group-pricing-strip-sub">Missed early bird? Bring your team and get back to early bird pricing per head.</span>
+          {/* ROI Strip */}
+          <div className="roi-strip fade-up delay-2">
+            <div className="roi-strip-label">🧮 What this would cost you otherwise</div>
+            <div className="roi-strip-items">
+              <div className="roi-strip-item"><span>AI consultant (2 days)</span><span className="roi-strip-val">₹40,000</span></div>
+              <div className="roi-strip-item"><span>No-code automation setup</span><span className="roi-strip-val">₹30,000+</span></div>
+              <div className="roi-strip-item"><span>90-day post-support</span><span className="roi-strip-val">₹30,000</span></div>
+              <div className="roi-strip-item roi-strip-item--total"><span>Equivalent market value</span><span className="roi-strip-val">₹1,00,000+</span></div>
             </div>
-            <div className="group-pricing-strip-cards">
-              {/* Duo */}
-              <div className="group-plan-card">
-                <div className="group-plan-label">Duo</div>
-                <div className="group-plan-people">2 people</div>
-                <div className="group-plan-price">₹70,000<span> + GST</span></div>
-                <div className="group-plan-per">₹35,000 per person</div>
-                <div className="group-plan-saving">Save ₹4,000 per person</div>
-                <button className="group-plan-cta" onClick={() => navigate("/redesign-ai/intake")}>Register as Duo →</button>
+          </div>
+
+          {/* Co-Brand */}
+          <div className="cobrand-block fade-up delay-3">
+            <div className="cobrand-block-left">
+              <div className="cobrand-tag">🤝 Co-Brand Partner Slot</div>
+              <h4 className="cobrand-title">Give Your Best Clients an AI Education — With Your Brand On It</h4>
+              <p className="cobrand-desc">Bring your top SME Customers, Channel Partners, or Franchisees to REDESIGN-ai and co-brand one of the most forward-thinking events of the year.</p>
+            </div>
+            <div className="cobrand-block-right">
+              <div className="cobrand-details">
+                <div className="cobrand-detail-row"><span>Seats included</span><strong>5 seats</strong></div>
+                <div className="cobrand-detail-row"><span>Your brand on the event</span><strong>✓ Co-branded</strong></div>
+                <div className="cobrand-detail-row"><span>Investment</span><strong>₹1,35,000 + GST</strong></div>
               </div>
-              {/* Trio */}
-              <div className="group-plan-card group-plan-card--featured">
-                <div className="group-plan-best">⭐ Best Value</div>
-                <div className="group-plan-label">Trio</div>
-                <div className="group-plan-people">3 people</div>
-                <div className="group-plan-price">₹90,000<span> + GST</span></div>
-                <div className="group-plan-per">₹30,000 per person</div>
-                <div className="group-plan-saving">Save ₹9,000 per person — early bird price per head</div>
-                <button className="group-plan-cta" onClick={() => navigate("/redesign-ai/intake")}>Register as Trio →</button>
-              </div>
+              <a
+                href="https://wa.me/919010155595?text=Hi%20Sanjay%2C%20I%27m%20interested%20in%20the%20Co-Brand%20Partner%20slot%20for%20REDESIGN-ai.%20Please%20share%20more%20details."
+                className="cobrand-cta"
+              >
+                Talk to us on WhatsApp →
+              </a>
             </div>
           </div>
         </div>
