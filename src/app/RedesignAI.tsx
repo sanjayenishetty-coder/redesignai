@@ -84,7 +84,6 @@ export default function RedesignAI() {
   const [activeTab, setActiveTab] = useState<"day1" | "day2">("day1");
   const [activeIndustry, setActiveIndustry] = useState("retail");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [countdown, setCountdown] = useState({ days: "00", hours: "00", mins: "00", secs: "00" });
   const seatFillRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -147,29 +146,6 @@ export default function RedesignAI() {
     const wrap = seatFillRef.current.closest(".seat-progress-wrap");
     if (wrap) observer.observe(wrap);
     return () => observer.disconnect();
-  }, []);
-
-  // Countdown timer
-  useEffect(() => {
-    const update = () => {
-      const target = new Date("2026-04-12T23:59:59").getTime();
-      let diff = Math.max(0, target - Date.now());
-      const days = Math.floor(diff / 86400000);
-      diff %= 86400000;
-      const hours = Math.floor(diff / 3600000);
-      diff %= 3600000;
-      const mins = Math.floor(diff / 60000);
-      const secs = Math.floor((diff % 60000) / 1000);
-      setCountdown({
-        days: String(days).padStart(2, "0"),
-        hours: String(hours).padStart(2, "0"),
-        mins: String(mins).padStart(2, "0"),
-        secs: String(secs).padStart(2, "0"),
-      });
-    };
-    update();
-    const interval = setInterval(update, 1000);
-    return () => clearInterval(interval);
   }, []);
 
   const toggleFaq = useCallback((index: number) => {
@@ -699,8 +675,8 @@ export default function RedesignAI() {
                     <span className="roi-row-value" style={{ fontSize: 18, textDecoration: "line-through", color: "var(--ink-4)" }}>₹1,00,000+</span>
                   </div>
                   <div className="roi-row">
-                    <span className="roi-row-label" style={{ fontWeight: 700, color: "var(--ink)" }}>Your early bird price</span>
-                    <span className="roi-row-value big">₹30,000</span>
+                    <span className="roi-row-label" style={{ fontWeight: 700, color: "var(--ink)" }}>Your seat price</span>
+                    <span className="roi-row-value big">₹39,000</span>
                   </div>
                 </div>
               </div>
@@ -744,50 +720,22 @@ export default function RedesignAI() {
 
               {/* Urgency */}
               <div className="urgency-block fade-up delay-3">
-                <div className="urgency-icon">⏰</div>
+                <div className="urgency-icon">🔥</div>
                 <div className="urgency-text">
-                  <strong>Early bird pricing ends April 12th</strong>
-                  <span>After April 12th, the price returns to ₹39,000 and group discounts no longer apply. Reserve your seat now to lock in your rate.</span>
+                  <strong>Early Bird ₹30,000 seats are sold out</strong>
+                  <span>The early bird window has closed. Remaining seats are available at ₹39,000. Limited spots left — secure yours before the workshop fills up.</span>
                 </div>
               </div>
             </div>
 
             {/* Pricing Card */}
             <div className="pricing-card fade-up delay-2">
-              <div className="early-bird-badge">🐦 Early Bird — Ends April 12th</div>
-              <div className="pricing-original">₹39,000</div>
-              <div className="pricing-main">₹30,000<span> + GST</span></div>
-              <div className="pricing-taxes">Per person, early bird price</div>
-              <div className="early-bird-save">Early Bird — Save ₹9,000 before April 12th</div>
+              <div className="early-bird-badge" style={{ background: "#e53935", color: "#fff" }}>🚫 Early Bird ₹30,000 — Sold Out</div>
+              <div className="pricing-main">₹39,000<span> + GST</span></div>
+              <div className="pricing-taxes">Per person</div>
               <div className="osmapi-bonus">
                 <span className="osmapi-bonus-icon">🎁</span>
                 <span className="osmapi-bonus-text">Bonus: ₹20,000 worth of <strong>osmAPI</strong> credits included free with every registration</span>
-              </div>
-
-              {/* Countdown */}
-              <div className="countdown-wrap">
-                <div className="countdown-label">Early bird offer expires in</div>
-                <div className="countdown-timer">
-                  <div className="countdown-unit">
-                    <span className="countdown-num">{countdown.days}</span>
-                    <span className="countdown-unit-label">Days</span>
-                  </div>
-                  <span className="countdown-sep">:</span>
-                  <div className="countdown-unit">
-                    <span className="countdown-num">{countdown.hours}</span>
-                    <span className="countdown-unit-label">Hours</span>
-                  </div>
-                  <span className="countdown-sep">:</span>
-                  <div className="countdown-unit">
-                    <span className="countdown-num">{countdown.mins}</span>
-                    <span className="countdown-unit-label">Mins</span>
-                  </div>
-                  <span className="countdown-sep">:</span>
-                  <div className="countdown-unit">
-                    <span className="countdown-num">{countdown.secs}</span>
-                    <span className="countdown-unit-label">Secs</span>
-                  </div>
-                </div>
               </div>
 
               {/* Seat Progress */}
