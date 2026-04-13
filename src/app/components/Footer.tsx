@@ -52,16 +52,6 @@ export const Footer = () => {
               <li>
                 <a 
                   // href="/#agenda" 
-                  onClick={()=>{navigate('/agenda')}}
-                  className="text-[#007787] hover:text-[#1DB2AB] transition-colors text-sm"
-                  style={{ fontFamily: 'Montserrat, sans-serif' }}
-                >
-                  Agenda
-                </a>
-              </li>
-              <li>
-                <a 
-                  // href="/#agenda" 
                   onClick={()=>{navigate('/privacy-policy')}}
                   className="text-[#007787] hover:text-[#1DB2AB] transition-colors text-sm"
                   style={{ fontFamily: 'Montserrat, sans-serif' }}

@@ -121,37 +121,12 @@ export default function Home() {
             {/* Navigation & Button */}
             <div className="flex items-center gap-4 md:gap-12">
               <nav className="flex items-center gap-3 md:gap-8" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                <a
-                  href="#about"
-                  className={`text-[20px] md:text-[14px] font-semibold transition-colors cursor-pointer whitespace-nowrap
-                  ${isScrolled ? 'text-[#007787] hover:text-[#1DB2AB]' : 'text-white hover:text-[#92dad7]'}
-                `}
-                >
-                  About
-                </a>
-                <button
-                  onClick={() => navigate('/team')}
-                  className={`text-[20px] md:text-[14px] font-semibold transition-colors cursor-pointer whitespace-nowrap
-                  ${isScrolled ? 'text-[#007787] hover:text-[#1DB2AB]' : 'text-white hover:text-[#92dad7]'}
-                `}
-                >
-                  Team
-                </button>
                 <button
                   onClick={() => navigate('/redesign-ai')}
                   className="redesign-ai-btn text-[20px] md:text-[14px] cursor-pointer whitespace-nowrap"
                 >
                   Redesign AI
                 </button>
-                {/* <a
-                //   href="#agenda"
-                onClick={() => {navigate('/agenda')}}
-                  className={`text-[20px] md:text-[14px] font-semibold transition-colors cursor-pointer whitespace-nowrap
-                  ${isScrolled ? 'text-[#007787] hover:text-[#1DB2AB]' : 'text-white hover:text-[#92dad7]'}
-                `}
-                >
-                  Agenda
-                </a> */}
               </nav>
 
               {/* Apply Now Button */}
@@ -187,24 +162,6 @@ export default function Home() {
 
             {/* Desktop Navigation - Hidden on Mobile */}
             <nav className="hidden md:flex items-center gap-8 mr-8" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-              <a
-                href="#about"
-                className="text-sm font-semibold text-[#007787] hover:text-[#1DB2AB] transition-colors"
-              >
-                About
-              </a>
-              <button
-                onClick={() => navigate('/team')}
-                className="text-sm font-semibold text-[#007787] hover:text-[#1DB2AB] transition-colors"
-              >
-                Team
-              </button>
-              <a
-                href="#agenda"
-                className="text-sm font-semibold text-[#007787] hover:text-[#1DB2AB] transition-colors"
-              >
-                Agenda
-              </a>
               <button
                 onClick={() => navigate('/redesign-ai')}
                 className="redesign-ai-btn text-sm cursor-pointer"
@@ -229,29 +186,6 @@ export default function Home() {
         {mobileMenuOpen && (
           <div className="fixed top-[64px] left-0 right-0 bg-white shadow-lg z-40 md:hidden">
             <nav className="flex flex-col py-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-              <a 
-                href="#about" 
-                className="px-6 py-3 text-sm font-semibold text-[#007787] hover:bg-gray-50"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                About
-              </a>
-              <button
-                onClick={() => {
-                  navigate('/team');
-                  setMobileMenuOpen(false);
-                }}
-                className="px-6 py-3 text-sm font-semibold text-[#007787] hover:bg-gray-50 text-left"
-              >
-                Team
-              </button>
-              <a
-                href="#agenda"
-                className="px-6 py-3 text-sm font-semibold text-[#007787] hover:bg-gray-50"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Agenda
-              </a>
               <button
                 onClick={() => {
                   navigate('/redesign-ai');
@@ -1072,9 +1006,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Agenda Section */}
-      <AgendaSection />
 
       {/* Is This For You Section */}
       <IsThisForYouSection />
