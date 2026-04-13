@@ -90,6 +90,8 @@ export default function Admin() {
   const [activeTab, setActiveTab] = useState<"leads" | "analytics">("leads");
   const [leadActivity, setLeadActivity] = useState<Record<string, ActivityEntry[]>>({});
   const [activityLoading, setActivityLoading] = useState<string | null>(null);
+  const [editingLeadId, setEditingLeadId] = useState<string | null>(null);
+  const [editFields, setEditFields] = useState<Partial<Lead>>({});
 
   const fetchLeads = useCallback(async (pwd: string) => {
     setLoading(true);
@@ -154,6 +156,22 @@ export default function Admin() {
     });
     setSaving(null);
     logActivity(id, leads.find(l => l.id === id)?.full_name || "", "Notes updated");
+  };
+
+  const handleSaveEdit = async (id: string) => {
+    setSaving(id);
+    setLeads((prev) => prev.map((l) => (l.id === id ? { ...l, ...editFields } : l)));
+    await fetch("/api/update-lead", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "x-admin-password": sessionStorage.getItem("adminPwd") || "",
+      },
+      body: JSON.stringify({ id, ...editFields }),
+    });
+    setSaving(null);
+    setEditingLeadId(null);
+    logActivity(id, (editFields.full_name as string) || leads.find((l) => l.id === id)?.full_name || "", "Lead fields updated");
   };
 
   const DEFAULT_EMAIL_TYPE: Record<string, string> = {
@@ -631,6 +649,52 @@ export default function Admin() {
                       {expandedId === lead.id && (
                         <tr key={`${lead.id}-detail`} style={{ background: "#f0f4ff" }}>
                           <td colSpan={12} style={styles.detailCell}>
+                            {/* Inline Edit Panel */}
+                            {editingLeadId === lead.id ? (
+                              <div style={{ marginBottom: 20 }}>
+                                <div style={{ fontWeight: 700, fontSize: 12, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 12 }}>✏ Editing Fields</div>
+                                <div style={styles.editGrid}>
+                                  {([
+                                    { label: "Full Name", key: "full_name" },
+                                    { label: "Email", key: "email" },
+                                    { label: "Phone", key: "phone" },
+                                    { label: "City", key: "city" },
+                                    { label: "Company", key: "company_name" },
+                                    { label: "Designation", key: "designation" },
+                                    { label: "Industry", key: "industry" },
+                                    { label: "Team Size", key: "team_size" },
+                                    { label: "Referred By", key: "referred_by" },
+                                    { label: "LinkedIn", key: "linkedin_profile" },
+                                    { label: "Website", key: "company_website" },
+                                  ] as { label: string; key: keyof Lead }[]).map(({ label, key }) => (
+                                    <div key={key}>
+                                      <div style={styles.detailLabel}>{label}</div>
+                                      <input
+                                        style={styles.editInput}
+                                        value={(editFields[key] as string) ?? ""}
+                                        onChange={(e) => setEditFields((prev) => ({ ...prev, [key]: e.target.value }))}
+                                      />
+                                    </div>
+                                  ))}
+                                </div>
+                                <div style={{ display: "flex", gap: 10, marginTop: 12 }}>
+                                  <button onClick={() => handleSaveEdit(lead.id)} disabled={saving === lead.id} style={styles.saveBtn}>
+                                    {saving === lead.id ? "Saving..." : "✓ Save Changes"}
+                                  </button>
+                                  <button onClick={() => setEditingLeadId(null)} style={styles.logoutBtn}>Cancel</button>
+                                </div>
+                              </div>
+                            ) : (
+                              <div style={{ marginBottom: 16 }}>
+                                <button
+                                  onClick={() => { setEditingLeadId(lead.id); setEditFields({ ...lead }); }}
+                                  style={styles.editFieldsBtn}
+                                >
+                                  ✏ Edit Fields
+                                </button>
+                              </div>
+                            )}
+
                             <div style={styles.detailGrid}>
                               <div style={styles.detailBlock}>
                                 <div style={styles.detailLabel}>AI Usage</div>
@@ -1397,5 +1461,31 @@ const styles: Record<string, React.CSSProperties> = {
     marginBottom: 16,
     textTransform: "uppercase" as const,
     letterSpacing: "0.06em",
+  },
+  editFieldsBtn: {
+    background: "#f0f4ff",
+    color: "#2563eb",
+    border: "1px solid #c7d7fe",
+    borderRadius: 6,
+    padding: "6px 14px",
+    fontSize: 12,
+    fontWeight: 600,
+    cursor: "pointer",
+  },
+  editGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+    gap: "12px 16px",
+  },
+  editInput: {
+    width: "100%",
+    padding: "6px 10px",
+    border: "1px solid #c7d7fe",
+    borderRadius: 6,
+    fontSize: 13,
+    background: "#f8faff",
+    marginTop: 4,
+    boxSizing: "border-box" as const,
+    outline: "none",
   },
 };
