@@ -315,6 +315,10 @@ export default function RedesignAI() {
           </div>
           <div className="logo-strip-divider" />
           <div className="logo-partner">
+            <img src="/assets/odwen-logo.svg" alt="ODWEN" className="logo-partner-img copartner-logo" />
+          </div>
+          <div className="logo-strip-divider" />
+          <div className="logo-partner">
             <img src="/assets/finteract-logo.png" alt="Finteract AI" className="logo-partner-img copartner-logo" />
           </div>
         </div>
