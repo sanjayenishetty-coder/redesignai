@@ -38,6 +38,8 @@ export default async function handler(req, res) {
       specific_tools: l.specific_tools || l.specificTools || null,
       status: l.status || "new",
       notes: l.notes || null,
+      participant_type: l.participant_type || null,
+      source_channel: l.source_channel || null,
     }));
 
     const response = await fetch(`${SUPABASE_URL}/rest/v1/redesign_intake`, {

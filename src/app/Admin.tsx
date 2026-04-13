@@ -2,6 +2,31 @@ import { useState, useEffect, useCallback } from "react";
 
 const STATUS_OPTIONS = ["new", "contacted", "paid", "attended", "rejected"];
 
+const PARTICIPANT_TYPES = ["individual", "b2b", "duo", "trio", "co-brand"];
+const PARTICIPANT_TYPE_COLORS: Record<string, string> = {
+  individual: "#2563eb",
+  b2b: "#7c3aed",
+  duo: "#0891b2",
+  trio: "#16a34a",
+  "co-brand": "#d97706",
+};
+
+const SOURCE_CHANNELS = [
+  "WhatsApp Broadcast",
+  "LinkedIn Organic",
+  "LinkedIn Ad",
+  "Instagram Organic",
+  "Instagram Ad",
+  "Google Ad",
+  "Referral",
+  "Email Campaign",
+  "Event / In-person",
+  "Website Direct",
+  "Cold Outreach",
+  "Partner Network",
+  "Other",
+];
+
 const CITY_ALIASES: Record<string, string> = {
   hyderabad: "Hyderabad", hyd: "Hyderabad", "hyd.": "Hyderabad",
   secunderabad: "Hyderabad", secundrabad: "Hyderabad",
@@ -50,6 +75,8 @@ type Lead = {
   specific_tools: string | null;
   status: string;
   notes: string | null;
+  participant_type: string | null;
+  source_channel: string | null;
 };
 
 type ActivityEntry = {
@@ -85,6 +112,7 @@ export default function Admin() {
     full_name: "", email: "", phone: "", city: "",
     company_name: "", designation: "", industry: "",
     team_size: "", referred_by: "", status: "new", notes: "",
+    participant_type: "", source_channel: "",
   });
   const [addSaving, setAddSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<"leads" | "analytics">("leads");
@@ -140,6 +168,30 @@ export default function Admin() {
     });
     setSaving(null);
     logActivity(id, leads.find(l => l.id === id)?.full_name || "", "Status changed", `→ ${status}`);
+  };
+
+  const handleParticipantTypeChange = async (id: string, participant_type: string) => {
+    setSaving(id);
+    setLeads((prev) => prev.map((l) => (l.id === id ? { ...l, participant_type } : l)));
+    await fetch("/api/update-lead", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", "x-admin-password": sessionStorage.getItem("adminPwd") || "" },
+      body: JSON.stringify({ id, participant_type }),
+    });
+    setSaving(null);
+    logActivity(id, leads.find(l => l.id === id)?.full_name || "", "Type tagged", `→ ${participant_type}`);
+  };
+
+  const handleSourceChannelChange = async (id: string, source_channel: string) => {
+    setSaving(id);
+    setLeads((prev) => prev.map((l) => (l.id === id ? { ...l, source_channel } : l)));
+    await fetch("/api/update-lead", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", "x-admin-password": sessionStorage.getItem("adminPwd") || "" },
+      body: JSON.stringify({ id, source_channel }),
+    });
+    setSaving(null);
+    logActivity(id, leads.find(l => l.id === id)?.full_name || "", "Source tagged", `→ ${source_channel}`);
   };
 
   const handleSaveNotes = async (id: string) => {
@@ -296,7 +348,7 @@ export default function Admin() {
       setLeads((prev) => [data[0], ...prev]);
       logActivity(data[0].id, data[0].full_name, "Lead added manually");
       setShowAddModal(false);
-      setAddForm({ full_name: "", email: "", phone: "", city: "", company_name: "", designation: "", industry: "", team_size: "", referred_by: "", status: "new", notes: "" });
+      setAddForm({ full_name: "", email: "", phone: "", city: "", company_name: "", designation: "", industry: "", team_size: "", referred_by: "", status: "new", notes: "", participant_type: "", source_channel: "" });
     } catch {
       alert("Failed to add lead. Try again.");
     } finally {
@@ -567,6 +619,8 @@ export default function Admin() {
                     <th style={styles.th}>Referred By</th>
                     <th style={styles.th}>Applied</th>
                     <th style={styles.th}>Status</th>
+                    <th style={styles.th}>Type</th>
+                    <th style={styles.th}>Source</th>
                     <th style={styles.th}>Details</th>
                   </tr>
                 </thead>
@@ -633,6 +687,36 @@ export default function Admin() {
                           </select>
                         </td>
                         <td style={styles.td}>
+                          <select
+                            value={lead.participant_type || ""}
+                            onChange={(e) => handleParticipantTypeChange(lead.id, e.target.value)}
+                            disabled={saving === lead.id}
+                            style={{
+                              ...styles.statusSelect,
+                              color: lead.participant_type ? PARTICIPANT_TYPE_COLORS[lead.participant_type] || "#111" : "#9ca3af",
+                              borderColor: lead.participant_type ? PARTICIPANT_TYPE_COLORS[lead.participant_type] || "#ccc" : "#e5e7eb",
+                            }}
+                          >
+                            <option value="">— Tag type</option>
+                            {PARTICIPANT_TYPES.map((t) => (
+                              <option key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td style={styles.td}>
+                          <select
+                            value={lead.source_channel || ""}
+                            onChange={(e) => handleSourceChannelChange(lead.id, e.target.value)}
+                            disabled={saving === lead.id}
+                            style={{ ...styles.statusSelect, color: lead.source_channel ? "#111" : "#9ca3af", borderColor: lead.source_channel ? "#6b7280" : "#e5e7eb", minWidth: 130 }}
+                          >
+                            <option value="">— Tag source</option>
+                            {SOURCE_CHANNELS.map((s) => (
+                              <option key={s} value={s}>{s}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td style={styles.td}>
                           <button
                             onClick={() => {
                               const newId = expandedId === lead.id ? null : lead.id;
@@ -648,7 +732,7 @@ export default function Admin() {
 
                       {expandedId === lead.id && (
                         <tr key={`${lead.id}-detail`} style={{ background: "#f0f4ff" }}>
-                          <td colSpan={12} style={styles.detailCell}>
+                          <td colSpan={14} style={styles.detailCell}>
                             {/* Inline Edit Panel */}
                             {editingLeadId === lead.id ? (
                               <div style={{ marginBottom: 20 }}>
@@ -994,6 +1078,46 @@ export default function Admin() {
                 ));
               })()}
             </div>
+
+            {/* Participant Type */}
+            <div style={styles.analyticsSection}>
+              <div style={styles.analyticsSectionTitle}>By Participant Type</div>
+              {(() => {
+                const data = Object.entries(leads.reduce((acc, l) => { const t = l.participant_type || "Untagged"; acc[t]=(acc[t]||0)+1; return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]);
+                const max = Math.max(...data.map(d=>d[1]), 1);
+                return data.map(([label, value]) => (
+                  <div key={label} style={{ marginBottom: 10 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 4 }}>
+                      <span style={{ color: "#374151" }}>{label.charAt(0).toUpperCase() + label.slice(1)}</span>
+                      <span style={{ fontWeight: 700, color: "#111" }}>{value}</span>
+                    </div>
+                    <div style={{ background: "#f3f4f6", borderRadius: 4, height: 8 }}>
+                      <div style={{ width: `${(value/max)*100}%`, height: "100%", background: PARTICIPANT_TYPE_COLORS[label] || "#9ca3af", borderRadius: 4 }} />
+                    </div>
+                  </div>
+                ));
+              })()}
+            </div>
+
+            {/* Source Channel */}
+            <div style={styles.analyticsSection}>
+              <div style={styles.analyticsSectionTitle}>By Source Channel</div>
+              {(() => {
+                const data = Object.entries(leads.reduce((acc, l) => { const s = l.source_channel || "Untagged"; acc[s]=(acc[s]||0)+1; return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]);
+                const max = Math.max(...data.map(d=>d[1]), 1);
+                return data.map(([label, value]) => (
+                  <div key={label} style={{ marginBottom: 10 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, marginBottom: 4 }}>
+                      <span style={{ color: "#374151" }}>{label}</span>
+                      <span style={{ fontWeight: 700, color: "#111" }}>{value}</span>
+                    </div>
+                    <div style={{ background: "#f3f4f6", borderRadius: 4, height: 8 }}>
+                      <div style={{ width: `${(value/max)*100}%`, height: "100%", background: "#7c3aed", borderRadius: 4 }} />
+                    </div>
+                  </div>
+                ));
+              })()}
+            </div>
           </div>
         </div>
       )}
@@ -1038,6 +1162,32 @@ export default function Admin() {
                   >
                     {STATUS_OPTIONS.map((s) => (
                       <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label style={styles.modalLabel}>Participant Type</label>
+                  <select
+                    style={styles.modalInput}
+                    value={addForm.participant_type}
+                    onChange={(e) => setAddForm((p) => ({ ...p, participant_type: e.target.value }))}
+                  >
+                    <option value="">— Select type</option>
+                    {PARTICIPANT_TYPES.map((t) => (
+                      <option key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label style={styles.modalLabel}>Source Channel</label>
+                  <select
+                    style={styles.modalInput}
+                    value={addForm.source_channel}
+                    onChange={(e) => setAddForm((p) => ({ ...p, source_channel: e.target.value }))}
+                  >
+                    <option value="">— Select source</option>
+                    {SOURCE_CHANNELS.map((s) => (
+                      <option key={s} value={s}>{s}</option>
                     ))}
                   </select>
                 </div>
