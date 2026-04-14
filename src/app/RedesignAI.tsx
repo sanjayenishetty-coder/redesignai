@@ -695,8 +695,37 @@ export default function RedesignAI() {
             </div>
           </div>
 
+          {/* Co-Brand — Prominent Card */}
+          <div className="cobrand-prominent fade-up delay-2">
+            <div className="cobrand-prominent-left">
+              <div className="cobrand-prominent-eyebrow">🤝 Co-Brand Partner Slot — Limited Availability</div>
+              <h3 className="cobrand-prominent-title">Brand the Workshop.<br />Educate Your Best Clients.</h3>
+              <p className="cobrand-prominent-desc">Put your brand on REDESIGN-ai and send your top SME Customers, Channel Partners, or Franchisees to one of the most forward-thinking AI workshops in India. They learn. You lead.</p>
+              <div className="cobrand-prominent-pills">
+                <span className="cobrand-pill">✓ 5 seats included</span>
+                <span className="cobrand-pill">✓ Your logo on all event collateral</span>
+                <span className="cobrand-pill">✓ Brand mention throughout the workshop</span>
+                <span className="cobrand-pill">✓ Co-branded certificate for participants</span>
+              </div>
+            </div>
+            <div className="cobrand-prominent-right">
+              <div className="cobrand-prominent-price-label">Investment</div>
+              <div className="cobrand-prominent-price">₹1,35,000</div>
+              <div className="cobrand-prominent-price-sub">+ GST &nbsp;·&nbsp; 5 seats</div>
+              <div className="cobrand-prominent-per">₹27,000 per seat — best rate on the page</div>
+              <a
+                href="https://wa.me/919010155595?text=Hi%20Sanjay%2C%20I%27m%20interested%20in%20the%20Co-Brand%20Partner%20slot%20for%20REDESIGN-ai.%20Please%20share%20more%20details."
+                className="cobrand-prominent-cta"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Talk to us on WhatsApp →
+              </a>
+              <div className="cobrand-prominent-note">We'll send you a full partnership deck within 24 hours.</div>
+            </div>
+          </div>
+
           {/* Shared Details */}
-          <div className="pricing-details fade-up delay-2">
+          <div className="pricing-details fade-up delay-3">
             <div className="pricing-details-left">
               <div className="osmapi-bonus osmapi-bonus--light">
                 <span className="osmapi-bonus-icon">🎁</span>
@@ -743,29 +772,6 @@ export default function RedesignAI() {
               <div className="roi-strip-item"><span>No-code automation setup</span><span className="roi-strip-val">₹30,000+</span></div>
               <div className="roi-strip-item"><span>90-day post-support</span><span className="roi-strip-val">₹30,000</span></div>
               <div className="roi-strip-item roi-strip-item--total"><span>Equivalent market value</span><span className="roi-strip-val">₹1,00,000+</span></div>
-            </div>
-          </div>
-
-          {/* Co-Brand */}
-          <div className="cobrand-block fade-up delay-3">
-            <div className="cobrand-block-left">
-              <div className="cobrand-tag">🤝 Co-Brand Partner Slot</div>
-              <h4 className="cobrand-title">Give Your Best Clients an AI Education — With Your Brand On It</h4>
-              <p className="cobrand-desc">Bring your top SME Customers, Channel Partners, or Franchisees to REDESIGN-ai and co-brand one of the most forward-thinking events of the year.</p>
-            </div>
-            <div className="cobrand-block-right">
-              <div className="cobrand-details">
-                <div className="cobrand-detail-row"><span>Seats included</span><strong>5 seats</strong></div>
-                <div className="cobrand-detail-row"><span>Your brand on the event</span><strong>✓ Co-branded</strong></div>
-                <div className="cobrand-detail-row"><span>Investment</span><strong>₹1,35,000 + GST</strong></div>
-              </div>
-              <a
-                href="https://wa.me/919010155595?text=Hi%20Sanjay%2C%20I%27m%20interested%20in%20the%20Co-Brand%20Partner%20slot%20for%20REDESIGN-ai.%20Please%20share%20more%20details."
-                className="cobrand-cta"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                Talk to us →
-              </a>
             </div>
           </div>
         </div>

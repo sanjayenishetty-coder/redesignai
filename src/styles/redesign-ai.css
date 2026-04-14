@@ -2281,6 +2281,162 @@
   opacity: 0.9;
 }
 
+/* ─── CO-BRAND PROMINENT CARD ─── */
+.redesign-page .cobrand-prominent {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  background: linear-gradient(135deg, #0D2B24 0%, #0F3D33 60%, #1A5C48 100%);
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--teal-400);
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(26,122,96,0.30), 0 4px 16px rgba(0,0,0,0.20);
+  margin-bottom: 48px;
+  position: relative;
+}
+.redesign-page .cobrand-prominent::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(46,196,143,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.redesign-page .cobrand-prominent-left {
+  flex: 1;
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-right: 1px solid rgba(255,255,255,0.10);
+}
+.redesign-page .cobrand-prominent-right {
+  width: 300px;
+  flex-shrink: 0;
+  padding: 48px 36px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  background: rgba(0,0,0,0.15);
+}
+.redesign-page .cobrand-prominent-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal-300);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.redesign-page .cobrand-prominent-title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 800;
+  line-height: 1.2;
+  color: #FFFFFF;
+  margin: 0;
+}
+.redesign-page .cobrand-prominent-desc {
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.72);
+  max-width: 520px;
+  margin: 0;
+}
+.redesign-page .cobrand-prominent-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+.redesign-page .cobrand-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: rgba(46,196,143,0.15);
+  border: 1px solid rgba(46,196,143,0.35);
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--teal-200);
+}
+.redesign-page .cobrand-prominent-price-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--teal-300);
+}
+.redesign-page .cobrand-prominent-price {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 900;
+  color: #FFFFFF;
+  line-height: 1;
+}
+.redesign-page .cobrand-prominent-price-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  margin-top: -4px;
+}
+.redesign-page .cobrand-prominent-per {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--teal-200);
+  background: rgba(46,196,143,0.12);
+  border-radius: 8px;
+  padding: 6px 12px;
+}
+.redesign-page .cobrand-prominent-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #25D366;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px 24px;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  margin-top: 8px;
+  transition: background 0.2s, transform 0.15s;
+  width: 100%;
+  justify-content: center;
+}
+.redesign-page .cobrand-prominent-cta:hover {
+  background: #1ebe58;
+  transform: translateY(-2px);
+}
+.redesign-page .cobrand-prominent-note {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.4;
+}
+
+/* Mobile cobrand prominent */
+@media (max-width: 768px) {
+  .redesign-page .cobrand-prominent {
+    flex-direction: column;
+  }
+  .redesign-page .cobrand-prominent-left {
+    padding: 32px 24px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+  }
+  .redesign-page .cobrand-prominent-right {
+    width: 100%;
+    padding: 32px 24px;
+  }
+  .redesign-page .cobrand-prominent-price {
+    font-size: 40px;
+  }
+}
+
 /* Footer Partners */
 .redesign-page .footer-partners {
   padding: 24px 0;
