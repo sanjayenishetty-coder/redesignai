@@ -854,6 +854,8 @@ export default function RedesignAI() {
             <div className="footer-partners-logos">
               <img src="/assets/zaggle-logo.png" alt="Zaggle" className="footer-partner-logo" />
               <img src="/assets/alliance-pro-logo.png" alt="Alliance Pro" className="footer-partner-logo" />
+              <img src="/assets/odwen-logo.svg" alt="ODWEN" className="footer-partner-logo" />
+              <img src="/assets/finteract-logo.png" alt="Finteract" className="footer-partner-logo" />
             </div>
           </div>
           <div className="footer-bottom">
