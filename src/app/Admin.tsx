@@ -120,6 +120,11 @@ export default function Admin() {
   const [activityLoading, setActivityLoading] = useState<string | null>(null);
   const [editingLeadId, setEditingLeadId] = useState<string | null>(null);
   const [editFields, setEditFields] = useState<Partial<Lead>>({});
+  const [analyticsStatusFilter, setAnalyticsStatusFilter] = useState("all");
+  const [analyticsTypeFilter, setAnalyticsTypeFilter] = useState("all");
+  const [analyticsSourceFilter, setAnalyticsSourceFilter] = useState("all");
+  const [analyticsDateFrom, setAnalyticsDateFrom] = useState("");
+  const [analyticsDateTo, setAnalyticsDateTo] = useState("");
 
   const fetchLeads = useCallback(async (pwd: string) => {
     setLoading(true);
@@ -912,16 +917,60 @@ export default function Admin() {
         </>
       )}
 
-      {activeTab === "analytics" && (
+      {activeTab === "analytics" && (() => {
+        const analyticsLeads = leads.filter((l) => {
+          if (analyticsStatusFilter !== "all" && l.status !== analyticsStatusFilter) return false;
+          if (analyticsTypeFilter !== "all" && (l.participant_type || "") !== analyticsTypeFilter) return false;
+          if (analyticsSourceFilter !== "all" && (l.source_channel || "") !== analyticsSourceFilter) return false;
+          if (analyticsDateFrom && new Date(l.created_at) < new Date(analyticsDateFrom)) return false;
+          if (analyticsDateTo && new Date(l.created_at) > new Date(analyticsDateTo + "T23:59:59")) return false;
+          return true;
+        });
+        const activeFiltersCount = [analyticsStatusFilter, analyticsTypeFilter, analyticsSourceFilter].filter(f => f !== "all").length + (analyticsDateFrom ? 1 : 0) + (analyticsDateTo ? 1 : 0);
+        return (
         <div style={styles.analyticsWrap}>
+          {/* Analytics Filters */}
+          <div style={styles.analyticsFilterBar}>
+            <div style={styles.analyticsFilterLabel}>
+              🔍 Filter Analytics
+              {activeFiltersCount > 0 && (
+                <span style={styles.analyticsFilterBadge}>{activeFiltersCount} active</span>
+              )}
+            </div>
+            <div style={styles.analyticsFilterControls}>
+              <select value={analyticsStatusFilter} onChange={(e) => setAnalyticsStatusFilter(e.target.value)} style={styles.analyticsFilterSelect}>
+                <option value="all">All Statuses</option>
+                {STATUS_OPTIONS.map(s => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
+              </select>
+              <select value={analyticsTypeFilter} onChange={(e) => setAnalyticsTypeFilter(e.target.value)} style={styles.analyticsFilterSelect}>
+                <option value="all">All Types</option>
+                {PARTICIPANT_TYPES.map(t => <option key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>)}
+              </select>
+              <select value={analyticsSourceFilter} onChange={(e) => setAnalyticsSourceFilter(e.target.value)} style={styles.analyticsFilterSelect}>
+                <option value="all">All Sources</option>
+                {SOURCE_CHANNELS.map(s => <option key={s} value={s}>{s}</option>)}
+              </select>
+              <input type="date" value={analyticsDateFrom} onChange={(e) => setAnalyticsDateFrom(e.target.value)} style={styles.analyticsFilterSelect} title="From date" />
+              <input type="date" value={analyticsDateTo} onChange={(e) => setAnalyticsDateTo(e.target.value)} style={styles.analyticsFilterSelect} title="To date" />
+              {activeFiltersCount > 0 && (
+                <button onClick={() => { setAnalyticsStatusFilter("all"); setAnalyticsTypeFilter("all"); setAnalyticsSourceFilter("all"); setAnalyticsDateFrom(""); setAnalyticsDateTo(""); }} style={styles.analyticsClearBtn}>
+                  ✕ Clear all
+                </button>
+              )}
+            </div>
+            <div style={styles.analyticsFilterResult}>
+              Showing <strong>{analyticsLeads.length}</strong> of {leads.length} leads
+            </div>
+          </div>
+
           {/* Metric Cards */}
           <div style={styles.analyticsCards}>
             {[
-              { label: "Total Applicants", value: leads.length, color: "#2563eb", icon: "👥" },
-              { label: "Paid", value: leads.filter(l => l.status === "paid").length, color: "#16a34a", icon: "✅" },
-              { label: "Conversion Rate", value: leads.length > 0 ? `${Math.round((leads.filter(l => l.status === "paid").length / leads.length) * 100)}%` : "0%", color: "#7c3aed", icon: "📈" },
+              { label: "Total Applicants", value: analyticsLeads.length, color: "#2563eb", icon: "👥" },
+              { label: "Paid", value: analyticsLeads.filter(l => l.status === "paid").length, color: "#16a34a", icon: "✅" },
+              { label: "Conversion Rate", value: analyticsLeads.length > 0 ? `${Math.round((analyticsLeads.filter(l => l.status === "paid").length / analyticsLeads.length) * 100)}%` : "0%", color: "#7c3aed", icon: "📈" },
               { label: "Seats Remaining", value: 50 - leads.filter(l => l.status === "paid").length, color: "#d97706", icon: "💺" },
-              { label: "Avg Team Size", value: (() => { const sizes = leads.map(l => parseInt(l.team_size)).filter(n => !isNaN(n)); return sizes.length > 0 ? Math.round(sizes.reduce((a,b)=>a+b,0)/sizes.length) : "—"; })(), color: "#0891b2", icon: "🏢" },
+              { label: "Avg Team Size", value: (() => { const sizes = analyticsLeads.map(l => parseInt(l.team_size)).filter(n => !isNaN(n)); return sizes.length > 0 ? Math.round(sizes.reduce((a,b)=>a+b,0)/sizes.length) : "—"; })(), color: "#0891b2", icon: "🏢" },
             ].map((card) => (
               <div key={card.label} style={styles.analyticsCard}>
                 <div style={{ fontSize: 24, marginBottom: 8 }}>{card.icon}</div>
@@ -942,8 +991,8 @@ export default function Admin() {
                 { label: "Attended", key: "attended", color: "#7c3aed" },
                 { label: "Rejected", key: "rejected", color: "#dc2626" },
               ].map((stage, i) => {
-                const count = leads.filter(l => l.status === stage.key).length;
-                const pct = leads.length > 0 ? Math.round((count / leads.length) * 100) : 0;
+                const count = analyticsLeads.filter(l => l.status === stage.key).length;
+                const pct = analyticsLeads.length > 0 ? Math.round((count / analyticsLeads.length) * 100) : 0;
                 return (
                   <div key={stage.key} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <div style={{ flex: 1, width: "100%", background: stage.color, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", color: "white", opacity: 0.85 + (i * 0.03) }}>
@@ -962,7 +1011,7 @@ export default function Admin() {
             <div style={styles.analyticsSection}>
               <div style={styles.analyticsSectionTitle}>By Industry</div>
               {(() => {
-                const data = Object.entries(leads.reduce((acc, l) => { if (l.industry) acc[l.industry] = (acc[l.industry]||0)+1; return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]).slice(0,8);
+                const data = Object.entries(analyticsLeads.reduce((acc, l) => { if (l.industry) acc[l.industry] = (acc[l.industry]||0)+1; return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]).slice(0,8);
                 const max = Math.max(...data.map(d=>d[1]), 1);
                 return data.map(([label, value]) => (
                   <div key={label} style={{ marginBottom: 10 }}>
@@ -982,7 +1031,7 @@ export default function Admin() {
             <div style={styles.analyticsSection}>
               <div style={styles.analyticsSectionTitle}>By City</div>
               {(() => {
-                const data = Object.entries(leads.reduce((acc, l) => { if (l.city) { const c = normalizeCity(l.city); acc[c] = (acc[c]||0)+1; } return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]).slice(0,8);
+                const data = Object.entries(analyticsLeads.reduce((acc, l) => { if (l.city) { const c = normalizeCity(l.city); acc[c] = (acc[c]||0)+1; } return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]).slice(0,8);
                 const max = Math.max(...data.map(d=>d[1]), 1);
                 return data.map(([label, value]) => (
                   <div key={label} style={{ marginBottom: 10 }}>
@@ -1003,7 +1052,7 @@ export default function Admin() {
               <div style={styles.analyticsSectionTitle}>By Team Size</div>
               {(() => {
                 const buckets: Record<string,number> = { "1–10": 0, "11–50": 0, "51–200": 0, "200+": 0 };
-                leads.forEach(l => { const n = parseInt(l.team_size); if (!isNaN(n)) { if(n<=10)buckets["1–10"]++; else if(n<=50)buckets["11–50"]++; else if(n<=200)buckets["51–200"]++; else buckets["200+"]++; }});
+                analyticsLeads.forEach(l => { const n = parseInt(l.team_size); if (!isNaN(n)) { if(n<=10)buckets["1–10"]++; else if(n<=50)buckets["11–50"]++; else if(n<=200)buckets["51–200"]++; else buckets["200+"]++; }});
                 const max = Math.max(...Object.values(buckets), 1);
                 return Object.entries(buckets).map(([label, value]) => (
                   <div key={label} style={{ marginBottom: 10 }}>
@@ -1023,7 +1072,7 @@ export default function Admin() {
             <div style={styles.analyticsSection}>
               <div style={styles.analyticsSectionTitle}>Registrations Over Time</div>
               {(() => {
-                const data = Object.entries(leads.reduce((acc, l) => { const d = new Date(l.created_at).toLocaleDateString("en-IN",{day:"numeric",month:"short"}); acc[d]=(acc[d]||0)+1; return acc; }, {} as Record<string,number>));
+                const data = Object.entries(analyticsLeads.reduce((acc, l) => { const d = new Date(l.created_at).toLocaleDateString("en-IN",{day:"numeric",month:"short"}); acc[d]=(acc[d]||0)+1; return acc; }, {} as Record<string,number>));
                 const max = Math.max(...data.map(d=>d[1]), 1);
                 return data.map(([label, value]) => (
                   <div key={label} style={{ marginBottom: 10 }}>
@@ -1043,7 +1092,7 @@ export default function Admin() {
             <div style={styles.analyticsSection}>
               <div style={styles.analyticsSectionTitle}>Current AI Usage Level</div>
               {(() => {
-                const data = Object.entries(leads.reduce((acc, l) => { if (l.current_ai_usage) acc[l.current_ai_usage] = (acc[l.current_ai_usage]||0)+1; return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]);
+                const data = Object.entries(analyticsLeads.reduce((acc, l) => { if (l.current_ai_usage) acc[l.current_ai_usage] = (acc[l.current_ai_usage]||0)+1; return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]);
                 const max = Math.max(...data.map(d=>d[1]), 1);
                 return data.map(([label, value]) => (
                   <div key={label} style={{ marginBottom: 10 }}>
@@ -1063,7 +1112,7 @@ export default function Admin() {
             <div style={styles.analyticsSection}>
               <div style={styles.analyticsSectionTitle}>Referral Sources</div>
               {(() => {
-                const data = Object.entries(leads.reduce((acc, l) => { const r = l.referred_by || "Direct / Unknown"; acc[r]=(acc[r]||0)+1; return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]).slice(0,8);
+                const data = Object.entries(analyticsLeads.reduce((acc, l) => { const r = l.referred_by || "Direct / Unknown"; acc[r]=(acc[r]||0)+1; return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]).slice(0,8);
                 const max = Math.max(...data.map(d=>d[1]), 1);
                 return data.map(([label, value]) => (
                   <div key={label} style={{ marginBottom: 10 }}>
@@ -1083,7 +1132,7 @@ export default function Admin() {
             <div style={styles.analyticsSection}>
               <div style={styles.analyticsSectionTitle}>By Participant Type</div>
               {(() => {
-                const data = Object.entries(leads.reduce((acc, l) => { const t = l.participant_type || "Untagged"; acc[t]=(acc[t]||0)+1; return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]);
+                const data = Object.entries(analyticsLeads.reduce((acc, l) => { const t = l.participant_type || "Untagged"; acc[t]=(acc[t]||0)+1; return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]);
                 const max = Math.max(...data.map(d=>d[1]), 1);
                 return data.map(([label, value]) => (
                   <div key={label} style={{ marginBottom: 10 }}>
@@ -1103,7 +1152,7 @@ export default function Admin() {
             <div style={styles.analyticsSection}>
               <div style={styles.analyticsSectionTitle}>By Source Channel</div>
               {(() => {
-                const data = Object.entries(leads.reduce((acc, l) => { const s = l.source_channel || "Untagged"; acc[s]=(acc[s]||0)+1; return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]);
+                const data = Object.entries(analyticsLeads.reduce((acc, l) => { const s = l.source_channel || "Untagged"; acc[s]=(acc[s]||0)+1; return acc; }, {} as Record<string,number>)).sort((a,b)=>b[1]-a[1]);
                 const max = Math.max(...data.map(d=>d[1]), 1);
                 return data.map(([label, value]) => (
                   <div key={label} style={{ marginBottom: 10 }}>
@@ -1120,7 +1169,8 @@ export default function Admin() {
             </div>
           </div>
         </div>
-      )}
+        );
+      })()}
 
       {/* Add Lead Modal */}
       {showAddModal && (
@@ -1611,6 +1661,61 @@ const styles: Record<string, React.CSSProperties> = {
     marginBottom: 16,
     textTransform: "uppercase" as const,
     letterSpacing: "0.06em",
+  },
+  analyticsFilterBar: {
+    background: "white",
+    border: "1px solid #e5e7eb",
+    borderRadius: 10,
+    padding: "16px 20px",
+    marginBottom: 20,
+    display: "flex",
+    flexDirection: "column" as const,
+    gap: 12,
+  },
+  analyticsFilterLabel: {
+    fontSize: 13,
+    fontWeight: 700,
+    color: "#111",
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+  },
+  analyticsFilterBadge: {
+    background: "#2563eb",
+    color: "white",
+    fontSize: 11,
+    fontWeight: 700,
+    padding: "2px 8px",
+    borderRadius: 20,
+  },
+  analyticsFilterControls: {
+    display: "flex",
+    gap: 10,
+    flexWrap: "wrap" as const,
+    alignItems: "center",
+  },
+  analyticsFilterSelect: {
+    padding: "6px 10px",
+    border: "1px solid #e5e7eb",
+    borderRadius: 7,
+    fontSize: 13,
+    background: "#f9fafb",
+    color: "#374151",
+    cursor: "pointer",
+  },
+  analyticsClearBtn: {
+    padding: "6px 12px",
+    background: "#fee2e2",
+    color: "#dc2626",
+    border: "none",
+    borderRadius: 7,
+    fontSize: 12,
+    fontWeight: 600,
+    cursor: "pointer",
+  },
+  analyticsFilterResult: {
+    fontSize: 12,
+    color: "#6b7280",
   },
   editFieldsBtn: {
     background: "#f0f4ff",
