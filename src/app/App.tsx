@@ -12,6 +12,7 @@ import FeedbackSubmitted from "./FeedbackSubmit";
 import RedesignAI from "./RedesignAI";
 import IntakeForm from "./IntakeForm";
 import Admin from "./Admin";
+import Partners from "./Partners";
 export default function App() {
   return (
     <Routes>
@@ -28,6 +29,7 @@ export default function App() {
       <Route path="/redesign-ai" element={<RedesignAI />} />
       <Route path="/redesign-ai/intake" element={<IntakeForm />} />
       <Route path="/admin" element={<Admin />} />
+      <Route path="/partners" element={<Partners />} />
     </Routes>
   );
 }
