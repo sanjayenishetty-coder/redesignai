@@ -2,13 +2,14 @@ import { useState, useEffect, useCallback } from "react";
 
 const STATUS_OPTIONS = ["new", "contacted", "paid", "attended", "rejected"];
 
-const PARTICIPANT_TYPES = ["individual", "b2b", "duo", "trio", "co-brand"];
+const PARTICIPANT_TYPES = ["individual", "b2b", "duo", "trio", "co-brand", "complimentary"];
 const PARTICIPANT_TYPE_COLORS: Record<string, string> = {
   individual: "#2563eb",
   b2b: "#7c3aed",
   duo: "#0891b2",
   trio: "#16a34a",
   "co-brand": "#d97706",
+  complimentary: "#be185d",
 };
 
 const SOURCE_CHANNELS = [
