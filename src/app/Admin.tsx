@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-const STATUS_OPTIONS = ["new", "contacted", "paid", "attended", "rejected", "complimentary"];
+const STATUS_OPTIONS = ["new", "contacted", "paid", "attended", "rejected", "complimentary", "not interested"];
 
 const PARTICIPANT_TYPES = ["individual", "b2b", "duo", "trio", "co-brand"];
 const PARTICIPANT_TYPE_COLORS: Record<string, string> = {
@@ -54,6 +54,7 @@ const STATUS_COLORS: Record<string, string> = {
   attended: "#7c3aed",
   rejected: "#dc2626",
   complimentary: "#be185d",
+  "not interested": "#6b7280",
 };
 
 type Lead = {
