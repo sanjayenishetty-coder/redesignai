@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/redesign-ai.css";
 
 const RAZORPAY_LINK = "https://rzp.io/rzp/ce6486z";
+const RAZORPAY_DUO_LINK = "https://rzp.io/rzp/dOZVhZL";
 
 const industries = [
   {
@@ -681,7 +682,7 @@ export default function RedesignAI() {
               <div className="pack-price">₹70,000<span> + GST</span></div>
               <div className="pack-per">₹35,000 per person</div>
               <div className="pack-saving">Save ₹4,000 per person</div>
-              <button className="pack-cta" onClick={() => navigate("/redesign-ai/intake")}>Register as Duo →</button>
+              <button className="pack-cta" onClick={() => window.open(RAZORPAY_DUO_LINK, "_blank")}>Register as Duo →</button>
             </div>
             {/* Trio */}
             <div className="pack-card pack-card--featured">
