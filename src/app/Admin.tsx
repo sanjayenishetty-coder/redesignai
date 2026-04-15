@@ -415,7 +415,7 @@ export default function Admin() {
       const s = Array.isArray(v) ? v.join("; ") : String(v ?? "");
       return `"${s.replace(/"/g, '""')}"`;
     };
-    const rows = [cols.join(","), ...leads.map((l) => cols.map((c) => escape(l[c as keyof typeof l])).join(","))];
+    const rows = [cols.join(","), ...filtered.map((l) => cols.map((c) => escape(l[c as keyof typeof l])).join(","))];
     const blob = new Blob([rows.join("\n")], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
