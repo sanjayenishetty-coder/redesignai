@@ -4,6 +4,7 @@ import "../styles/redesign-ai.css";
 
 const RAZORPAY_LINK = "https://rzp.io/rzp/ce6486z";
 const RAZORPAY_DUO_LINK = "https://rzp.io/rzp/dOZVhZL";
+const RAZORPAY_TRIO_LINK = "https://rzp.io/rzp/x4lHwlZ";
 
 const industries = [
   {
@@ -692,7 +693,7 @@ export default function RedesignAI() {
               <div className="pack-price">₹90,000<span> + GST</span></div>
               <div className="pack-per">₹30,000 per person</div>
               <div className="pack-saving">Save ₹9,000/person — back to early bird price</div>
-              <button className="pack-cta" onClick={() => navigate("/redesign-ai/intake")}>Register as Trio →</button>
+              <button className="pack-cta" onClick={() => window.open(RAZORPAY_TRIO_LINK, "_blank")}>Register as Trio →</button>
             </div>
           </div>
 
