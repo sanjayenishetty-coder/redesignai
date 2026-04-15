@@ -428,7 +428,15 @@ export default function Admin() {
   const filtered = leads.filter((l) => {
     const matchesSearch =
       search === "" ||
-      [l.full_name, l.email, l.company_name, l.phone, l.city]
+      [
+        l.full_name, l.email, l.phone, l.city, l.company_name,
+        l.designation, l.industry, l.team_size, l.referred_by,
+        l.linkedin_profile, l.company_website, l.current_ai_usage,
+        l.biggest_challenge, l.specific_tools, l.status, l.notes,
+        l.participant_type, l.source_channel,
+        ...(Array.isArray(l.workshop_goals) ? l.workshop_goals : []),
+      ]
+        .filter(Boolean)
         .join(" ")
         .toLowerCase()
         .includes(search.toLowerCase());
