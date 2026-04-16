@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
-const ADMIN_PASSWORD_KEY = "redesign_admin_pw";
+const PARTICIPANTS_PASSWORD_KEY = "redesign_participants_pw";
 
 type Participant = {
   id: string;
@@ -55,7 +55,6 @@ function inferSeniority(desig: string) {
   return "ic";
 }
 const SEN_LABEL: Record<string, string> = { c: "C-Suite/Founder", vp: "VP / Head", mgr: "Manager / Lead", ic: "Individual" };
-const SEN_CLASS: Record<string, string> = { c: "s-c", vp: "s-vp", mgr: "s-mgr", ic: "s-ic" };
 const SEN_COLORS: Record<string, string> = { "C-Suite/Founders": "#F5A623", "VP/Head Level": "#0D9E6E", "Manager/Lead": "#94A3B8", "Individual": "#7C5CBF" };
 const SEN_MAP: Record<string, string> = { c: "C-Suite/Founders", vp: "VP/Head Level", mgr: "Manager/Lead", ic: "Individual" };
 
@@ -70,9 +69,11 @@ export default function Participants() {
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const [indFilter, setIndFilter] = useState("all");
-  const [typeFilter, setTypeFilter] = useState("all"); // all | paid | complimentary
+  const [typeFilter, setTypeFilter] = useState("all");
   const [activeCompany, setActiveCompany] = useState<string | null>(null);
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
+  const [showShare, setShowShare] = useState(false);
+  const [copied, setCopied] = useState(false);
   const donutRef = useRef<HTMLCanvasElement>(null);
   const passwordRef = useRef("");
 
@@ -80,14 +81,13 @@ export default function Participants() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/admin-leads", {
+      const res = await fetch("/api/get-participants", {
         headers: { "x-admin-password": pw },
       });
-      if (res.status === 401) { setPwError(true); setAuthed(false); return; }
+      if (res.status === 401) { setPwError(true); setAuthed(false); setLoading(false); return; }
       if (!res.ok) throw new Error("Failed to fetch");
       const data: Participant[] = await res.json();
-      const filtered = data.filter(l => l.status === "paid" || l.status === "complimentary");
-      setParticipants(filtered);
+      setParticipants(data);
       setLastRefresh(new Date());
     } catch {
       setError("Failed to load participants. Please try again.");
@@ -100,13 +100,14 @@ export default function Participants() {
     const pw = pwInput.trim();
     if (!pw) return;
     passwordRef.current = pw;
-    sessionStorage.setItem(ADMIN_PASSWORD_KEY, pw);
+    sessionStorage.setItem(PARTICIPANTS_PASSWORD_KEY, pw);
     setAuthed(true);
     fetchParticipants(pw);
   };
 
   useEffect(() => {
-    const saved = sessionStorage.getItem(ADMIN_PASSWORD_KEY);
+    // Check participants-specific session first, then fall back to admin session
+    const saved = sessionStorage.getItem(PARTICIPANTS_PASSWORD_KEY) || sessionStorage.getItem("redesign_admin_pw");
     if (saved) {
       passwordRef.current = saved;
       setAuthed(true);
@@ -120,6 +121,19 @@ export default function Participants() {
     const interval = setInterval(() => fetchParticipants(passwordRef.current), 60000);
     return () => clearInterval(interval);
   }, [authed, fetchParticipants]);
+
+  function getFiltered() {
+    return participants.filter(p => {
+      if (typeFilter !== "all" && p.status !== typeFilter) return false;
+      if (indFilter !== "all" && (p.industry || "") !== indFilter) return false;
+      if (activeCompany && p.company_name !== activeCompany) return false;
+      if (search) {
+        const q = search.toLowerCase();
+        return [p.full_name, p.company_name, p.designation, p.city, p.industry].join(" ").toLowerCase().includes(q);
+      }
+      return true;
+    });
+  }
 
   // Draw donut chart
   useEffect(() => {
@@ -145,18 +159,11 @@ export default function Participants() {
     ctx.fillStyle = "#94A3B8"; ctx.font = "10px sans-serif"; ctx.fillText("people", 65, 81);
   });
 
-  function getFiltered() {
-    return participants.filter(p => {
-      if (typeFilter !== "all" && p.status !== typeFilter) return false;
-      if (indFilter !== "all" && (p.industry || "") !== indFilter) return false;
-      if (activeCompany && p.company_name !== activeCompany) return false;
-      if (search) {
-        const q = search.toLowerCase();
-        return [p.full_name, p.company_name, p.designation, p.city, p.industry].join(" ").toLowerCase().includes(q);
-      }
-      return true;
-    });
-  }
+  const handleCopyAll = () => {
+    const url = `${window.location.origin}/participants`;
+    const text = `REDESIGN-AI Participant Dashboard\n\nURL: ${url}\nPassword: redesign2026`;
+    navigator.clipboard.writeText(text).then(() => { setCopied(true); setTimeout(() => setCopied(false), 2500); });
+  };
 
   if (!authed) {
     return (
@@ -164,18 +171,18 @@ export default function Participants() {
         <div style={s.loginBox}>
           <div style={s.loginIcon}>📋</div>
           <h2 style={s.loginTitle}>REDESIGN-AI · Participant Dashboard</h2>
-          <p style={s.loginSub}>Enter admin password to access live participant data</p>
+          <p style={s.loginSub}>Enter the access password to view participant data</p>
           <input
             style={s.loginInput}
             type="password"
-            placeholder="Admin password"
+            placeholder="Enter password"
             value={pwInput}
             onChange={e => { setPwInput(e.target.value); setPwError(false); }}
             onKeyDown={e => e.key === "Enter" && handleLogin()}
             autoFocus
           />
-          {pwError && <div style={s.loginErr}>Incorrect password</div>}
-          <button style={s.loginBtn} onClick={handleLogin}>Access Dashboard →</button>
+          {pwError && <div style={s.loginErr}>Incorrect password — please check with the organiser</div>}
+          <button style={s.loginBtn} onClick={handleLogin}>View Dashboard →</button>
         </div>
       </div>
     );
@@ -186,7 +193,6 @@ export default function Participants() {
   const n = filtered.length;
   const total = P.length;
 
-  // Stats
   const companies: Record<string, number> = {};
   const industries: Record<string, number> = {};
   filtered.forEach(p => {
@@ -201,19 +207,15 @@ export default function Participants() {
   const paid = P.filter(p => p.status === "paid").length;
   const comp = P.filter(p => p.status === "complimentary").length;
 
-  // Industry bars
   const indSorted = Object.entries(industries).sort((a, b) => b[1] - a[1]);
   const maxI = indSorted[0]?.[1] || 1;
 
-  // Seniority donut legend
   const senCts: Record<string, number> = {};
   filtered.forEach(p => { const l = SEN_MAP[inferSeniority(p.designation)]; senCts[l] = (senCts[l] || 0) + 1; });
   const senE = Object.entries(senCts).filter(([, v]) => v > 0);
 
-  // Company bubbles
   const compSorted = Object.entries(allCompanies).sort((a, b) => b[1] - a[1]);
 
-  // Goals
   const gkw: Record<string, number> = {};
   P.forEach(p => {
     const goals = Array.isArray(p.workshop_goals) ? p.workshop_goals.join(" ") : (p.workshop_goals || "");
@@ -222,7 +224,6 @@ export default function Participants() {
   });
   const topGoals = Object.entries(gkw).sort((a, b) => b[1] - a[1]).slice(0, 8);
 
-  // AI Tools
   const toolMap: Record<string, number> = {};
   P.forEach(p => {
     const tools = p.specific_tools || p.current_ai_usage || "";
@@ -233,8 +234,35 @@ export default function Participants() {
   });
   const topTools = Object.entries(toolMap).sort((a, b) => b[1] - a[1]).slice(0, 20);
 
+  const shareUrl = `${window.location.origin}/participants`;
+
   return (
     <div style={s.page}>
+      {/* SHARE MODAL */}
+      {showShare && (
+        <div style={s.modalOverlay} onClick={() => setShowShare(false)}>
+          <div style={s.modal} onClick={e => e.stopPropagation()}>
+            <div style={s.modalTitle}>🔗 Share Participant Dashboard</div>
+            <p style={s.modalDesc}>Anyone with this link and password can view the participant list. They cannot access the full CRM.</p>
+            <div style={s.shareField}>
+              <div style={s.shareLabel}>Dashboard URL</div>
+              <div style={s.shareValue}>{shareUrl}</div>
+            </div>
+            <div style={s.shareField}>
+              <div style={s.shareLabel}>Access Password</div>
+              <div style={s.shareValue} id="share-pw">redesign2026</div>
+            </div>
+            <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
+              <button style={s.copyBtn} onClick={handleCopyAll}>
+                {copied ? "✅ Copied!" : "📋 Copy Link + Password"}
+              </button>
+              <button style={s.closeBtn} onClick={() => setShowShare(false)}>Close</button>
+            </div>
+            <p style={s.modalNote}>To change the password, update <code>PARTICIPANTS_PASSWORD</code> in Vercel environment variables.</p>
+          </div>
+        </div>
+      )}
+
       {/* HEADER */}
       <div style={s.header}>
         <div>
@@ -243,6 +271,7 @@ export default function Participants() {
         </div>
         <div style={s.headerRight}>
           <div style={s.headerBadge}>{total} Participants · Confirmed</div>
+          <button style={s.shareBtn} onClick={() => setShowShare(true)}>🔗 Share</button>
           <button style={s.reloadBtn} onClick={() => fetchParticipants(passwordRef.current)}>
             {loading ? "Refreshing…" : "↻ Refresh"}
           </button>
@@ -287,7 +316,6 @@ export default function Participants() {
           <div style={s.sectionLine} />
         </div>
         <div style={s.chartsRow}>
-          {/* Industry Bars */}
           <div style={s.chartCard}>
             <div style={s.chartTitle}>Industry Breakdown</div>
             {indSorted.length === 0 ? <div style={s.empty}>No data</div> :
@@ -309,7 +337,6 @@ export default function Participants() {
             }
           </div>
 
-          {/* Donut */}
           <div style={s.chartCard}>
             <div style={s.chartTitle}>Seniority Level</div>
             <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
@@ -326,7 +353,6 @@ export default function Participants() {
             </div>
           </div>
 
-          {/* Company Bubbles */}
           <div style={s.chartCard}>
             <div style={s.chartTitle}>Companies Represented</div>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
@@ -336,12 +362,7 @@ export default function Participants() {
                 return (
                   <div key={comp}
                     onClick={() => setActiveCompany(isActive ? null : comp)}
-                    style={{
-                      background: isActive ? "rgba(13,158,110,0.18)" : "rgba(255,255,255,0.05)",
-                      border: `1px solid ${isActive ? "#0D9E6E" : "rgba(255,255,255,0.08)"}`,
-                      borderRadius: 8, padding: "8px 12px", display: "flex", alignItems: "center",
-                      gap: 8, cursor: "pointer", transition: "all .2s",
-                    }}>
+                    style={{ background: isActive ? "rgba(13,158,110,0.18)" : "rgba(255,255,255,0.05)", border: `1px solid ${isActive ? "#0D9E6E" : "rgba(255,255,255,0.08)"}`, borderRadius: 8, padding: "8px 12px", display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
                     <span style={{ fontSize: 11, color: "#fff" }}>{short || comp}</span>
                     <span style={{ background: "#0D9E6E", color: "#fff", fontSize: 10, fontWeight: 600, borderRadius: 10, padding: "1px 7px" }}>{cnt}</span>
                   </div>
@@ -393,7 +414,6 @@ export default function Participants() {
           <div style={s.sectionLine} />
         </div>
 
-        {/* Search + Industry Filters */}
         <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap", alignItems: "center" }}>
           <button style={{ ...s.filterBtn, ...(indFilter === "all" ? s.filterBtnActive : {}) }} onClick={() => { setIndFilter("all"); setActiveCompany(null); }}>All</button>
           {allIndustries.map(ind => (
@@ -402,13 +422,7 @@ export default function Participants() {
               {ind.length > 20 ? ind.slice(0, 18) + "…" : ind}
             </button>
           ))}
-          <input
-            style={s.searchInput}
-            type="text"
-            placeholder="🔍  Search name, company, role..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
+          <input style={s.searchInput} type="text" placeholder="🔍  Search name, company, role..." value={search} onChange={e => setSearch(e.target.value)} />
         </div>
 
         {loading && <div style={s.empty}>Loading participants…</div>}
@@ -432,11 +446,11 @@ export default function Participants() {
                   <div style={{ width: 38, height: 38, borderRadius: "50%", background: av.bg, color: av.fg, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 600, flexShrink: 0 }}>
                     {av.init}
                   </div>
-                  <div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.3, color: "#fff" }}>{p.full_name}</div>
                     <div style={{ fontSize: 11, color: "#94A3B8", marginTop: 2 }}>{p.designation || "—"}</div>
                   </div>
-                  <div style={{ marginLeft: "auto", fontSize: 10, padding: "3px 8px", borderRadius: 10, fontWeight: 600, background: p.status === "paid" ? "rgba(13,158,110,0.2)" : "rgba(190,24,93,0.2)", color: p.status === "paid" ? "#0BB87F" : "#f472b6" }}>
+                  <div style={{ fontSize: 10, padding: "3px 8px", borderRadius: 10, fontWeight: 600, flexShrink: 0, background: p.status === "paid" ? "rgba(13,158,110,0.2)" : "rgba(190,24,93,0.2)", color: p.status === "paid" ? "#0BB87F" : "#f472b6" }}>
                     {p.status === "paid" ? "✅ Paid" : "🎁 Comp"}
                   </div>
                 </div>
@@ -444,18 +458,8 @@ export default function Participants() {
                   <span style={{ fontSize: 11, opacity: 0.5 }}>🏢</span>
                   <span style={{ fontSize: 11, color: "#94A3B8" }}>{p.company_name || "—"}</span>
                 </div>
-                {p.city && (
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-                    <span style={{ fontSize: 11, opacity: 0.5 }}>📍</span>
-                    <span style={{ fontSize: 11, color: "#94A3B8" }}>{p.city}</span>
-                  </div>
-                )}
-                {p.team_size && (
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-                    <span style={{ fontSize: 11, opacity: 0.5 }}>👥</span>
-                    <span style={{ fontSize: 11, color: "#94A3B8" }}>{p.team_size} employees</span>
-                  </div>
-                )}
+                {p.city && <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}><span style={{ fontSize: 11, opacity: 0.5 }}>📍</span><span style={{ fontSize: 11, color: "#94A3B8" }}>{p.city}</span></div>}
+                {p.team_size && <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}><span style={{ fontSize: 11, opacity: 0.5 }}>👥</span><span style={{ fontSize: 11, color: "#94A3B8" }}>{p.team_size} employees</span></div>}
                 <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginTop: 8 }}>
                   <span style={{ fontSize: 10, padding: "2px 8px", borderRadius: 10, fontWeight: 500, background: `${color}22`, color }}>{p.industry || "—"}</span>
                   <span style={{ fontSize: 9, padding: "2px 7px", borderRadius: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.5px", ...sc }}>{SEN_LABEL[sen]}</span>
@@ -484,6 +488,7 @@ const s: Record<string, React.CSSProperties> = {
   headerSub: { fontSize: 13, color: "#94A3B8", marginTop: 2 },
   headerRight: { display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" },
   headerBadge: { background: "rgba(13,158,110,0.15)", border: "1px solid rgba(13,158,110,0.3)", borderRadius: 20, padding: "6px 16px", fontSize: 12, color: "#0BB87F", fontWeight: 500 },
+  shareBtn: { background: "rgba(245,166,35,0.15)", border: "1px solid rgba(245,166,35,0.4)", borderRadius: 20, padding: "6px 16px", fontSize: 12, color: "#F5A623", cursor: "pointer", fontFamily: "DM Sans, sans-serif", fontWeight: 600 },
   reloadBtn: { background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 20, padding: "6px 14px", fontSize: 12, color: "#94A3B8", cursor: "pointer", fontFamily: "DM Sans, sans-serif" },
   lastRefresh: { fontSize: 11, color: "#94A3B8" },
   adminLink: { background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 20, padding: "6px 14px", fontSize: 12, color: "#94A3B8", textDecoration: "none", fontWeight: 500 },
@@ -509,6 +514,16 @@ const s: Record<string, React.CSSProperties> = {
   filterBtnActive: { background: "rgba(13,158,110,0.15)", border: "1px solid #0D9E6E", color: "#0BB87F" },
   searchInput: { background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 20, padding: "6px 16px", fontSize: 12, color: "#fff", fontFamily: "DM Sans, sans-serif", outline: "none", minWidth: 220, marginLeft: "auto" },
   participantGrid: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14, marginBottom: 40 },
-  pCard: { background: "#152B47", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: 16, transition: "all .2s" },
+  pCard: { background: "#152B47", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: 16 },
   empty: { fontSize: 13, color: "#94A3B8", padding: "20px 0" },
+  modalOverlay: { position: "fixed", inset: 0, background: "rgba(0,0,0,0.7)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1000 },
+  modal: { background: "#152B47", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 20, padding: 36, maxWidth: 480, width: "90%", boxShadow: "0 24px 64px rgba(0,0,0,0.4)" },
+  modalTitle: { fontSize: 20, fontWeight: 700, color: "#fff", marginBottom: 10 },
+  modalDesc: { fontSize: 13, color: "#94A3B8", lineHeight: 1.6, marginBottom: 24 },
+  shareField: { background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "12px 16px", marginBottom: 12 },
+  shareLabel: { fontSize: 10, color: "#94A3B8", textTransform: "uppercase", letterSpacing: 1, marginBottom: 4 },
+  shareValue: { fontSize: 14, fontWeight: 600, color: "#0BB87F", wordBreak: "break-all" },
+  copyBtn: { flex: 1, background: "#0D9E6E", color: "#fff", border: "none", borderRadius: 10, padding: "11px 20px", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "DM Sans, sans-serif" },
+  closeBtn: { background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", color: "#94A3B8", borderRadius: 10, padding: "11px 20px", fontSize: 14, cursor: "pointer", fontFamily: "DM Sans, sans-serif" },
+  modalNote: { fontSize: 11, color: "#94A3B8", marginTop: 16, lineHeight: 1.5 },
 };
