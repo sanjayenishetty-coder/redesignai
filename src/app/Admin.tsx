@@ -521,6 +521,7 @@ export default function Admin() {
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
           <button onClick={() => setShowAddModal(true)} style={styles.addBtn}>+ Add Lead</button>
           <button onClick={handleDownloadCsv} style={styles.downloadBtn}>↓ Download CSV</button>
+          <a href="/participants" target="_blank" style={{ ...styles.downloadBtn, background: "#0D9E6E", color: "#fff", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>👥 Participants</a>
           <label style={styles.csvBtn}>
             {csvUploading ? "Uploading..." : "↑ Upload CSV"}
             <input type="file" accept=".csv" onChange={handleCsvUpload} style={{ display: "none" }} disabled={csvUploading} />
