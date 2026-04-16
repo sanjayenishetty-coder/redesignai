@@ -1,7 +1,7 @@
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
-const PARTICIPANTS_PASSWORD = process.env.PARTICIPANTS_PASSWORD;
+const PARTICIPANTS_PASSWORD = process.env.PARTICIPANTS_PASSWORD || "redesign2026";
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
