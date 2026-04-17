@@ -2469,3 +2469,149 @@
   filter: brightness(0) invert(1);
   opacity: 0.6;
 }
+
+/* ─── SOLD OUT BADGE (pack cards) ─── */
+.redesign-page .pack-soldout-badge {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: #dc2626;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: var(--radius-sm);
+  cursor: default;
+  margin-top: auto;
+}
+
+/* ─── HERO SOLD OUT BADGE ─── */
+.redesign-page .hero-soldout-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  color: #f87171;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+/* ─── WAITLIST SECTION ─── */
+.redesign-page .redesign-waitlist-section {
+  background: var(--teal-800);
+}
+.redesign-page .redesign-waitlist-section .section-tag { color: var(--teal-300); }
+.redesign-page .redesign-waitlist-section .section-h2 { color: var(--white); }
+.redesign-page .redesign-waitlist-section .section-sub { color: rgba(255,255,255,0.6); }
+
+.redesign-page .waitlist-form {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius-xl);
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 36px;
+}
+
+.redesign-page .waitlist-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.redesign-page .waitlist-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.redesign-page .waitlist-field label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--teal-200);
+}
+
+.redesign-page .waitlist-field input,
+.redesign-page .waitlist-field select {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--white);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.redesign-page .waitlist-field input::placeholder { color: rgba(255,255,255,0.35); }
+.redesign-page .waitlist-field input:focus,
+.redesign-page .waitlist-field select:focus { border-color: var(--teal-400); }
+
+.redesign-page .waitlist-field select option { background: var(--teal-800); color: var(--white); }
+
+.redesign-page .waitlist-submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  margin-top: 4px;
+}
+.redesign-page .waitlist-submit-btn:hover:not(:disabled) { background: var(--orange-dark); transform: translateY(-2px); }
+.redesign-page .waitlist-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.redesign-page .waitlist-success {
+  margin-top: 36px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius-xl);
+  padding: 48px 36px;
+  text-align: center;
+}
+.redesign-page .waitlist-success-icon {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--teal-400);
+  color: #fff;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+.redesign-page .waitlist-success h3 {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+.redesign-page .waitlist-success p {
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .redesign-page .waitlist-form-row { grid-template-columns: 1fr; }
+  .redesign-page .waitlist-form { padding: 24px; }
+}

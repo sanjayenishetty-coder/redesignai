@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/redesign-ai.css";
 
@@ -86,6 +86,15 @@ export default function RedesignAI() {
   const [activeTab, setActiveTab] = useState<"day1" | "day2">("day1");
   const [activeIndustry, setActiveIndustry] = useState("retail");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [isWaitlistLoading, setIsWaitlistLoading] = useState(false);
+  const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
+  const [waitlistData, setWaitlistData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    companyName: '',
+    industry: '',
+  });
   const seatFillRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -158,6 +167,37 @@ export default function RedesignAI() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const handleWaitlistChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setWaitlistData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleWaitlistSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsWaitlistLoading(true);
+    const data = {
+      businessId: "1f0ffff7-c282-624f-9d23-03d83203e77f",
+      name: waitlistData.fullName,
+      mobileNo: waitlistData.phone,
+      email: waitlistData.email,
+      message: '',
+      moreInfo: { ...waitlistData, source: 'Waitlist - REDESIGN-ai Next Cohort' }
+    };
+    try {
+      const res = await fetch("https://api.simpo.ai/business/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error("API failed");
+      setIsWaitlistLoading(false);
+      setWaitlistSubmitted(true);
+    } catch {
+      setIsWaitlistLoading(false);
+      alert("Submission failed. Please try again.");
+    }
+  };
+
   return (
     <div className="redesign-page" ref={containerRef}>
       {/* Google Fonts */}
@@ -184,8 +224,8 @@ export default function RedesignAI() {
           <div className="dot" />
           <span>50 Seats Only</span>
         </div>
-        <button className="nav-cta" onClick={() => navigate("/redesign-ai/intake")}>
-          Apply for Your Seat →
+        <button className="nav-cta" onClick={() => scrollToSection("redesign-waitlist")}>
+          Join Next Cohort Waitlist →
         </button>
       </nav>
 
@@ -230,8 +270,9 @@ export default function RedesignAI() {
           </div>
 
           <div className="hero-ctas fade-up delay-3">
-            <button className="btn-primary" onClick={() => navigate("/redesign-ai/intake")}>
-              Apply for Your Seat →
+            <div className="hero-soldout-badge">🔒 April Cohort — Sold Out</div>
+            <button className="btn-primary" onClick={() => scrollToSection("redesign-waitlist")}>
+              Join Next Cohort Waitlist →
             </button>
             <button className="btn-secondary" onClick={() => scrollToSection("curriculum")}>
               View the Curriculum
@@ -265,8 +306,8 @@ export default function RedesignAI() {
 
           <div className="ai-landscape-cta fade-up delay-4">
             <p>The question isn't whether AI will transform your industry.<br />It's whether you'll lead the change — or react to it.</p>
-            <button className="btn-primary" onClick={() => navigate("/redesign-ai/intake")}>
-              Start Building With AI →
+            <button className="btn-primary" onClick={() => scrollToSection("redesign-waitlist")}>
+              Join the Next Cohort Waitlist →
             </button>
           </div>
         </div>
@@ -466,7 +507,7 @@ export default function RedesignAI() {
           ))}
 
           <div className="industry-bottom fade-up">
-            <p className="industry-bottom-text">Don't see your industry? This workshop teaches <strong>frameworks, not formulas</strong>. The AI skills you build here apply to any business. <a href="#" className="industry-bottom-link" onClick={(e) => { e.preventDefault(); navigate("/redesign-ai/intake"); }}>Apply for your seat →</a></p>
+            <p className="industry-bottom-text">Don't see your industry? This workshop teaches <strong>frameworks, not formulas</strong>. The AI skills you build here apply to any business. <a href="#redesign-waitlist" className="industry-bottom-link" onClick={(e) => { e.preventDefault(); scrollToSection("redesign-waitlist"); }}>Join the waitlist →</a></p>
           </div>
         </div>
       </section>
@@ -677,9 +718,9 @@ export default function RedesignAI() {
       {/* Pricing */}
       <section className="section pricing-section" id="pricing">
         <div className="section-inner">
-          <span className="section-tag fade-up">Reserve your seat</span>
-          <h2 className="section-h2 fade-up delay-1">Secure Your Seat in the April Cohort</h2>
-          <p className="section-sub fade-up delay-2">50 seats to ensure every participant gets hands-on support and personalised feedback. Join us on 18th &amp; 19th April 2026 at ISB-CBI Hyderabad.</p>
+          <span className="section-tag fade-up">April Cohort — Sold Out</span>
+          <h2 className="section-h2 fade-up delay-1">REDESIGN-ai April Cohort is Fully Booked</h2>
+          <p className="section-sub fade-up delay-2">All 50 seats for the 18–19 April 2026 cohort are gone. Join the waitlist below to get first access when the next cohort opens.</p>
 
           {/* 3 Pricing Cards */}
           <div className="pack-cards-row fade-up delay-1">
@@ -690,7 +731,7 @@ export default function RedesignAI() {
               <div className="pack-price">₹39,000<span> + GST</span></div>
               <div className="pack-per">Per person</div>
               <div className="pack-saving-spacer" />
-              <button className="pack-cta" onClick={() => navigate("/redesign-ai/intake")}>Apply for Your Seat →</button>
+              <div className="pack-soldout-badge">Sold Out</div>
             </div>
             {/* Duo */}
             <div className="pack-card">
@@ -699,7 +740,7 @@ export default function RedesignAI() {
               <div className="pack-price">₹70,000<span> + GST</span></div>
               <div className="pack-per">₹35,000 per person</div>
               <div className="pack-saving">Save ₹4,000 per person</div>
-              <button className="pack-cta" onClick={() => window.open(RAZORPAY_DUO_LINK, "_blank")}>Register as Duo →</button>
+              <div className="pack-soldout-badge">Sold Out</div>
             </div>
             {/* Trio */}
             <div className="pack-card pack-card--featured">
@@ -709,7 +750,7 @@ export default function RedesignAI() {
               <div className="pack-price">₹90,000<span> + GST</span></div>
               <div className="pack-per">₹30,000 per person</div>
               <div className="pack-saving">Save ₹9,000/person — back to early bird price</div>
-              <button className="pack-cta" onClick={() => window.open(RAZORPAY_TRIO_LINK, "_blank")}>Register as Trio →</button>
+              <div className="pack-soldout-badge">Sold Out</div>
             </div>
           </div>
 
@@ -752,17 +793,17 @@ export default function RedesignAI() {
               <div className="seat-progress-wrap" style={{ marginTop: 20 }}>
                 <div className="seat-progress-label">
                   <span>50 total seats</span>
-                  <span className="seats-left">20 seats left</span>
+                  <span className="seats-left" style={{ color: '#dc2626' }}>All seats filled</span>
                 </div>
                 <div className="seat-progress-bar">
-                  <div className="seat-progress-fill" ref={seatFillRef} />
+                  <div className="seat-progress-fill" ref={seatFillRef} style={{ width: '100%', background: '#dc2626' }} />
                 </div>
               </div>
               <div className="urgency-block" style={{ marginTop: 20 }}>
-                <div className="urgency-icon">🔥</div>
+                <div className="urgency-icon">🔒</div>
                 <div className="urgency-text">
-                  <strong>Early Bird ₹30,000 seats are sold out</strong>
-                  <span>Remaining seats at ₹39,000 — or bring colleagues to save more.</span>
+                  <strong>All 50 seats are sold out</strong>
+                  <span>Join the waitlist below to get priority access for the next cohort.</span>
                 </div>
               </div>
             </div>
@@ -792,6 +833,65 @@ export default function RedesignAI() {
               <div className="roi-strip-item roi-strip-item--total"><span>Equivalent market value</span><span className="roi-strip-val">₹1,00,000+</span></div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Future Cohort Waitlist */}
+      <section className="section redesign-waitlist-section" id="redesign-waitlist">
+        <div className="section-inner" style={{ maxWidth: 640 }}>
+          <span className="section-tag fade-up">Future Cohort Waitlist</span>
+          <h2 className="section-h2 fade-up delay-1">Be First in Line for the Next Cohort</h2>
+          <p className="section-sub fade-up delay-2">
+            Leave your details and we'll reach out the moment the next REDESIGN-ai cohort opens — before public announcements.
+          </p>
+
+          {waitlistSubmitted ? (
+            <div className="waitlist-success fade-up delay-3">
+              <div className="waitlist-success-icon">✓</div>
+              <h3>You're on the list!</h3>
+              <p>We'll reach out as soon as the next REDESIGN-ai cohort opens. Keep building.</p>
+            </div>
+          ) : (
+            <form className="waitlist-form fade-up delay-3" onSubmit={handleWaitlistSubmit}>
+              <div className="waitlist-form-row">
+                <div className="waitlist-field">
+                  <label>Full Name *</label>
+                  <input type="text" name="fullName" required value={waitlistData.fullName} onChange={handleWaitlistChange} placeholder="Your full name" />
+                </div>
+                <div className="waitlist-field">
+                  <label>Phone *</label>
+                  <input type="tel" name="phone" required value={waitlistData.phone} onChange={handleWaitlistChange} placeholder="+91 XXXXX XXXXX" />
+                </div>
+              </div>
+              <div className="waitlist-field">
+                <label>Email *</label>
+                <input type="email" name="email" required value={waitlistData.email} onChange={handleWaitlistChange} placeholder="you@company.com" />
+              </div>
+              <div className="waitlist-form-row">
+                <div className="waitlist-field">
+                  <label>Company Name *</label>
+                  <input type="text" name="companyName" required value={waitlistData.companyName} onChange={handleWaitlistChange} placeholder="Your company" />
+                </div>
+                <div className="waitlist-field">
+                  <label>Industry</label>
+                  <select name="industry" value={waitlistData.industry} onChange={handleWaitlistChange}>
+                    <option value="">Select industry</option>
+                    <option>Retail & E-commerce</option>
+                    <option>Manufacturing</option>
+                    <option>Distribution & Logistics</option>
+                    <option>Consulting & Professional Services</option>
+                    <option>Healthcare & Pharma</option>
+                    <option>Real Estate & Construction</option>
+                    <option>Education & Training</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" className="waitlist-submit-btn" disabled={isWaitlistLoading}>
+                {isWaitlistLoading ? 'Submitting...' : 'Register for Next Cohort →'}
+              </button>
+            </form>
+          )}
         </div>
       </section>
 
