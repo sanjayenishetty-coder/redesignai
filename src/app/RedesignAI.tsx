@@ -584,6 +584,22 @@ export default function RedesignAI() {
                 </div>
               </div>
             </div>
+
+            <div className="faculty-card">
+              <div className="faculty-avatar-wrap">
+                <img src="/assets/pavan-adipuram.jpeg" alt="Pavan Adhipuram" className="faculty-avatar-img" />
+              </div>
+              <div className="faculty-info">
+                <div className="faculty-name">Pavan Adhipuram</div>
+                <div className="faculty-role">Founder &amp; CEO, Nexurova</div>
+                <div className="faculty-bio">Leads the session on turning business data into decisions. Participants learn to identify the metrics that actually matter — revenue, cash flow, and profitability — and build simple, AI-powered dashboards from tools like Excel and accounting systems. A practical, no-jargon framework to stop drowning in data and start running your business from a single screen.</div>
+                <div className="faculty-tags">
+                  <span className="speaker-tag">Business Intelligence</span>
+                  <span className="speaker-tag">Decision Dashboards</span>
+                  <span className="speaker-tag">AI for Finance</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
