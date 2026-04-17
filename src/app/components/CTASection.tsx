@@ -24,7 +24,7 @@ export const CTASection = () => {
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase text-white leading-tight mb-6"
           style={{ fontFamily: 'Bebas Neue, sans-serif' }}
         >
-          Summit Sold Out.<br />Next Cohort Coming.
+          Ready To Unlock The<br />Next Phase?
         </h2>
 
         {/* Description */}
@@ -32,7 +32,7 @@ export const CTASection = () => {
           className="text-base md:text-lg lg:text-xl text-white/90 leading-relaxed mb-8 max-w-2xl mx-auto"
           style={{ fontFamily: 'Montserrat, sans-serif' }}
         >
-          ScaleMe Summit '26 is sold out. Join the waitlist for the next cohort — get priority access before seats open to the public.
+          250 Operators, Founders and CXOs. Curated applications. If you're running a ₹25 Cr – ₹100 Cr business and serious about scale, this is your room.
         </p>
 
         {/* CTA Button */}
@@ -41,7 +41,7 @@ export const CTASection = () => {
           className="bg-[#F15A2B] hover:bg-[#d94f24] text-white font-bold text-lg md:text-xl uppercase px-10 md:px-14 py-4 md:py-5 rounded-lg shadow-lg transition-all duration-300 hover:scale-105"
           style={{ fontFamily: 'Montserrat, sans-serif' }}
         >
-          Join Waitlist for Next Cohort
+          Join Network
         </button>
       </div>
     </section>

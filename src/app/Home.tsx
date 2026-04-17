@@ -7,7 +7,6 @@ import { AgendaSection } from "./components/AgendaSection";
 import { IsThisForYouSection } from "./components/IsThisForYouSection";
 import { CTASection } from "./components/CTASection";
 import { NewsletterSection } from "./components/NewsletterSection";
-import { WaitlistSection } from "./components/WaitlistSection";
 import { Footer } from "./components/Footer";
 import Team from "./Team";
 import Agenda from "./Agenda";
@@ -299,24 +298,6 @@ export default function Home() {
                 className="h-12 md:h-14 w-auto"
               />
             </div>
-          </div>
-          <div className="flex items-center gap-4 mt-5">
-            <span
-              className="inline-flex items-center gap-2 bg-red-600/90 text-white text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full"
-              style={{ fontFamily: 'Montserrat, sans-serif' }}
-            >
-              Sold Out — April 18, 2026
-            </span>
-            <button
-              onClick={() => {
-                const el = document.getElementById('waitlist');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="bg-[#F15A2B] hover:bg-[#d94f24] cursor-pointer text-white font-bold text-sm md:text-base uppercase px-6 py-2 rounded-lg shadow-lg transition-all duration-300 hover:scale-105"
-              style={{ fontFamily: 'Montserrat, sans-serif' }}
-            >
-              Join Next Cohort Waitlist
-            </button>
           </div>
         </div>
       </section>
@@ -1016,9 +997,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Future Cohort Waitlist Section */}
-      <WaitlistSection />
 
       {/* Is This For You Section */}
       <IsThisForYouSection />
