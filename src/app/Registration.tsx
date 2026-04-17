@@ -1,207 +1,102 @@
-// import backgroundPattern from "figma:asset/154465906a86e9abb2111c1fddf397d04d59de3e.png";
-import { ArrowLeft, Loader2 } from 'lucide-react';
+import { ArrowLeft, Loader2, CheckCircle, Lock } from 'lucide-react';
 import { useState, FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 
-interface RegistrationProps {
-  onNavigate: (page: 'home' | 'team' | 'agenda' | 'registration' | 'thank-you') => void;
-}
+const tiers = [
+  {
+    name: 'Early Founder Access',
+    description: 'Priority seating · Pre-event networking · Summit materials',
+  },
+  {
+    name: 'Summit Access',
+    description: 'Full-day access · All sessions · Peer roundtables',
+    featured: true,
+  },
+  {
+    name: "Founders' Circle",
+    description: 'VIP seating · Exclusive dinner · 1:1 faculty access',
+  },
+];
 
 export default function Registration() {
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState<'home' | 'team' | 'agenda' | 'registration' | 'thank-you'>('home');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     contactNumber: '',
     companyLegalName: '',
-    designation: '',
-    linkedinProfile: '',
-    city: '',
-    website: '',
-    industrySector: '',
-    companyCIN: '',
     annualRevenue: '',
-    pressingNeeds: [] as string[],
-    howDidYouHear: '',
-    decisionMaker: false,
-    verificationConsent: false,
-    marketingCommunication: [] as string[],
   });
-
-  const [otherNeed, setOtherNeed] = useState('');
-  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [currentPage]);
+  }, []);
 
-  // Handle Scroll Event for Header
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const designationOptions = [
-    'Founder/Owner/Promotor',
-    'Managing Director',
-    'Designated Partner',
-    'Professional CEO',
-    'Other',
-  ];
-
-  const industrySectorOptions = [
-    'Manufacturing (Auto, Engineering, Industrial Goods)',
-    'Manufacturing (FMCG, Consumer Goods)',
-    'Retail & D2C E-commerce',
-    'Healthcare & Pharmaceuticals',
-    'Food & Beverage',
-    'Beauty, Wellness & Personal Care',
-    'Information Technology Services',
-    'Software as a Service (SaaS)',
-    'Real Estate & Construction',
-    'B2B Professional Services',
-    'Logistics & Supply Chain',
-    'Textiles & Apparel',
-    'Agri-Processing & Food Tech',
-    'Clean Technology & EV',
-    'Education & EdTech',
-    'Fintech & Financial Services',
-    'Other',
-  ];
-
   const annualRevenueOptions = [
-    '₹10cr - ₹25cr  (Waitlist - Priority given to ₹25Cr+)',
+    '₹10cr - ₹25cr',
     '₹25cr - ₹50cr',
     '₹50cr - ₹100cr',
     '₹100cr - ₹200cr',
     '₹200cr above',
   ];
 
-  const howDidYouHearOptions = [
-    'ISB-CBI Network / Alumni',
-    'Referral by Friend / Colleague',
-    'Social Media channels',
-    'WhatsApp Groups',
-  ];
-
-  const pressingNeedsOptions = [
-    { id: 'gtm', label: 'Go-to-Market Strategy (entering new markets, channels, customer segments)' },
-    { id: 'capital', label: 'Capital (debt, equity, or growth funding)' },
-    { id: 'connections', label: 'Connections (introductions to potential customers, partners, or talent)' },
-    { id: 'advisory', label: 'Advisory (strategic guidance from experienced operators or experts)' },
-    { id: 'ai', label: 'AI & Digital Transformation (automation, tech upgrades, data systems)' },
-    { id: 'other', label: 'Other' },
-  ];
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = e.target;
-
-    if (type === 'checkbox') {
-      const checked = (e.target as HTMLInputElement).checked;
-      setFormData(prev => ({ ...prev, [name]: checked }));
-    } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
-    }
-  };
-
-  const handlePressingNeedsChange = (needId: string) => {
-    setFormData(prev => {
-      const currentNeeds = prev.pressingNeeds;
-
-      if (currentNeeds.includes(needId)) {
-        return { ...prev, pressingNeeds: currentNeeds.filter(id => id !== needId) };
-      } else {
-        if (currentNeeds.length >= 2) {
-          return prev;
-        }
-        return { ...prev, pressingNeeds: [...currentNeeds, needId] };
-      }
-    });
-  };
-
-  const handleMarketingCommunicationChange = (value: string) => {
-    setFormData(prev => {
-      const current = prev.marketingCommunication;
-
-      if (current.includes(value)) {
-        return { ...prev, marketingCommunication: current.filter(item => item !== value) };
-      } else {
-        return { ...prev, marketingCommunication: [...current, value] };
-      }
-    });
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
-    // Form validation
-    if (!formData.decisionMaker || !formData.verificationConsent) {
-      alert('Please confirm both required declarations.');
-      return;
-    }
-
-    if (formData.pressingNeeds.length === 0) {
-      alert('Please select at least one pressing need.');
-      return;
-    }
-
     setIsLoading(true);
 
-    const data: any = {
+    const data = {
       businessId: "1f0ffff7-c282-624f-9d23-03d83203e77f",
       name: formData.firstName + ' ' + formData.lastName,
       mobileNo: formData.contactNumber,
       email: formData.email,
       message: '',
-      moreInfo: formData
+      moreInfo: { ...formData, source: 'Waitlist - ScaleMe Summit Next Cohort' }
     };
+
     try {
-      const res = await fetch(
-        "https://api.simpo.ai/business/contact",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const res = await fetch("https://api.simpo.ai/business/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-      if (!res.ok) {
-        throw new Error("API failed");
-      }
-
-      const result = await res.json();
-      // Navigate to thank you page on successful submission
+      if (!res.ok) throw new Error("API failed");
       setIsLoading(false);
-      navigate('/thank-you');
-    } catch (err: any) {
+      setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch {
       setIsLoading(false);
       alert("Submission failed. Please try again.");
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5]"
+    <div
+      className="min-h-screen bg-[#F5F5F5]"
       style={{
         backgroundImage: `url(assets/154465906a86e9abb2111c1fddf397d04d59de3e.png)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}>
-
-      {/* Simple Header */}
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
+      {/* Header */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between">
           <img
@@ -212,8 +107,7 @@ export default function Registration() {
         </div>
       </div>
 
-      {/* Registration Page Content */}
-      <div className="pt-32 pb-20 px-6">
+      <div className="pt-28 pb-20 px-6">
         <div className="max-w-4xl mx-auto">
           {/* Back Button */}
           <button
@@ -225,38 +119,129 @@ export default function Registration() {
             Back to Home
           </button>
 
-          {/* Header Section */}
+          {/* Sold Out Hero */}
           <div className="mb-12 text-center">
-            <h1
-              className="text-[48px] md:text-[64px] lg:text-[72px] uppercase leading-[0.95] text-[#007787] mb-4"
-              style={{ fontFamily: 'Bebas Neue, sans-serif' }}
-            >
-              Get Your Invite
-            </h1>
-            <p
-              className="text-lg md:text-xl text-[#2a2a2a] uppercase font-medium"
+            <div
+              className="inline-flex items-center gap-2 bg-red-50 text-red-600 text-sm font-bold uppercase tracking-widest px-5 py-2 rounded-full mb-5 border border-red-200"
               style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
-              Register for ScaleME Summit '26
+              <Lock className="w-4 h-4" />
+              All Seats Sold Out
+            </div>
+            <h1
+              className="text-[48px] md:text-[64px] lg:text-[80px] uppercase leading-[0.95] text-[#007787] mb-4"
+              style={{ fontFamily: 'Bebas Neue, sans-serif' }}
+            >
+              ScaleMe Summit '26
+            </h1>
+            <p
+              className="text-lg md:text-xl text-[#2a2a2a] font-medium"
+              style={{ fontFamily: 'Montserrat, sans-serif' }}
+            >
+              April 18, 2026 · ISB-CBI, Hyderabad
             </p>
           </div>
 
-          {/* Form Container */}
+          {/* Tier Cards — Sold Out */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-14">
+            {tiers.map((tier) => (
+              <div
+                key={tier.name}
+                className={`relative bg-white rounded-2xl p-6 overflow-hidden ${
+                  tier.featured ? 'border-2 border-[#007787] shadow-md' : 'border border-gray-200 shadow-sm'
+                }`}
+              >
+                {tier.featured && (
+                  <div
+                    className="absolute top-3 right-3 bg-[#007787] text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
+                  >
+                    Most Popular
+                  </div>
+                )}
+
+                {/* Sold Out Overlay */}
+                <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] flex flex-col items-center justify-center rounded-2xl z-10">
+                  <div className="bg-red-600 text-white text-base font-black uppercase tracking-widest px-6 py-2 rounded-lg rotate-[-2deg] shadow-lg"
+                    style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: '22px' }}
+                  >
+                    Sold Out
+                  </div>
+                </div>
+
+                <h3
+                  className="text-lg font-bold text-[#007787] mb-2"
+                  style={{ fontFamily: 'Bebas Neue, sans-serif', fontSize: '22px' }}
+                >
+                  {tier.name}
+                </h3>
+                <p
+                  className="text-sm text-gray-500 leading-relaxed"
+                  style={{ fontFamily: 'Montserrat, sans-serif' }}
+                >
+                  {tier.description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Divider with message */}
+          <div className="text-center mb-10">
+            <p
+              className="text-gray-500 text-sm uppercase tracking-widest font-semibold"
+              style={{ fontFamily: 'Montserrat, sans-serif' }}
+            >
+              Missed this cohort? Don't miss the next one.
+            </p>
+            <h2
+              className="text-4xl md:text-5xl lg:text-6xl font-bold uppercase text-[#007787] mt-2"
+              style={{ fontFamily: 'Bebas Neue, sans-serif' }}
+            >
+              Register for the Next Cohort
+            </h2>
+            <p
+              className="text-base text-gray-600 mt-3 max-w-lg mx-auto"
+              style={{ fontFamily: 'Montserrat, sans-serif' }}
+            >
+              Join the waitlist and get priority access before seats open to the public.
+            </p>
+          </div>
+
+          {/* Waitlist Form */}
           <div className="bg-white rounded-3xl overflow-hidden shadow-lg p-8 md:p-12">
-            <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Personal Information Section */}
-              <div className="space-y-6">
-                <h2
-                  className="text-2xl md:text-3xl uppercase text-[#007787] font-bold mb-6"
+            {submitted ? (
+              <div className="py-10 text-center">
+                <div className="w-16 h-16 bg-[#007787] rounded-full flex items-center justify-center mx-auto mb-5">
+                  <CheckCircle className="w-9 h-9 text-white" strokeWidth={2} />
+                </div>
+                <h3
+                  className="text-4xl font-bold uppercase text-[#007787] mb-3"
                   style={{ fontFamily: 'Bebas Neue, sans-serif' }}
                 >
-                  Personal Information
-                </h2>
-
+                  You're on the list!
+                </h3>
+                <p
+                  className="text-gray-600 text-base max-w-sm mx-auto"
+                  style={{ fontFamily: 'Montserrat, sans-serif' }}
+                >
+                  We'll reach out as soon as seats for the next ScaleMe Summit open up. Keep building.
+                </p>
+                <button
+                  onClick={() => navigate('/')}
+                  className="mt-8 inline-flex items-center gap-2 bg-[#007787] text-white font-bold uppercase px-8 py-3 rounded-lg hover:bg-[#1DB2AB] transition-colors"
+                  style={{ fontFamily: 'Montserrat, sans-serif' }}
+                >
+                  Back to Home
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* First Name */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                    <label
+                      className="block text-sm font-semibold text-gray-700 mb-2"
+                      style={{ fontFamily: 'Montserrat, sans-serif' }}
+                    >
                       First Name <span className="text-[#F15A2B]">*</span>
                     </label>
                     <input
@@ -269,10 +254,11 @@ export default function Registration() {
                       style={{ fontFamily: 'Montserrat, sans-serif' }}
                     />
                   </div>
-
-                  {/* Last Name */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                    <label
+                      className="block text-sm font-semibold text-gray-700 mb-2"
+                      style={{ fontFamily: 'Montserrat, sans-serif' }}
+                    >
                       Last Name <span className="text-[#F15A2B]">*</span>
                     </label>
                     <input
@@ -288,10 +274,12 @@ export default function Registration() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Email */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                      Email id <span className="text-[#F15A2B]">*</span>
+                    <label
+                      className="block text-sm font-semibold text-gray-700 mb-2"
+                      style={{ fontFamily: 'Montserrat, sans-serif' }}
+                    >
+                      Email <span className="text-[#F15A2B]">*</span>
                     </label>
                     <input
                       type="email"
@@ -303,10 +291,11 @@ export default function Registration() {
                       style={{ fontFamily: 'Montserrat, sans-serif' }}
                     />
                   </div>
-
-                  {/* Contact Number */}
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                    <label
+                      className="block text-sm font-semibold text-gray-700 mb-2"
+                      style={{ fontFamily: 'Montserrat, sans-serif' }}
+                    >
                       Contact Number <span className="text-[#F15A2B]">*</span>
                     </label>
                     <input
@@ -321,76 +310,12 @@ export default function Registration() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Designation */}
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                      Your Designation <span className="text-[#F15A2B]">*</span>
-                    </label>
-                    <select
-                      name="designation"
-                      required
-                      value={formData.designation}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007787] focus:border-transparent transition-all"
-                      style={{ fontFamily: 'Montserrat, sans-serif' }}
-                    >
-                      <option value="">Select Designation</option>
-                      {designationOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* LinkedIn Profile */}
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                      LinkedIn Profile link
-                    </label>
-                    <input
-                      type="url"
-                      name="linkedinProfile"
-                      value={formData.linkedinProfile}
-                      onChange={handleInputChange}
-                      placeholder="https://linkedin.com/in/..."
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007787] focus:border-transparent transition-all"
-                      style={{ fontFamily: 'Montserrat, sans-serif' }}
-                    />
-                  </div>
-                </div>
-
-                {/* City */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                    City <span className="text-[#F15A2B]">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="city"
-                    required
-                    value={formData.city}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007787] focus:border-transparent transition-all"
+                  <label
+                    className="block text-sm font-semibold text-gray-700 mb-2"
                     style={{ fontFamily: 'Montserrat, sans-serif' }}
-                  />
-                </div>
-              </div>
-
-              {/* Company Information Section */}
-              <div className="space-y-6 pt-8 border-t border-gray-200">
-                <h2
-                  className="text-2xl md:text-3xl uppercase text-[#007787] font-bold mb-6"
-                  style={{ fontFamily: 'Bebas Neue, sans-serif' }}
-                >
-                  Company Information
-                </h2>
-
-                {/* Company Legal Name */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                    Company Legal Name <span className="text-[#F15A2B]">*</span>
+                  >
+                    Company Name <span className="text-[#F15A2B]">*</span>
                   </label>
                   <input
                     type="text"
@@ -403,286 +328,44 @@ export default function Registration() {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Website */}
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                      Website
-                    </label>
-                    <input
-                      type="url"
-                      name="website"
-                      value={formData.website}
-                      onChange={handleInputChange}
-                      placeholder="https://..."
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007787] focus:border-transparent transition-all"
-                      style={{ fontFamily: 'Montserrat, sans-serif' }}
-                    />
-                  </div>
-
-                  {/* Industry Sector */}
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                      Industry Sector <span className="text-[#F15A2B]">*</span>
-                    </label>
-                    <select
-                      name="industrySector"
-                      required
-                      value={formData.industrySector}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007787] focus:border-transparent transition-all"
-                      style={{ fontFamily: 'Montserrat, sans-serif' }}
-                    >
-                      <option value="">Select Industry Sector</option>
-                      {industrySectorOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Company CIN */}
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                      Company CIN Number
-                    </label>
-                    <input
-                      type="text"
-                      name="companyCIN"
-                      value={formData.companyCIN}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007787] focus:border-transparent transition-all"
-                      style={{ fontFamily: 'Montserrat, sans-serif' }}
-                    />
-                  </div>
-
-                  {/* Annual Revenue */}
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                      Annual Revenue (₹ crores) <span className="text-[#F15A2B]">*</span>
-                    </label>
-                    <select
-                      name="annualRevenue"
-                      required
-                      value={formData.annualRevenue}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007787] focus:border-transparent transition-all"
-                      style={{ fontFamily: 'Montserrat, sans-serif' }}
-                    >
-                      <option value="">Select Annual Revenue</option>
-                      {annualRevenueOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Pressing Needs Section */}
-              <div className="space-y-6 pt-8 border-t border-gray-200">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                    What are the two most pressing needs for your company's growth right now? (Select up to 2) <span className="text-[#F15A2B]">*</span>
-                  </label>
-                  <div className="space-y-3">
-                    {pressingNeedsOptions.map((option) => (
-                      <label
-                        key={option.id}
-                        className={`flex items-start gap-3 p-4 border rounded-lg cursor-pointer transition-all ${formData.pressingNeeds.includes(option.id)
-                            ? 'border-[#007787] bg-[#007787]/5'
-                            : 'border-gray-300 hover:border-gray-400'
-                          }`}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={formData.pressingNeeds.includes(option.id)}
-                          onChange={() => handlePressingNeedsChange(option.id)}
-                          disabled={!formData.pressingNeeds.includes(option.id) && formData.pressingNeeds.length >= 2}
-                          className="mt-1 w-4 h-4 text-[#007787] focus:ring-[#007787] border-gray-300 rounded"
-                        />
-                        <span className="text-sm text-gray-700" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                          {option.label}
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                  {formData.pressingNeeds.includes('other') && (
-                    <div className="mt-4">
-                      <input
-                        type="text"
-                        value={otherNeed}
-                        onChange={(e) => setOtherNeed(e.target.value)}
-                        placeholder="Please specify..."
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007787] focus:border-transparent transition-all"
-                        style={{ fontFamily: 'Montserrat, sans-serif' }}
-                      />
-                    </div>
-                  )}
-                </div>
-
-                {/* How did you hear */}
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                    How did you hear about ScaleME Summit'26 <span className="text-[#F15A2B]">*</span>
+                  <label
+                    className="block text-sm font-semibold text-gray-700 mb-2"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
+                  >
+                    Annual Revenue (₹ crores) <span className="text-[#F15A2B]">*</span>
                   </label>
                   <select
-                    name="howDidYouHear"
+                    name="annualRevenue"
                     required
-                    value={formData.howDidYouHear}
+                    value={formData.annualRevenue}
                     onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#007787] focus:border-transparent transition-all"
                     style={{ fontFamily: 'Montserrat, sans-serif' }}
                   >
-                    <option value="">Select Option</option>
-                    {howDidYouHearOptions.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
+                    <option value="">Select Annual Revenue</option>
+                    {annualRevenueOptions.map(opt => (
+                      <option key={opt} value={opt}>{opt}</option>
                     ))}
                   </select>
                 </div>
-              </div>
 
-              {/* Confirmations Section */}
-              <div className="space-y-4 pt-8 border-t border-gray-200">
-                <h2
-                  className="text-2xl md:text-3xl uppercase text-[#007787] font-bold mb-6"
-                  style={{ fontFamily: 'Bebas Neue, sans-serif' }}
-                >
-                  Confirmations
-                </h2>
-
-                <label className="flex items-start gap-3 p-4 border border-gray-300 rounded-lg cursor-pointer hover:border-gray-400 transition-all">
-                  <input
-                    type="checkbox"
-                    name="decisionMaker"
-                    required
-                    checked={formData.decisionMaker}
-                    onChange={handleInputChange}
-                    className="mt-1 w-4 h-4 text-[#007787] focus:ring-[#007787] border-gray-300 rounded"
-                  />
-                  <span className="text-sm text-gray-700" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                    I confirm that I am the decision-making authority in my company <span className="text-[#F15A2B]">*</span>
-                  </span>
-                </label>
-
-                <label className="flex items-start gap-3 p-4 border border-gray-300 rounded-lg cursor-pointer hover:border-gray-400 transition-all">
-                  <input
-                    type="checkbox"
-                    name="verificationConsent"
-                    required
-                    checked={formData.verificationConsent}
-                    onChange={handleInputChange}
-                    className="mt-1 w-4 h-4 text-[#007787] focus:ring-[#007787] border-gray-300 rounded"
-                  />
-                  <span className="text-sm text-gray-700" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                    I understand that my application will be verified (revenue, role, company CIN). <span className="text-[#F15A2B]">*</span>
-                  </span>
-                </label>
-              </div>
-
-              {/* Marketing Communication Section */}
-              <div className="space-y-4 pt-8 border-t border-gray-200">
-                <h2
-                  className="text-2xl md:text-3xl uppercase text-[#007787] font-bold mb-6"
-                  style={{ fontFamily: 'Bebas Neue, sans-serif' }}
-                >
-                  Marketing Communication
-                </h2>
-
-                <div className="space-y-3">
-                  <label className={`flex items-start gap-3 p-4 border rounded-lg cursor-pointer transition-all ${formData.marketingCommunication.includes('future-events')
-                      ? 'border-[#007787] bg-[#007787]/5'
-                      : 'border-gray-300 hover:border-gray-400'
-                    }`}>
-                    <input
-                      type="checkbox"
-                      checked={formData.marketingCommunication.includes('future-events')}
-                      onChange={() => handleMarketingCommunicationChange('future-events')}
-                      className="mt-1 w-4 h-4 text-[#007787] focus:ring-[#007787] border-gray-300 rounded"
-                    />
-                    <span className="text-sm text-gray-700" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                      Inform me about future ScaleME events
-                    </span>
-                  </label>
-
-                  <label className={`flex items-start gap-3 p-4 border rounded-lg cursor-pointer transition-all ${formData.marketingCommunication.includes('newsletters')
-                      ? 'border-[#007787] bg-[#007787]/5'
-                      : 'border-gray-300 hover:border-gray-400'
-                    }`}>
-                    <input
-                      type="checkbox"
-                      checked={formData.marketingCommunication.includes('newsletters')}
-                      onChange={() => handleMarketingCommunicationChange('newsletters')}
-                      className="mt-1 w-4 h-4 text-[#007787] focus:ring-[#007787] border-gray-300 rounded"
-                    />
-                    <span className="text-sm text-gray-700" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                      Send me Newsletters
-                    </span>
-                  </label>
-
-                  <label className={`flex items-start gap-3 p-4 border rounded-lg cursor-pointer transition-all ${formData.marketingCommunication.includes('whatsapp')
-                      ? 'border-[#007787] bg-[#007787]/5'
-                      : 'border-gray-300 hover:border-gray-400'
-                    }`}>
-                    <input
-                      type="checkbox"
-                      checked={formData.marketingCommunication.includes('whatsapp')}
-                      onChange={() => handleMarketingCommunicationChange('whatsapp')}
-                      className="mt-1 w-4 h-4 text-[#007787] focus:ring-[#007787] border-gray-300 rounded"
-                    />
-                    <span className="text-sm text-gray-700" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                      Add me to Whatsapp Group
-                    </span>
-                  </label>
-
-                  <label className={`flex items-start gap-3 p-4 border rounded-lg cursor-pointer transition-all ${formData.marketingCommunication.includes('not-interested')
-                      ? 'border-[#007787] bg-[#007787]/5'
-                      : 'border-gray-300 hover:border-gray-400'
-                    }`}>
-                    <input
-                      type="checkbox"
-                      checked={formData.marketingCommunication.includes('not-interested')}
-                      onChange={() => handleMarketingCommunicationChange('not-interested')}
-                      className="mt-1 w-4 h-4 text-[#007787] focus:ring-[#007787] border-gray-300 rounded"
-                    />
-                    <span className="text-sm text-gray-700" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                      Not Interested
-                    </span>
-                  </label>
-                </div>
-              </div>
-
-              {/* Submit Button */}
-              <div className="pt-6">
-                {
-                  isLoading ? 
+                <div className="pt-2">
                   <button
-                  type="button"
-                  className="w-full bg-[#F15A2B] text-white py-4 rounded-lg hover:bg-[#d94f24] transition-colors font-bold uppercase
-                  flex justify-center items-center gap-2"
-                  style={{ fontFamily: 'Montserrat, sans-serif' }}
-                >
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                      Submitting...
-                </button>
-                  :
-                      <button
-                  type = "submit"
-                  className = "w-full bg-[#F15A2B] text-white py-4 rounded-lg hover:bg-[#d94f24] transition-colors font-bold uppercase"
-                  style = {{ fontFamily: 'Montserrat, sans-serif' }}
-                >
-                Submit Registration
-              </button>
-                }
-                
-              </div>
-            </form>
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full bg-[#F15A2B] hover:bg-[#d94f24] disabled:opacity-70 text-white py-4 rounded-lg font-bold uppercase flex items-center justify-center gap-2 transition-colors"
+                    style={{ fontFamily: 'Montserrat, sans-serif' }}
+                  >
+                    {isLoading ? (
+                      <><Loader2 className="w-5 h-5 animate-spin" /> Submitting...</>
+                    ) : (
+                      'Register for Next Cohort'
+                    )}
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       </div>

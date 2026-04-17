@@ -24,24 +24,24 @@ export const CTASection = () => {
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold uppercase text-white leading-tight mb-6"
           style={{ fontFamily: 'Bebas Neue, sans-serif' }}
         >
-          Ready To Unlock The<br />Next Phase?
+          Summit Sold Out.<br />Next Cohort Coming.
         </h2>
 
         {/* Description */}
-        <p 
+        <p
           className="text-base md:text-lg lg:text-xl text-white/90 leading-relaxed mb-8 max-w-2xl mx-auto"
           style={{ fontFamily: 'Montserrat, sans-serif' }}
         >
-          250 Operators, Founders and CXOs. Curated applications. If you're running a ₹25 Cr – ₹100 Cr business and serious about scale, this is your room.
+          ScaleMe Summit '26 is sold out. Join the waitlist for the next cohort — get priority access before seats open to the public.
         </p>
 
         {/* CTA Button */}
-        <button 
-        onClick={() => navigate('/registration')}
+        <button
+          onClick={() => navigate('/registration')}
           className="bg-[#F15A2B] hover:bg-[#d94f24] text-white font-bold text-lg md:text-xl uppercase px-10 md:px-14 py-4 md:py-5 rounded-lg shadow-lg transition-all duration-300 hover:scale-105"
           style={{ fontFamily: 'Montserrat, sans-serif' }}
         >
-          Join Network
+          Join Waitlist for Next Cohort
         </button>
       </div>
     </section>
