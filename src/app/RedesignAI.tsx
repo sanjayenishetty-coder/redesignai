@@ -838,13 +838,13 @@ export default function RedesignAI() {
           </p>
 
           {waitlistSubmitted ? (
-            <div className="waitlist-success fade-up delay-3">
+            <div className="waitlist-success">
               <div className="waitlist-success-icon">✓</div>
               <h3>You're on the list!</h3>
               <p>We'll reach out as soon as the next REDESIGN-ai cohort opens. Keep building.</p>
             </div>
           ) : (
-            <form className="waitlist-form fade-up delay-3" onSubmit={handleWaitlistSubmit}>
+            <form className="waitlist-form" onSubmit={handleWaitlistSubmit}>
               <div className="waitlist-form-row">
                 <div className="waitlist-field">
                   <label>Full Name *</label>
