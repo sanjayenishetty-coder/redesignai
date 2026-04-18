@@ -14,6 +14,7 @@ import IntakeForm from "./IntakeForm";
 import Admin from "./Admin";
 import Partners from "./Partners";
 import Participants from "./Participants";
+import WorkshopFeedback from "./WorkshopFeedback";
 export default function App() {
   return (
     <Routes>
@@ -32,6 +33,7 @@ export default function App() {
       <Route path="/admin" element={<Admin />} />
       <Route path="/partners" element={<Partners />} />
       <Route path="/participants" element={<Participants />} />
+      <Route path="/workshopfeedback" element={<WorkshopFeedback />} />
     </Routes>
   );
 }
