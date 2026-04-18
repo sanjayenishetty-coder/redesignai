@@ -30,20 +30,11 @@ export default function IntakeForm() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const data = {
-      businessId: "1f0ffff7-c282-624f-9d23-03d83203e77f",
-      name: formData.fullName,
-      mobileNo: formData.phone,
-      email: formData.email,
-      message: '',
-      moreInfo: { ...formData, source: 'Waitlist - REDESIGN-ai Next Cohort' }
-    };
-
     try {
-      const res = await fetch("https://api.simpo.ai/business/contact", {
+      const res = await fetch("/api/submit-waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(formData),
       });
       if (!res.ok) throw new Error("Submission failed");
       window.scrollTo(0, 0);

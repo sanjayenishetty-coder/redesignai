@@ -175,19 +175,11 @@ export default function RedesignAI() {
   const handleWaitlistSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsWaitlistLoading(true);
-    const data = {
-      businessId: "1f0ffff7-c282-624f-9d23-03d83203e77f",
-      name: waitlistData.fullName,
-      mobileNo: waitlistData.phone,
-      email: waitlistData.email,
-      message: '',
-      moreInfo: { ...waitlistData, source: 'Waitlist - REDESIGN-ai Next Cohort' }
-    };
     try {
-      const res = await fetch("https://api.simpo.ai/business/contact", {
+      const res = await fetch("/api/submit-waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(waitlistData),
       });
       if (!res.ok) throw new Error("API failed");
       setIsWaitlistLoading(false);

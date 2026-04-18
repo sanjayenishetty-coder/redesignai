@@ -227,6 +227,57 @@ export function postEventEmailHtml({ fullName }) {
   `);
 }
 
+// Email W: Sent on waitlist form submission (next cohort)
+export function waitlistEmailHtml({ fullName, companyName, industry }) {
+  return emailWrapper(`
+    <tr><td style="background:#ffffff;padding:40px 40px 32px;">
+      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">You're on the REDESIGN-ai waitlist 🎉</h2>
+      <p style="margin:0 0 24px;color:#374151;font-size:15px;line-height:1.6;">
+        Hi ${fullName},<br><br>
+        Thanks for registering your interest in <strong>REDESIGN-ai — A Hands-On AI Workshop for Indian SMEs</strong>.<br><br>
+        The April 2026 cohort is fully booked, but you're now on the waitlist for the next one. We'll reach out the moment seats open — before any public announcement.
+      </p>
+
+      <!-- Summary -->
+      <table width="100%" cellpadding="0" cellspacing="0" style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:28px;">
+        <tr><td style="padding:20px 24px;">
+          <p style="margin:0 0 12px;color:#6b7280;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;">Your Details</p>
+          <table width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="padding:4px 0;color:#6b7280;font-size:13px;width:120px;">Name</td>
+              <td style="padding:4px 0;color:#111;font-size:13px;font-weight:600;">${fullName}</td>
+            </tr>
+            ${companyName ? `<tr>
+              <td style="padding:4px 0;color:#6b7280;font-size:13px;">Company</td>
+              <td style="padding:4px 0;color:#111;font-size:13px;font-weight:600;">${companyName}</td>
+            </tr>` : ''}
+            ${industry ? `<tr>
+              <td style="padding:4px 0;color:#6b7280;font-size:13px;">Industry</td>
+              <td style="padding:4px 0;color:#111;font-size:13px;font-weight:600;">${industry}</td>
+            </tr>` : ''}
+          </table>
+        </td></tr>
+      </table>
+
+      <!-- What to expect -->
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
+        <p style="margin:0 0 8px;color:#166534;font-size:13px;font-weight:700;">What happens next</p>
+        <ul style="margin:8px 0 0;padding-left:20px;color:#374151;font-size:13px;line-height:1.9;">
+          <li>You'll get first access when the next cohort opens</li>
+          <li>We'll notify you before seats are announced publicly</li>
+          <li>No action needed from you right now</li>
+        </ul>
+      </div>
+
+      <p style="margin:0;color:#6b7280;font-size:13px;line-height:1.6;">
+        Questions in the meantime? Reply to this email — we read every one.<br><br>
+        Warm regards,<br>
+        <strong>Sanjay & The REDESIGN-ai Team</strong>
+      </p>
+    </td></tr>
+  `);
+}
+
 // Email 6: Sent after payment is confirmed via Razorpay webhook
 export function confirmationEmailHtml({ fullName, companyName, designation, industry, workshopGoals = [] }) {
   const goalsHtml = workshopGoals.length > 0
