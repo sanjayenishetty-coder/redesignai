@@ -1,6 +1,5 @@
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "redesign2026";
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -14,7 +13,6 @@ export default async function handler(req, res) {
     const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
     if (!SUPABASE_URL || !SUPABASE_KEY) {
-      console.error("Missing Supabase credentials");
       return res.status(500).json({ error: "Server configuration error" });
     }
 

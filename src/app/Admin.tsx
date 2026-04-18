@@ -86,17 +86,12 @@ type FeedbackEntry = {
   id: string;
   created_at: string;
   participant_name: string | null;
-  participant_company: string | null;
-  sp_rating: number; sp_delivery: number; sp_relevance: number; sp_takeaway: string | null;
-  rt_rating: number; rt_delivery: number; rt_relevance: number; rt_takeaway: string | null;
-  ae_rating: number; ae_delivery: number; ae_relevance: number; ae_takeaway: string | null;
-  pa_rating: number; pa_delivery: number; pa_relevance: number; pa_takeaway: string | null;
-  vr_rating: number; vr_delivery: number; vr_relevance: number; vr_takeaway: string | null;
-  overall_rating: number;
-  best_session: string | null;
-  improvements: string | null;
-  would_recommend: boolean | null;
-  other_feedback: string | null;
+  day1_feedback: string | null;
+  sp_rating: number | null; sp_response: string | null;
+  rt_rating: number | null; rt_response: string | null;
+  ae_rating: number | null; ae_response: string | null;
+  pa_rating: number | null; pa_response: string | null;
+  vr_rating: number | null; vr_response: string | null;
 };
 
 type ActivityEntry = {
@@ -107,13 +102,21 @@ type ActivityEntry = {
   created_at: string;
 };
 
-function FeedbackRow({ f, idx, SPEAKERS, Stars }: {
-  f: FeedbackEntry;
-  idx: number;
-  SPEAKERS: { key: string; name: string }[];
-  Stars: (props: { val: number | null }) => React.ReactElement;
-}) {
+const FEEDBACK_SPEAKERS = [
+  { key: "sp", name: "Prof. Shankar Prakash" },
+  { key: "rt", name: "Ravi Tanniru" },
+  { key: "ae", name: "Abhishek Ekbote" },
+  { key: "pa", name: "Pavan Adipuram" },
+  { key: "vr", name: "Venkatesh Rajendran" },
+];
+
+function FeedbackRow({ f, idx }: { f: FeedbackEntry; idx: number }) {
   const [expanded, setExpanded] = useState(false);
+  const RatingBadge = ({ val }: { val: number | null }) => {
+    if (!val) return <span style={{ color: "#9ca3af" }}>—</span>;
+    const color = val >= 4 ? "#16a34a" : val >= 3 ? "#d97706" : "#dc2626";
+    return <span style={{ fontWeight: 700, color }}>{val}/5</span>;
+  };
   return (
     <>
       <tr style={{ borderBottom: "1px solid #f3f4f6" }}>
@@ -121,21 +124,14 @@ function FeedbackRow({ f, idx, SPEAKERS, Stars }: {
         <td style={{ padding: "10px 12px", fontSize: 12, color: "#6b7280", whiteSpace: "nowrap" as const }}>
           {new Date(f.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}
         </td>
-        <td style={{ padding: "10px 12px", fontSize: 13 }}>
-          <div style={{ fontWeight: 600, color: "#111" }}>{f.participant_name || "Anonymous"}</div>
-          {f.participant_company && <div style={{ fontSize: 11, color: "#6b7280" }}>{f.participant_company}</div>}
+        <td style={{ padding: "10px 12px", fontSize: 13, fontWeight: 600, color: "#111" }}>
+          {f.participant_name || "Anonymous"}
         </td>
-        {SPEAKERS.map((sp) => (
-          <td key={sp.key} style={{ padding: "10px 12px", fontSize: 13 }}>
-            <Stars val={(f as any)[`${sp.key}_rating`]} />
+        {FEEDBACK_SPEAKERS.map((sp) => (
+          <td key={sp.key} style={{ padding: "10px 12px", fontSize: 13, textAlign: "center" as const }}>
+            <RatingBadge val={(f as any)[`${sp.key}_rating`]} />
           </td>
         ))}
-        <td style={{ padding: "10px 12px", fontSize: 13 }}>
-          <Stars val={f.overall_rating} />
-        </td>
-        <td style={{ padding: "10px 12px", fontSize: 12 }}>
-          {f.would_recommend === true ? "✅ Yes" : f.would_recommend === false ? "❌ No" : "—"}
-        </td>
         <td style={{ padding: "10px 12px" }}>
           <button onClick={() => setExpanded(!expanded)} style={{ padding: "4px 10px", fontSize: 11, background: "#f3f4f6", border: "none", borderRadius: 6, cursor: "pointer" }}>
             {expanded ? "▲ Hide" : "▼ View"}
@@ -144,36 +140,24 @@ function FeedbackRow({ f, idx, SPEAKERS, Stars }: {
       </tr>
       {expanded && (
         <tr style={{ background: "#f9fafb" }}>
-          <td colSpan={11} style={{ padding: "16px 20px" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px 20px" }}>
-              {SPEAKERS.map((sp) => {
-                const takeaway = (f as any)[`${sp.key}_takeaway`];
-                if (!takeaway) return null;
+          <td colSpan={9} style={{ padding: "16px 20px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px 20px" }}>
+              {f.day1_feedback && (
+                <div style={{ gridColumn: "1 / -1" }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: "#6b7280", textTransform: "uppercase" as const, marginBottom: 4 }}>Overall Day 1 Feedback</div>
+                  <div style={{ fontSize: 13, color: "#374151" }}>{f.day1_feedback}</div>
+                </div>
+              )}
+              {FEEDBACK_SPEAKERS.map((sp) => {
+                const response = (f as any)[`${sp.key}_response`];
+                if (!response) return null;
                 return (
                   <div key={sp.key}>
-                    <div style={{ fontSize: 11, fontWeight: 700, color: "#6b7280", textTransform: "uppercase" as const, marginBottom: 4 }}>{sp.name} — Takeaway</div>
-                    <div style={{ fontSize: 13, color: "#374151" }}>{takeaway}</div>
+                    <div style={{ fontSize: 11, fontWeight: 700, color: "#6b7280", textTransform: "uppercase" as const, marginBottom: 4 }}>{sp.name}</div>
+                    <div style={{ fontSize: 13, color: "#374151" }}>{response}</div>
                   </div>
                 );
               })}
-              {f.improvements && (
-                <div>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: "#6b7280", textTransform: "uppercase" as const, marginBottom: 4 }}>Improvements</div>
-                  <div style={{ fontSize: 13, color: "#374151" }}>{f.improvements}</div>
-                </div>
-              )}
-              {f.other_feedback && (
-                <div>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: "#6b7280", textTransform: "uppercase" as const, marginBottom: 4 }}>Other Feedback</div>
-                  <div style={{ fontSize: 13, color: "#374151" }}>{f.other_feedback}</div>
-                </div>
-              )}
-              {f.best_session && (
-                <div>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: "#6b7280", textTransform: "uppercase" as const, marginBottom: 4 }}>Best Session</div>
-                  <div style={{ fontSize: 13, color: "#374151" }}>{f.best_session}</div>
-                </div>
-              )}
             </div>
           </td>
         </tr>
@@ -1303,23 +1287,12 @@ export default function Admin() {
       })()}
 
       {activeTab === "feedback" && (() => {
-        const SPEAKERS = [
-          { key: "sp", name: "Prof. Shankar Prakash" },
-          { key: "rt", name: "Ravi Tanniru" },
-          { key: "ae", name: "Abhishek Ekbote" },
-          { key: "pa", name: "Pavan Adipuram" },
-          { key: "vr", name: "Venkatesh Rajendran" },
-        ];
         const avg = (arr: number[]) => arr.length > 0 ? (arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(1) : "—";
-        const Stars = ({ val }: { val: number | null }) => {
-          if (!val) return <span style={{ color: "#9ca3af" }}>—</span>;
-          return <span style={{ color: val >= 4 ? "#16a34a" : val >= 3 ? "#d97706" : "#dc2626", fontWeight: 700 }}>{val}/5</span>;
-        };
         return (
           <div style={{ padding: "24px 32px" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
               <div>
-                <div style={{ fontWeight: 700, fontSize: 17, color: "#111" }}>Workshop Feedback — Day 1</div>
+                <div style={{ fontWeight: 700, fontSize: 17, color: "#111" }}>Workshop Feedback — REDESIGN-ai Day 1</div>
                 <div style={{ color: "#6b7280", fontSize: 13, marginTop: 4 }}>{feedbackData.length} response{feedbackData.length !== 1 ? "s" : ""}</div>
               </div>
               <div style={{ display: "flex", gap: 12 }}>
@@ -1338,47 +1311,17 @@ export default function Admin() {
               <div style={styles.empty}>No feedback submitted yet.</div>
             ) : (
               <>
-                {/* Per-Speaker Average Ratings */}
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16, marginBottom: 24 }}>
-                  {SPEAKERS.map((sp) => {
-                    const ratings = feedbackData.map((f) => (f as any)[`${sp.key}_rating`]).filter(Boolean);
-                    const deliveries = feedbackData.map((f) => (f as any)[`${sp.key}_delivery`]).filter(Boolean);
-                    const relevances = feedbackData.map((f) => (f as any)[`${sp.key}_relevance`]).filter(Boolean);
+                {/* Per-Speaker Avg Rating Cards */}
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 14, marginBottom: 24 }}>
+                  {FEEDBACK_SPEAKERS.map((sp) => {
+                    const ratings = feedbackData.map((f) => (f as any)[`${sp.key}_rating`]).filter(Boolean) as number[];
                     return (
-                      <div key={sp.key} style={{ background: "white", border: "1px solid #e5e7eb", borderRadius: 12, padding: "16px", boxShadow: "0 1px 4px rgba(0,0,0,0.05)" }}>
-                        <div style={{ fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 12, lineHeight: 1.4 }}>{sp.name}</div>
-                        <div style={{ display: "flex", flexDirection: "column" as const, gap: 6 }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12 }}>
-                            <span style={{ color: "#6b7280" }}>Overall</span>
-                            <span style={{ fontWeight: 700, color: "#111" }}>{avg(ratings)}</span>
-                          </div>
-                          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12 }}>
-                            <span style={{ color: "#6b7280" }}>Delivery</span>
-                            <span style={{ fontWeight: 700, color: "#111" }}>{avg(deliveries)}</span>
-                          </div>
-                          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12 }}>
-                            <span style={{ color: "#6b7280" }}>Relevance</span>
-                            <span style={{ fontWeight: 700, color: "#111" }}>{avg(relevances)}</span>
-                          </div>
-                        </div>
+                      <div key={sp.key} style={{ background: "white", border: "1px solid #e5e7eb", borderRadius: 10, padding: "16px", textAlign: "center" as const, boxShadow: "0 1px 4px rgba(0,0,0,0.05)" }}>
+                        <div style={{ fontSize: 26, fontWeight: 800, color: "#007787" }}>{avg(ratings)}</div>
+                        <div style={{ fontSize: 11, color: "#6b7280", marginTop: 4, lineHeight: 1.4 }}>{sp.name}</div>
                       </div>
                     );
                   })}
-                </div>
-
-                {/* Overall Stats */}
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16, marginBottom: 24 }}>
-                  {[
-                    { label: "Avg Overall Rating", value: avg(feedbackData.map((f) => f.overall_rating).filter(Boolean)) },
-                    { label: "Would Recommend", value: `${feedbackData.filter((f) => f.would_recommend === true).length}/${feedbackData.length}` },
-                    { label: "Most Valued Session", value: (() => { const counts: Record<string, number> = {}; feedbackData.forEach((f) => { if (f.best_session) counts[f.best_session] = (counts[f.best_session] || 0) + 1; }); const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]; return top ? top[0].split(" ")[0] + " " + top[0].split(" ")[1] : "—"; })() },
-                    { label: "Total Responses", value: feedbackData.length },
-                  ].map((card) => (
-                    <div key={card.label} style={{ background: "white", border: "1px solid #e5e7eb", borderRadius: 10, padding: "16px 20px", textAlign: "center" as const }}>
-                      <div style={{ fontSize: 22, fontWeight: 800, color: "#007787" }}>{card.value}</div>
-                      <div style={{ fontSize: 12, color: "#6b7280", marginTop: 4 }}>{card.label}</div>
-                    </div>
-                  ))}
                 </div>
 
                 {/* Response Table */}
@@ -1387,14 +1330,14 @@ export default function Admin() {
                     <table style={{ width: "100%", borderCollapse: "collapse" as const }}>
                       <thead>
                         <tr style={{ background: "#f9fafb" }}>
-                          {["#", "Submitted", "Participant", "S.Prakash", "R.Tanniru", "A.Ekbote", "P.Adipuram", "V.Rajendran", "Overall", "Recommend", "Details"].map((h) => (
+                          {["#", "Submitted", "Name", "S.Prakash", "R.Tanniru", "A.Ekbote", "P.Adipuram", "V.Rajendran", "Details"].map((h) => (
                             <th key={h} style={{ padding: "10px 12px", textAlign: "left" as const, fontSize: 11, fontWeight: 600, color: "#6b7280", textTransform: "uppercase" as const, letterSpacing: "0.05em", borderBottom: "1px solid #e5e7eb", whiteSpace: "nowrap" as const }}>{h}</th>
                           ))}
                         </tr>
                       </thead>
                       <tbody>
                         {feedbackData.map((f, idx) => (
-                          <FeedbackRow key={f.id} f={f} idx={idx} SPEAKERS={SPEAKERS} Stars={Stars} />
+                          <FeedbackRow key={f.id} f={f} idx={idx} />
                         ))}
                       </tbody>
                     </table>
