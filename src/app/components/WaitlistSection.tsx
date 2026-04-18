@@ -30,20 +30,18 @@ export const WaitlistSection = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    const data = {
-      businessId: "1f0ffff7-c282-624f-9d23-03d83203e77f",
-      name: formData.firstName + ' ' + formData.lastName,
-      mobileNo: formData.contactNumber,
-      email: formData.email,
-      message: '',
-      moreInfo: { ...formData, source: 'Waitlist - ScaleMe Summit Next Cohort' }
-    };
-
     try {
-      const res = await fetch("https://api.simpo.ai/business/contact", {
+      const res = await fetch("/api/submit-waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          fullName: formData.firstName + ' ' + formData.lastName,
+          phone: formData.contactNumber,
+          email: formData.email,
+          companyName: formData.companyLegalName,
+          industry: formData.annualRevenue,
+          source: 'waitlist',
+        }),
       });
 
       if (!res.ok) throw new Error("API failed");

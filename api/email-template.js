@@ -14,7 +14,7 @@ function emailWrapper(content) {
         <tr><td style="background:#0a0a0a;border-radius:12px 12px 0 0;padding:32px 40px;text-align:center;">
           <p style="margin:0 0 4px;color:#9ca3af;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;">ScaleMe × ISB-CBI Hyderabad</p>
           <h1 style="margin:0;color:#ffffff;font-size:28px;font-weight:800;letter-spacing:0.05em;">REDESIGN-ai</h1>
-          <p style="margin:6px 0 0;color:#6b7280;font-size:13px;">18th & 19th April 2026 · ISB-CBI Campus, Hyderabad</p>
+          <p style="margin:6px 0 0;color:#6b7280;font-size:13px;">A Hands-On AI Workshop for Indian SMEs</p>
         </td></tr>
 
         ${content}
@@ -231,17 +231,17 @@ export function postEventEmailHtml({ fullName }) {
 export function waitlistEmailHtml({ fullName, companyName, industry }) {
   return emailWrapper(`
     <tr><td style="background:#ffffff;padding:40px 40px 32px;">
-      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">You're on the REDESIGN-ai waitlist 🎉</h2>
+      <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">You're on the REDESIGN-ai waitlist ✅</h2>
       <p style="margin:0 0 24px;color:#374151;font-size:15px;line-height:1.6;">
         Hi ${fullName},<br><br>
-        Thanks for registering your interest in <strong>REDESIGN-ai — A Hands-On AI Workshop for Indian SMEs</strong>.<br><br>
-        The April 2026 cohort is fully booked, but you're now on the waitlist for the next one. We'll reach out the moment seats open — before any public announcement.
+        Thank you for your interest in <strong>REDESIGN-ai — A Hands-On AI Workshop for Indian SMEs</strong>.<br><br>
+        We're planning the next cohort and will reach out to you as soon as the dates are finalised — you'll hear from us before any public announcement.
       </p>
 
       <!-- Summary -->
       <table width="100%" cellpadding="0" cellspacing="0" style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:28px;">
         <tr><td style="padding:20px 24px;">
-          <p style="margin:0 0 12px;color:#6b7280;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;">Your Details</p>
+          <p style="margin:0 0 12px;color:#6b7280;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;">Your Registration</p>
           <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
               <td style="padding:4px 0;color:#6b7280;font-size:13px;width:120px;">Name</td>
@@ -255,6 +255,10 @@ export function waitlistEmailHtml({ fullName, companyName, industry }) {
               <td style="padding:4px 0;color:#6b7280;font-size:13px;">Industry</td>
               <td style="padding:4px 0;color:#111;font-size:13px;font-weight:600;">${industry}</td>
             </tr>` : ''}
+            <tr>
+              <td style="padding:4px 0;color:#6b7280;font-size:13px;">Cohort Date</td>
+              <td style="padding:4px 0;color:#111;font-size:13px;font-weight:600;">To be announced</td>
+            </tr>
           </table>
         </td></tr>
       </table>
@@ -263,8 +267,8 @@ export function waitlistEmailHtml({ fullName, companyName, industry }) {
       <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
         <p style="margin:0 0 8px;color:#166534;font-size:13px;font-weight:700;">What happens next</p>
         <ul style="margin:8px 0 0;padding-left:20px;color:#374151;font-size:13px;line-height:1.9;">
-          <li>You'll get first access when the next cohort opens</li>
-          <li>We'll notify you before seats are announced publicly</li>
+          <li>We are working on finalising the dates for the next REDESIGN-ai cohort</li>
+          <li>You will be the first to know once dates are confirmed — before public announcement</li>
           <li>No action needed from you right now</li>
         </ul>
       </div>
