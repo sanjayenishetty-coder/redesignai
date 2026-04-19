@@ -115,7 +115,13 @@ const FEEDBACK_SPEAKERS = [
   { key: "ar", name: "Arjun Reddy", day: 2 },
 ];
 
-function FeedbackRow({ f, idx }: { f: FeedbackEntry; idx: number }) {
+function FeedbackRow({ f, idx, onDelete, deleting, isSubAdmin }: {
+  f: FeedbackEntry;
+  idx: number;
+  onDelete: (id: string, name: string) => void;
+  deleting: string | null;
+  isSubAdmin: boolean;
+}) {
   const [expanded, setExpanded] = useState(false);
   const RatingBadge = ({ val }: { val: number | null }) => {
     if (!val) return <span style={{ color: "#9ca3af" }}>—</span>;
@@ -137,10 +143,19 @@ function FeedbackRow({ f, idx }: { f: FeedbackEntry; idx: number }) {
             <RatingBadge val={(f as any)[`${sp.key}_rating`]} />
           </td>
         ))}
-        <td style={{ padding: "10px 12px" }}>
+        <td style={{ padding: "10px 12px", display: "flex", gap: 6, alignItems: "center" }}>
           <button onClick={() => setExpanded(!expanded)} style={{ padding: "4px 10px", fontSize: 11, background: "#f3f4f6", border: "none", borderRadius: 6, cursor: "pointer" }}>
             {expanded ? "▲ Hide" : "▼ View"}
           </button>
+          {!isSubAdmin && (
+            <button
+              onClick={() => onDelete(f.id, f.participant_name || "Anonymous")}
+              disabled={deleting === f.id}
+              style={{ padding: "4px 10px", fontSize: 11, background: "white", color: "#dc2626", border: "1px solid #dc2626", borderRadius: 6, cursor: "pointer" }}
+            >
+              {deleting === f.id ? "..." : "🗑"}
+            </button>
+          )}
         </td>
       </tr>
       {expanded && (
@@ -228,6 +243,7 @@ export default function Admin() {
   const [feedbackData, setFeedbackData] = useState<FeedbackEntry[]>([]);
   const [feedbackLoading, setFeedbackLoading] = useState(false);
   const [feedbackLoaded, setFeedbackLoaded] = useState(false);
+  const [deletingFeedback, setDeletingFeedback] = useState<string | null>(null);
   const [leadActivity, setLeadActivity] = useState<Record<string, ActivityEntry[]>>({});
   const [activityLoading, setActivityLoading] = useState<string | null>(null);
   const [editingLeadId, setEditingLeadId] = useState<string | null>(null);
@@ -594,6 +610,23 @@ export default function Admin() {
       }
     } finally {
       setActivityLoading(null);
+    }
+  };
+
+  const handleDeleteFeedback = async (id: string, name: string) => {
+    if (!window.confirm(`Delete feedback from "${name}"? This cannot be undone.`)) return;
+    setDeletingFeedback(id);
+    try {
+      await fetch("/api/delete-workshop-feedback", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json", "x-admin-password": sessionStorage.getItem("adminPwd") || "" },
+        body: JSON.stringify({ id }),
+      });
+      setFeedbackData((prev) => prev.filter((f) => f.id !== id));
+    } catch {
+      alert("Failed to delete. Try again.");
+    } finally {
+      setDeletingFeedback(null);
     }
   };
 
@@ -1393,7 +1426,7 @@ export default function Admin() {
                       </thead>
                       <tbody>
                         {feedbackData.map((f, idx) => (
-                          <FeedbackRow key={f.id} f={f} idx={idx} />
+                          <FeedbackRow key={f.id} f={f} idx={idx} onDelete={handleDeleteFeedback} deleting={deletingFeedback} isSubAdmin={isSubAdmin} />
                         ))}
                       </tbody>
                     </table>
