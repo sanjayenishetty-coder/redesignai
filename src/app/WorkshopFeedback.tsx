@@ -148,7 +148,7 @@ export default function WorkshopFeedback() {
         <form onSubmit={handleSubmit}>
           {/* Name */}
           <div style={s.card}>
-            <label style={s.label}>Your Name <span style={s.opt}>(optional)</span></label>
+            <label style={s.label}>Your Name <span style={s.opt}></span></label>
             <input
               style={s.input}
               type="text"
@@ -162,7 +162,7 @@ export default function WorkshopFeedback() {
           <DayDivider label="Day 1" />
 
           <div style={s.card}>
-            <label style={s.label}>Overall Day 1 Feedback <span style={s.opt}>(optional)</span></label>
+            <label style={s.label}>Overall Day 1 Feedback <span style={s.opt}></span></label>
             <textarea
               style={s.textarea}
               rows={3}
@@ -190,7 +190,7 @@ export default function WorkshopFeedback() {
                 />
               </div>
               <div>
-                <label style={s.label}>Your thoughts <span style={s.opt}>(optional)</span></label>
+                <label style={s.label}>Your thoughts <span style={s.opt}></span></label>
                 <textarea
                   style={s.textarea}
                   rows={2}
@@ -206,7 +206,7 @@ export default function WorkshopFeedback() {
           <DayDivider label="Day 2" />
 
           <div style={s.card}>
-            <label style={s.label}>Overall Day 2 Feedback <span style={s.opt}>(optional)</span></label>
+            <label style={s.label}>Overall Day 2 Feedback <span style={s.opt}></span></label>
             <textarea
               style={s.textarea}
               rows={3}
@@ -234,7 +234,7 @@ export default function WorkshopFeedback() {
                 />
               </div>
               <div>
-                <label style={s.label}>Your thoughts <span style={s.opt}>(optional)</span></label>
+                <label style={s.label}>Your thoughts <span style={s.opt}></span></label>
                 <textarea
                   style={s.textarea}
                   rows={2}
@@ -251,8 +251,7 @@ export default function WorkshopFeedback() {
 
           <div style={s.card}>
             <label style={s.label}>
-              What can be improved for future cohorts? <span style={s.opt}>(optional)</span>
-            </label>
+              What can be improved for future cohorts?            </label>
             <textarea
               style={s.textarea}
               rows={3}
@@ -264,8 +263,7 @@ export default function WorkshopFeedback() {
 
           <div style={s.card}>
             <label style={s.label}>
-              Overall feedback on the 2-day workshop <span style={s.opt}>(optional)</span>
-            </label>
+              Overall feedback on the 2-day workshop            </label>
             <textarea
               style={s.textarea}
               rows={4}
