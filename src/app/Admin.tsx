@@ -87,11 +87,15 @@ type FeedbackEntry = {
   created_at: string;
   participant_name: string | null;
   day1_feedback: string | null;
+  day2_feedback: string | null;
   sp_rating: number | null; sp_response: string | null;
   rt_rating: number | null; rt_response: string | null;
   ae_rating: number | null; ae_response: string | null;
   pa_rating: number | null; pa_response: string | null;
   vr_rating: number | null; vr_response: string | null;
+  ar_rating: number | null; ar_response: string | null;
+  future_improvements: string | null;
+  overall_feedback: string | null;
 };
 
 type ActivityEntry = {
@@ -103,11 +107,12 @@ type ActivityEntry = {
 };
 
 const FEEDBACK_SPEAKERS = [
-  { key: "sp", name: "Prof. Shankar Prakash" },
-  { key: "rt", name: "Ravi Tanniru" },
-  { key: "ae", name: "Abhishek Ekbote" },
-  { key: "pa", name: "Pavan Adipuram" },
-  { key: "vr", name: "Venkatesh Rajendran" },
+  { key: "sp", name: "Prof. Shankar Prakash", day: 1 },
+  { key: "rt", name: "Ravi Tanniru", day: 1 },
+  { key: "ae", name: "Abhishek Ekbote", day: 1 },
+  { key: "pa", name: "Pavan Adipuram", day: 1 },
+  { key: "vr", name: "Venkatesh Rajendran", day: 1 },
+  { key: "ar", name: "Arjun Reddy", day: 2 },
 ];
 
 function FeedbackRow({ f, idx }: { f: FeedbackEntry; idx: number }) {
@@ -140,15 +145,15 @@ function FeedbackRow({ f, idx }: { f: FeedbackEntry; idx: number }) {
       </tr>
       {expanded && (
         <tr style={{ background: "#f9fafb" }}>
-          <td colSpan={9} style={{ padding: "16px 20px" }}>
+          <td colSpan={10} style={{ padding: "16px 20px" }}>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px 20px" }}>
               {f.day1_feedback && (
                 <div style={{ gridColumn: "1 / -1" }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: "#6b7280", textTransform: "uppercase" as const, marginBottom: 4 }}>Overall Day 1 Feedback</div>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: "#6b7280", textTransform: "uppercase" as const, marginBottom: 4 }}>Day 1 Overall</div>
                   <div style={{ fontSize: 13, color: "#374151" }}>{f.day1_feedback}</div>
                 </div>
               )}
-              {FEEDBACK_SPEAKERS.map((sp) => {
+              {FEEDBACK_SPEAKERS.filter(sp => sp.day === 1).map((sp) => {
                 const response = (f as any)[`${sp.key}_response`];
                 if (!response) return null;
                 return (
@@ -158,6 +163,30 @@ function FeedbackRow({ f, idx }: { f: FeedbackEntry; idx: number }) {
                   </div>
                 );
               })}
+              {f.day2_feedback && (
+                <div style={{ gridColumn: "1 / -1", borderTop: "1px solid #e5e7eb", paddingTop: 12, marginTop: 4 }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: "#1d4ed8", textTransform: "uppercase" as const, marginBottom: 4 }}>Day 2 Overall</div>
+                  <div style={{ fontSize: 13, color: "#374151" }}>{f.day2_feedback}</div>
+                </div>
+              )}
+              {f.ar_response && (
+                <div>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: "#1d4ed8", textTransform: "uppercase" as const, marginBottom: 4 }}>Arjun Reddy</div>
+                  <div style={{ fontSize: 13, color: "#374151" }}>{f.ar_response}</div>
+                </div>
+              )}
+              {f.future_improvements && (
+                <div style={{ gridColumn: "1 / -1", borderTop: "1px solid #e5e7eb", paddingTop: 12, marginTop: 4 }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: "#d97706", textTransform: "uppercase" as const, marginBottom: 4 }}>Improvements for Future Cohorts</div>
+                  <div style={{ fontSize: 13, color: "#374151" }}>{f.future_improvements}</div>
+                </div>
+              )}
+              {f.overall_feedback && (
+                <div style={{ gridColumn: "1 / -1" }}>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: "#374151", textTransform: "uppercase" as const, marginBottom: 4 }}>Overall 2-Day Feedback</div>
+                  <div style={{ fontSize: 13, color: "#374151" }}>{f.overall_feedback}</div>
+                </div>
+              )}
             </div>
           </td>
         </tr>
@@ -1357,7 +1386,7 @@ export default function Admin() {
                     <table style={{ width: "100%", borderCollapse: "collapse" as const }}>
                       <thead>
                         <tr style={{ background: "#f9fafb" }}>
-                          {["#", "Submitted", "Name", "S.Prakash", "R.Tanniru", "A.Ekbote", "P.Adipuram", "V.Rajendran", "Details"].map((h) => (
+                          {["#", "Submitted", "Name", "S.Prakash", "R.Tanniru", "A.Ekbote", "P.Adipuram", "V.Rajendran", "A.Reddy", "Details"].map((h) => (
                             <th key={h} style={{ padding: "10px 12px", textAlign: "left" as const, fontSize: 11, fontWeight: 600, color: "#6b7280", textTransform: "uppercase" as const, letterSpacing: "0.05em", borderBottom: "1px solid #e5e7eb", whiteSpace: "nowrap" as const }}>{h}</th>
                           ))}
                         </tr>

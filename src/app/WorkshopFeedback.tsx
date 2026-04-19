@@ -1,6 +1,6 @@
 import { useState, FormEvent } from "react";
 
-const SPEAKERS = [
+const DAY1_SPEAKERS = [
   { key: "sp", name: "Prof. Shankar Prakash", topic: "AI Foundations & Strategic Thinking" },
   { key: "rt", name: "Ravi Tanniru", topic: "AI Use Cases for Indian SMEs" },
   { key: "ae", name: "Abhishek Ekbote", topic: "Implementing AI in Business Operations" },
@@ -8,12 +8,21 @@ const SPEAKERS = [
   { key: "vr", name: "Venkatesh Rajendran", topic: "AI-Driven Growth Strategy" },
 ];
 
+const DAY2_SPEAKERS = [
+  { key: "ar", name: "Arjun Reddy", topic: "Agentic AI Building" },
+];
+
+const ALL_SPEAKERS = [...DAY1_SPEAKERS, ...DAY2_SPEAKERS];
+
 type SessionFeedback = { rating: string; response: string };
 
 type FormState = {
   name: string;
   day1Feedback: string;
+  day2Feedback: string;
   sessions: Record<string, SessionFeedback>;
+  futureImprovements: string;
+  overallFeedback: string;
 };
 
 const RatingButtons = ({ value, onChange }: { value: string; onChange: (v: string) => void }) => (
@@ -41,11 +50,24 @@ const RatingButtons = ({ value, onChange }: { value: string; onChange: (v: strin
   </div>
 );
 
+const DayDivider = ({ label }: { label: string }) => (
+  <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "8px 0 16px" }}>
+    <div style={{ flex: 1, height: 1, background: "#e5e7eb" }} />
+    <span style={{ fontSize: 12, fontWeight: 700, color: "#007787", textTransform: "uppercase", letterSpacing: "0.1em", background: "#f3f4f6", padding: "4px 14px", borderRadius: 20, border: "1px solid #d1fae5" }}>
+      {label}
+    </span>
+    <div style={{ flex: 1, height: 1, background: "#e5e7eb" }} />
+  </div>
+);
+
 export default function WorkshopFeedback() {
   const [form, setForm] = useState<FormState>({
     name: "",
     day1Feedback: "",
-    sessions: Object.fromEntries(SPEAKERS.map((s) => [s.key, { rating: "", response: "" }])),
+    day2Feedback: "",
+    sessions: Object.fromEntries(ALL_SPEAKERS.map((sp) => [sp.key, { rating: "", response: "" }])),
+    futureImprovements: "",
+    overallFeedback: "",
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -60,9 +82,9 @@ export default function WorkshopFeedback() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    for (const s of SPEAKERS) {
-      if (!form.sessions[s.key].rating) {
-        setError(`Please rate the session by ${s.name}.`);
+    for (const sp of ALL_SPEAKERS) {
+      if (!form.sessions[sp.key].rating) {
+        setError(`Please rate the session by ${sp.name}.`);
         return;
       }
     }
@@ -72,12 +94,15 @@ export default function WorkshopFeedback() {
       const payload = {
         participant_name: form.name || null,
         day1_feedback: form.day1Feedback || null,
+        day2_feedback: form.day2Feedback || null,
         ...Object.fromEntries(
-          SPEAKERS.flatMap((s) => [
-            [`${s.key}_rating`, parseInt(form.sessions[s.key].rating)],
-            [`${s.key}_response`, form.sessions[s.key].response || null],
+          ALL_SPEAKERS.flatMap((sp) => [
+            [`${sp.key}_rating`, parseInt(form.sessions[sp.key].rating)],
+            [`${sp.key}_response`, form.sessions[sp.key].response || null],
           ])
         ),
+        future_improvements: form.futureImprovements || null,
+        overall_feedback: form.overallFeedback || null,
       };
       const res = await fetch("/api/submit-workshop-feedback", {
         method: "POST",
@@ -115,9 +140,9 @@ export default function WorkshopFeedback() {
       <div style={s.container}>
         {/* Header */}
         <div style={s.header}>
-          <div style={s.badge}>REDESIGN-ai · Day 1</div>
+          <div style={s.badge}>REDESIGN-ai · Day 1 & Day 2</div>
           <h1 style={s.title}>Workshop Feedback</h1>
-          <p style={s.subtitle}>Share your honest feedback — it takes about 3 minutes.</p>
+          <p style={s.subtitle}>Share your honest feedback — takes about 5 minutes.</p>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -133,7 +158,9 @@ export default function WorkshopFeedback() {
             />
           </div>
 
-          {/* Day 1 Overall */}
+          {/* Day 1 */}
+          <DayDivider label="Day 1" />
+
           <div style={s.card}>
             <label style={s.label}>Overall Day 1 Feedback <span style={s.opt}>(optional)</span></label>
             <textarea
@@ -145,8 +172,7 @@ export default function WorkshopFeedback() {
             />
           </div>
 
-          {/* Per-Speaker */}
-          {SPEAKERS.map((speaker, idx) => (
+          {DAY1_SPEAKERS.map((speaker, idx) => (
             <div key={speaker.key} style={s.card}>
               <div style={s.sessionHeader}>
                 <div style={s.sessionNum}>{String(idx + 1).padStart(2, "0")}</div>
@@ -155,7 +181,6 @@ export default function WorkshopFeedback() {
                   <div style={s.speakerTopic}>{speaker.topic}</div>
                 </div>
               </div>
-
               <div style={{ marginBottom: 16 }}>
                 <label style={s.ratingLabel}>Rate this session <span style={s.req}>*</span></label>
                 <div style={s.ratingHint}>1 = Poor &nbsp;·&nbsp; 5 = Excellent</div>
@@ -164,7 +189,6 @@ export default function WorkshopFeedback() {
                   onChange={(v) => setSession(speaker.key, "rating", v)}
                 />
               </div>
-
               <div>
                 <label style={s.label}>Your thoughts <span style={s.opt}>(optional)</span></label>
                 <textarea
@@ -177,6 +201,79 @@ export default function WorkshopFeedback() {
               </div>
             </div>
           ))}
+
+          {/* Day 2 */}
+          <DayDivider label="Day 2" />
+
+          <div style={s.card}>
+            <label style={s.label}>Overall Day 2 Feedback <span style={s.opt}>(optional)</span></label>
+            <textarea
+              style={s.textarea}
+              rows={3}
+              placeholder="How was your overall Day 2 experience? Any highlights or suggestions..."
+              value={form.day2Feedback}
+              onChange={(e) => setForm((p) => ({ ...p, day2Feedback: e.target.value }))}
+            />
+          </div>
+
+          {DAY2_SPEAKERS.map((speaker) => (
+            <div key={speaker.key} style={s.card}>
+              <div style={s.sessionHeader}>
+                <div style={{ ...s.sessionNum, background: "#1d4ed8" }}>06</div>
+                <div>
+                  <div style={s.speakerName}>{speaker.name}</div>
+                  <div style={s.speakerTopic}>{speaker.topic}</div>
+                </div>
+              </div>
+              <div style={{ marginBottom: 16 }}>
+                <label style={s.ratingLabel}>Rate this session <span style={s.req}>*</span></label>
+                <div style={s.ratingHint}>1 = Poor &nbsp;·&nbsp; 5 = Excellent</div>
+                <RatingButtons
+                  value={form.sessions[speaker.key].rating}
+                  onChange={(v) => setSession(speaker.key, "rating", v)}
+                />
+              </div>
+              <div>
+                <label style={s.label}>Your thoughts <span style={s.opt}>(optional)</span></label>
+                <textarea
+                  style={s.textarea}
+                  rows={2}
+                  placeholder="What did you find most useful? Any feedback for the speaker?"
+                  value={form.sessions[speaker.key].response}
+                  onChange={(e) => setSession(speaker.key, "response", e.target.value)}
+                />
+              </div>
+            </div>
+          ))}
+
+          {/* Overall */}
+          <DayDivider label="Overall" />
+
+          <div style={s.card}>
+            <label style={s.label}>
+              What can be improved for future cohorts? <span style={s.opt}>(optional)</span>
+            </label>
+            <textarea
+              style={s.textarea}
+              rows={3}
+              placeholder="Content, format, pacing, logistics, topics you'd like added..."
+              value={form.futureImprovements}
+              onChange={(e) => setForm((p) => ({ ...p, futureImprovements: e.target.value }))}
+            />
+          </div>
+
+          <div style={s.card}>
+            <label style={s.label}>
+              Overall feedback on the 2-day workshop <span style={s.opt}>(optional)</span>
+            </label>
+            <textarea
+              style={s.textarea}
+              rows={4}
+              placeholder="Any final thoughts on the full workshop — what worked, what didn't, what you'll take back to your business..."
+              value={form.overallFeedback}
+              onChange={(e) => setForm((p) => ({ ...p, overallFeedback: e.target.value }))}
+            />
+          </div>
 
           {error && (
             <div style={{ background: "#fef2f2", border: "1px solid #fecaca", color: "#dc2626", padding: "12px 16px", borderRadius: 8, fontSize: 14, marginBottom: 16 }}>
