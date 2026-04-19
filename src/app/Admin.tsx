@@ -195,6 +195,7 @@ export default function Admin() {
   });
   const [addSaving, setAddSaving] = useState(false);
   const [activeTab, setActiveTab] = useState<"leads" | "analytics" | "feedback">("leads");
+  const [isSubAdmin, setIsSubAdmin] = useState(false);
   const [feedbackData, setFeedbackData] = useState<FeedbackEntry[]>([]);
   const [feedbackLoading, setFeedbackLoading] = useState(false);
   const [feedbackLoaded, setFeedbackLoaded] = useState(false);
@@ -221,7 +222,10 @@ export default function Admin() {
       }
       if (!res.ok) throw new Error("Failed to fetch");
       const data = await res.json();
-      setLeads(data);
+      const leadsArray = Array.isArray(data) ? data : (data.leads ?? []);
+      const role = data.role ?? "admin";
+      setLeads(leadsArray);
+      setIsSubAdmin(role === "subadmin");
       setAuthed(true);
       setAuthError("");
       sessionStorage.setItem("adminPwd", pwd);
@@ -612,15 +616,16 @@ export default function Admin() {
         <div>
           <span style={styles.headerTitle}>REDESIGN — Leads CRM</span>
           <span style={styles.headerSub}>{leads.length} total applicants</span>
+          {isSubAdmin && <span style={{ background: "#d97706", color: "white", fontSize: 11, fontWeight: 700, padding: "2px 10px", borderRadius: 20, marginLeft: 10 }}>View Only</span>}
         </div>
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <button onClick={() => setShowAddModal(true)} style={styles.addBtn}>+ Add Lead</button>
+          {!isSubAdmin && <button onClick={() => setShowAddModal(true)} style={styles.addBtn}>+ Add Lead</button>}
           <button onClick={handleDownloadCsv} style={styles.downloadBtn}>↓ Download CSV</button>
           <a href="/participants" target="_blank" style={{ ...styles.downloadBtn, background: "#0D9E6E", color: "#fff", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>👥 Participants</a>
-          <label style={styles.csvBtn}>
+          {!isSubAdmin && <label style={styles.csvBtn}>
             {csvUploading ? "Uploading..." : "↑ Upload CSV"}
             <input type="file" accept=".csv" onChange={handleCsvUpload} style={{ display: "none" }} disabled={csvUploading} />
-          </label>
+          </label>}
           {csvResult && (
             <span style={{ fontSize: 12, color: csvResult.errors > 0 ? "#dc2626" : "#16a34a" }}>
               {csvResult.added} added{csvResult.errors > 0 ? `, ${csvResult.errors} failed` : ""}
@@ -700,7 +705,7 @@ export default function Admin() {
               <button onClick={() => setDateFilter("")} style={{ background: "none", border: "none", cursor: "pointer", color: "#6b7280", fontSize: 13 }}>✕ Clear date</button>
             )}
             <span style={styles.resultCount}>{filtered.length} result{filtered.length !== 1 ? "s" : ""}</span>
-            {selectedIds.size > 0 && (
+            {!isSubAdmin && selectedIds.size > 0 && (
               <button
                 onClick={() => handleBulkDelete(Array.from(selectedIds))}
                 disabled={bulkDeleting}
@@ -788,52 +793,68 @@ export default function Admin() {
                           <div style={{ fontSize: 11, color: "#9ca3af", marginTop: 2 }}>{new Date(lead.created_at).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true })}</div>
                         </td>
                         <td style={styles.td}>
-                          <select
-                            value={lead.status}
-                            onChange={(e) => handleStatusChange(lead.id, e.target.value)}
-                            disabled={saving === lead.id}
-                            style={{
-                              ...styles.statusSelect,
-                              color: STATUS_COLORS[lead.status] || "#111",
-                              borderColor: STATUS_COLORS[lead.status] || "#ccc",
-                            }}
-                          >
-                            {STATUS_OPTIONS.map((s) => (
-                              <option key={s} value={s}>
-                                {s.charAt(0).toUpperCase() + s.slice(1)}
-                              </option>
-                            ))}
-                          </select>
+                          {isSubAdmin ? (
+                            <span style={{ ...styles.statusSelect, color: STATUS_COLORS[lead.status] || "#111", borderColor: STATUS_COLORS[lead.status] || "#ccc", display: "inline-block", padding: "5px 8px" }}>
+                              {lead.status.charAt(0).toUpperCase() + lead.status.slice(1)}
+                            </span>
+                          ) : (
+                            <select
+                              value={lead.status}
+                              onChange={(e) => handleStatusChange(lead.id, e.target.value)}
+                              disabled={saving === lead.id}
+                              style={{
+                                ...styles.statusSelect,
+                                color: STATUS_COLORS[lead.status] || "#111",
+                                borderColor: STATUS_COLORS[lead.status] || "#ccc",
+                              }}
+                            >
+                              {STATUS_OPTIONS.map((s) => (
+                                <option key={s} value={s}>
+                                  {s.charAt(0).toUpperCase() + s.slice(1)}
+                                </option>
+                              ))}
+                            </select>
+                          )}
                         </td>
                         <td style={styles.td}>
-                          <select
-                            value={lead.participant_type || ""}
-                            onChange={(e) => handleParticipantTypeChange(lead.id, e.target.value)}
-                            disabled={saving === lead.id}
-                            style={{
-                              ...styles.statusSelect,
-                              color: lead.participant_type ? PARTICIPANT_TYPE_COLORS[lead.participant_type] || "#111" : "#9ca3af",
-                              borderColor: lead.participant_type ? PARTICIPANT_TYPE_COLORS[lead.participant_type] || "#ccc" : "#e5e7eb",
-                            }}
-                          >
-                            <option value="">— Tag type</option>
-                            {PARTICIPANT_TYPES.map((t) => (
-                              <option key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>
-                            ))}
-                          </select>
+                          {isSubAdmin ? (
+                            <span style={{ fontSize: 12, color: lead.participant_type ? PARTICIPANT_TYPE_COLORS[lead.participant_type] || "#111" : "#9ca3af" }}>
+                              {lead.participant_type ? lead.participant_type.charAt(0).toUpperCase() + lead.participant_type.slice(1) : "—"}
+                            </span>
+                          ) : (
+                            <select
+                              value={lead.participant_type || ""}
+                              onChange={(e) => handleParticipantTypeChange(lead.id, e.target.value)}
+                              disabled={saving === lead.id}
+                              style={{
+                                ...styles.statusSelect,
+                                color: lead.participant_type ? PARTICIPANT_TYPE_COLORS[lead.participant_type] || "#111" : "#9ca3af",
+                                borderColor: lead.participant_type ? PARTICIPANT_TYPE_COLORS[lead.participant_type] || "#ccc" : "#e5e7eb",
+                              }}
+                            >
+                              <option value="">— Tag type</option>
+                              {PARTICIPANT_TYPES.map((t) => (
+                                <option key={t} value={t}>{t.charAt(0).toUpperCase() + t.slice(1)}</option>
+                              ))}
+                            </select>
+                          )}
                         </td>
                         <td style={styles.td}>
-                          <select
-                            value={lead.source_channel || ""}
-                            onChange={(e) => handleSourceChannelChange(lead.id, e.target.value)}
-                            disabled={saving === lead.id}
-                            style={{ ...styles.statusSelect, color: lead.source_channel ? "#111" : "#9ca3af", borderColor: lead.source_channel ? "#6b7280" : "#e5e7eb", minWidth: 130 }}
-                          >
-                            <option value="">— Tag source</option>
-                            {SOURCE_CHANNELS.map((s) => (
-                              <option key={s} value={s}>{s}</option>
-                            ))}
-                          </select>
+                          {isSubAdmin ? (
+                            <span style={{ fontSize: 12, color: "#374151" }}>{lead.source_channel || "—"}</span>
+                          ) : (
+                            <select
+                              value={lead.source_channel || ""}
+                              onChange={(e) => handleSourceChannelChange(lead.id, e.target.value)}
+                              disabled={saving === lead.id}
+                              style={{ ...styles.statusSelect, color: lead.source_channel ? "#111" : "#9ca3af", borderColor: lead.source_channel ? "#6b7280" : "#e5e7eb", minWidth: 130 }}
+                            >
+                              <option value="">— Tag source</option>
+                              {SOURCE_CHANNELS.map((s) => (
+                                <option key={s} value={s}>{s}</option>
+                              ))}
+                            </select>
+                          )}
                         </td>
                         <td style={styles.td}>
                           <button
@@ -853,7 +874,7 @@ export default function Admin() {
                         <tr key={`${lead.id}-detail`} style={{ background: "#f0f4ff" }}>
                           <td colSpan={14} style={styles.detailCell}>
                             {/* Inline Edit Panel */}
-                            {editingLeadId === lead.id ? (
+                            {!isSubAdmin && editingLeadId === lead.id ? (
                               <div style={{ marginBottom: 20 }}>
                                 <div style={{ fontWeight: 700, fontSize: 12, color: "#2563eb", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 12 }}>✏ Editing Fields</div>
                                 <div style={styles.editGrid}>
@@ -888,14 +909,16 @@ export default function Admin() {
                                 </div>
                               </div>
                             ) : (
-                              <div style={{ marginBottom: 16 }}>
-                                <button
-                                  onClick={() => { setEditingLeadId(lead.id); setEditFields({ ...lead }); }}
-                                  style={styles.editFieldsBtn}
-                                >
-                                  ✏ Edit Fields
-                                </button>
-                              </div>
+                              !isSubAdmin && (
+                                <div style={{ marginBottom: 16 }}>
+                                  <button
+                                    onClick={() => { setEditingLeadId(lead.id); setEditFields({ ...lead }); }}
+                                    style={styles.editFieldsBtn}
+                                  >
+                                    ✏ Edit Fields
+                                  </button>
+                                </div>
+                              )
                             )}
 
                             <div style={styles.detailGrid}>
@@ -941,56 +964,60 @@ export default function Admin() {
                                   style={styles.notesArea}
                                 />
                                 <div style={{ display: "flex", gap: 10, marginTop: 8, alignItems: "center" }}>
-                                  <button
-                                    onClick={() => handleSaveNotes(lead.id)}
-                                    disabled={saving === lead.id}
-                                    style={styles.saveBtn}
-                                  >
-                                    {saving === lead.id ? "Saving..." : "Save Notes"}
-                                  </button>
-                                  <select
-                                    value={emailType[lead.id] || DEFAULT_EMAIL_TYPE[lead.status] || "confirmation"}
-                                    onChange={(e) => setEmailType((prev) => ({ ...prev, [lead.id]: e.target.value }))}
-                                    style={styles.emailTypeSelect}
-                                  >
-                                    {EMAIL_TYPE_OPTIONS.map((o) => (
-                                      <option key={o.value} value={o.value}>{o.label}</option>
-                                    ))}
-                                  </select>
-                                  <button
-                                    onClick={() => handleSendEmail(lead)}
-                                    disabled={emailSending === lead.id}
-                                    style={{
-                                      ...styles.emailBtn,
-                                      ...(emailStatus[lead.id] === "sent" ? styles.emailBtnSent : {}),
-                                      ...(emailStatus[lead.id] === "error" ? styles.emailBtnError : {}),
-                                    }}
-                                  >
-                                    {emailSending === lead.id
-                                      ? "Sending..."
-                                      : emailStatus[lead.id] === "sent"
-                                      ? "✓ Sent"
-                                      : emailStatus[lead.id] === "error"
-                                      ? "✗ Failed"
-                                      : "✉ Send"}
-                                  </button>
-                                  {lead.phone && (
-                                    <a
-                                      href={(() => { const num = lead.phone.replace(/[^0-9]/g, ""); const e164 = num.startsWith("91") && num.length === 12 ? num : num.length === 10 ? `91${num}` : num; return `https://wa.me/${e164}?text=${encodeURIComponent(`Hi ${lead.full_name}, this is Sanjay from REDESIGN-ai. `)}`; })()}
-                                      target="_blank"
-                                      rel="noreferrer"
-                                      style={styles.whatsappBtn}
+                                  {!isSubAdmin && (
+                                    <button
+                                      onClick={() => handleSaveNotes(lead.id)}
+                                      disabled={saving === lead.id}
+                                      style={styles.saveBtn}
                                     >
-                                      💬 WhatsApp
-                                    </a>
+                                      {saving === lead.id ? "Saving..." : "Save Notes"}
+                                    </button>
                                   )}
-                                  <button
-                                    onClick={() => handleDelete(lead.id, lead.full_name)}
-                                    disabled={deleting === lead.id}
-                                    style={styles.deleteBtn}
-                                  >
-                                    {deleting === lead.id ? "Deleting..." : "🗑 Delete"}
-                                  </button>
+                                  {!isSubAdmin && <>
+                                    <select
+                                      value={emailType[lead.id] || DEFAULT_EMAIL_TYPE[lead.status] || "confirmation"}
+                                      onChange={(e) => setEmailType((prev) => ({ ...prev, [lead.id]: e.target.value }))}
+                                      style={styles.emailTypeSelect}
+                                    >
+                                      {EMAIL_TYPE_OPTIONS.map((o) => (
+                                        <option key={o.value} value={o.value}>{o.label}</option>
+                                      ))}
+                                    </select>
+                                    <button
+                                      onClick={() => handleSendEmail(lead)}
+                                      disabled={emailSending === lead.id}
+                                      style={{
+                                        ...styles.emailBtn,
+                                        ...(emailStatus[lead.id] === "sent" ? styles.emailBtnSent : {}),
+                                        ...(emailStatus[lead.id] === "error" ? styles.emailBtnError : {}),
+                                      }}
+                                    >
+                                      {emailSending === lead.id
+                                        ? "Sending..."
+                                        : emailStatus[lead.id] === "sent"
+                                        ? "✓ Sent"
+                                        : emailStatus[lead.id] === "error"
+                                        ? "✗ Failed"
+                                        : "✉ Send"}
+                                    </button>
+                                    {lead.phone && (
+                                      <a
+                                        href={(() => { const num = lead.phone.replace(/[^0-9]/g, ""); const e164 = num.startsWith("91") && num.length === 12 ? num : num.length === 10 ? `91${num}` : num; return `https://wa.me/${e164}?text=${encodeURIComponent(`Hi ${lead.full_name}, this is Sanjay from REDESIGN-ai. `)}`; })()}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        style={styles.whatsappBtn}
+                                      >
+                                        💬 WhatsApp
+                                      </a>
+                                    )}
+                                    <button
+                                      onClick={() => handleDelete(lead.id, lead.full_name)}
+                                      disabled={deleting === lead.id}
+                                      style={styles.deleteBtn}
+                                    >
+                                      {deleting === lead.id ? "Deleting..." : "🗑 Delete"}
+                                    </button>
+                                  </>}
                                 </div>
                               </div>
                             </div>

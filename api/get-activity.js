@@ -1,6 +1,7 @@
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+const SUB_ADMIN_PASSWORD = process.env.SUB_ADMIN_PASSWORD || "scaleme2026";
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -11,7 +12,7 @@ export default async function handler(req, res) {
   if (req.method !== "GET") return res.status(405).json({ error: "Method not allowed" });
 
   const password = req.headers["x-admin-password"];
-  if (!password || password !== ADMIN_PASSWORD) {
+  if (!password || (password !== ADMIN_PASSWORD && password !== SUB_ADMIN_PASSWORD)) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 

@@ -1,6 +1,7 @@
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+const SUB_ADMIN_PASSWORD = process.env.SUB_ADMIN_PASSWORD || "scaleme2026";
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -11,7 +12,9 @@ export default async function handler(req, res) {
   if (req.method !== "GET") return res.status(405).json({ error: "Method not allowed" });
 
   const password = req.headers["x-admin-password"];
-  if (!password || password !== ADMIN_PASSWORD) {
+  const isAdmin = password && password === ADMIN_PASSWORD;
+  const isSubAdmin = password && password === SUB_ADMIN_PASSWORD;
+  if (!isAdmin && !isSubAdmin) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
@@ -33,7 +36,7 @@ export default async function handler(req, res) {
     }
 
     const data = await response.json();
-    return res.status(200).json(data);
+    return res.status(200).json({ leads: data, role: isAdmin ? "admin" : "subadmin" });
   } catch (err) {
     console.error("Handler error:", err);
     return res.status(500).json({ error: "Internal server error" });
