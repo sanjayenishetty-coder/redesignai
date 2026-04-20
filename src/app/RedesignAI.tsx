@@ -193,7 +193,7 @@ export default function RedesignAI() {
         <div className="hero-content">
           <div className="hero-eyebrow fade-up">
             <span className="badge">Cohort 1 Complete — Cohort 2 Coming Soon</span>
-            A 2-Day Hands-On AI Workshop for Indian SMEs
+            Learn AI by building
           </div>
 
           <h1 className="fade-up delay-1">
@@ -319,7 +319,7 @@ export default function RedesignAI() {
               <div className="problem-items">
                 {[
                   { title: "Academic lectures give you theories, not tools.", desc: "You leave with notes, not a working system. No one shows you how to wire it into your actual operations." },
-                  { title: "Coding bootcamps are built for engineers, not operators.", desc: "You don't need to code. You need to execute. There's a difference, and most workshops miss it." },
+                  { title: "Coding bootcamps are built for engineers, not operators.", desc: "You don't need to code. You need to execute. There's a difference, and most programs miss it." },
                   { title: "Generic webinars sell dreams, not results.", desc: "No one maps AI to your P&L. No one shows you what it'll cost, save, or earn. You leave inspired and lost." },
                 ].map((item, i) => (
                   <div className={`problem-item fade-up delay-${i + 1}`} key={i}>
@@ -338,7 +338,7 @@ export default function RedesignAI() {
               <p className="build-sprint">This isn't a seminar. It's a build sprint. In 2 days at ISB-CBI Hyderabad, you'll walk out with systems running, not slides to read later.</p>
               <div className="solution-items">
                 {[
-                  { title: "Live AI workflows tailored to your operations", desc: "Built during the workshop, for your specific industry context" },
+                  { title: "Live AI workflows tailored to your operations", desc: "Built during the cohort, for your specific industry context" },
                   { title: "Automation blueprints that cut costs immediately", desc: "From HR to finance to customer support, working systems not templates" },
                   { title: "Scalable AI agents deployable Monday morning", desc: "No coding required. No engineering team. Just you and the tools." },
                   { title: "P&L-focused frameworks for Indian SME realities", desc: "Built around Indian business constraints, not Silicon Valley assumptions" },
@@ -385,7 +385,7 @@ export default function RedesignAI() {
         <div className="section-inner">
           <span className="section-tag fade-up">Who this is for</span>
           <h2 className="section-h2 fade-up delay-1">Every industry has an AI advantage.<br />Find yours.</h2>
-          <p className="section-sub fade-up delay-2">Whether you run a factory floor, manage a retail chain, or advise clients — AI can transform how you operate. This workshop gives you the tools to make it happen, tailored to your industry.</p>
+          <p className="section-sub fade-up delay-2">Whether you run a factory floor, manage a retail chain, or advise clients — AI can transform how you operate. This program gives you the tools to make it happen, tailored to your industry.</p>
 
           <div className="industry-tabs fade-up delay-2">
             {industries.map((ind) => (
@@ -424,7 +424,7 @@ export default function RedesignAI() {
           ))}
 
           <div className="industry-bottom fade-up">
-            <p className="industry-bottom-text">Don't see your industry? This workshop teaches <strong>frameworks, not formulas</strong>. The AI skills you build here apply to any business. <a href="#redesign-waitlist" className="industry-bottom-link" onClick={(e) => { e.preventDefault(); scrollToSection("redesign-waitlist"); }}>Register for the next cohort →</a></p>
+            <p className="industry-bottom-text">Don't see your industry? REDESIGN teaches <strong>frameworks, not formulas</strong>. The AI skills you build here apply to any business. <a href="#redesign-waitlist" className="industry-bottom-link" onClick={(e) => { e.preventDefault(); scrollToSection("redesign-waitlist"); }}>Register for the next cohort →</a></p>
           </div>
         </div>
       </section>
@@ -461,7 +461,7 @@ export default function RedesignAI() {
             <div className="isb-endorsement-icon">🏛️</div>
             <div>
               <div className="isb-endorsement-label">ISB-CBI Centre for Business Innovation</div>
-              <p className="isb-endorsement-quote">"The REDESIGN workshop represents exactly the kind of practical, operator-focused AI education that Indian SMEs have been waiting for. We're proud to host this cohort on the ISB-CBI campus."</p>
+              <p className="isb-endorsement-quote">"REDESIGN represents exactly the kind of practical, operator-focused AI education that Indian SMEs have been waiting for. We're proud to host this cohort on the ISB-CBI campus."</p>
               <div className="isb-endorsement-source">
                 Anvesh T — Associate Director,&nbsp;
                 <img src="/assets/isb-logo.png" alt="ISB-CBI" style={{ height: 20, verticalAlign: "middle", display: "inline-block" }} />
@@ -539,14 +539,14 @@ export default function RedesignAI() {
 
           <div className="faq-grid fade-up delay-2">
             {[
-              { q: "Do I need to know how to code?", a: "No coding required, at any point. This workshop is designed specifically for business operators, owners, managers, and distributors who have zero engineering background. Every tool we teach is no-code or low-code, built for people who run businesses, not software teams." },
+              { q: "Do I need to know how to code?", a: "No coding required, at any point. REDESIGN is designed specifically for business operators, owners, managers, and distributors who have zero engineering background. Every tool we teach is no-code or low-code, built for people who run businesses, not software teams." },
               { q: "Is this only for tech companies?", a: "The opposite. This is built specifically for non-tech SMEs, including manufacturing, retail, distribution, professional services, food & beverages, logistics. Tech companies already have engineering teams for this. The gap is in traditional Indian businesses, and that's exactly who we built this for." },
               { q: "What size business is this designed for?", a: "Typically businesses with 5 to 500 employees and annual revenues between ₹50 lakhs and ₹100 crores. The frameworks and tools are calibrated for this range, not enterprise-scale, and not solo freelancers. If you're running a real operation with real team and real costs, this is built for you." },
               { q: "Can I bring my team or employees?", a: "Yes, and we encourage it. Coming as a team means you can divide and build simultaneously. One person builds the sales agent while another works on HR automation. Contact us for group pricing and availability." },
-              { q: "What will I actually build during the workshop?", a: "Live AI workflows tailored to your business context. Depending on your industry, this includes marketing and sales automation agents, AI-powered customer support systems, financial decision dashboards, content generation pipelines, and agentic workflows — all built hands-on, no coding required." },
-              { q: "Will I get ongoing support after the workshop?", a: "Yes. Every participant gets 90-day post-workshop access to expert instructors through the AI Collective, a private community of REDESIGN alumni. You can ask questions, share progress, get code reviews, and access updated templates as new AI tools emerge." },
+              { q: "What will I actually build?", a: "Live AI workflows tailored to your business context. Depending on your industry, this includes marketing and sales automation agents, AI-powered customer support systems, financial decision dashboards, content generation pipelines, and agentic workflows — all built hands-on, no coding required." },
+              { q: "Will I get ongoing support after the cohort?", a: "Yes. Every participant gets 90-day access to expert instructors through the AI Collective, a private community of REDESIGN alumni. You can ask questions, share progress, get code reviews, and access updated templates as new AI tools emerge." },
               { q: "When is the next cohort?", a: "Cohort 2 dates are being finalised. Register your interest now and you'll be the first to know — before we announce publicly. Seats are limited to 50 participants per cohort." },
-              { q: "What do I need to bring?", a: "Just a laptop. All software is browser-based and free-tier accessible. We'll send you a pre-workshop setup guide 5 days before the event — it takes about 30 minutes to complete and ensures you hit the ground running on Day 1." },
+              { q: "What do I need to bring?", a: "Just a laptop. All software is browser-based and free-tier accessible. We'll send you a pre-cohort setup guide 5 days before — it takes about 30 minutes and ensures you hit the ground running on Day 1." },
             ].map((faq, i) => (
               <div className={`faq-item ${openFaq === i ? "open" : ""}`} key={i}>
                 <button className="faq-question" onClick={() => toggleFaq(i)}>
@@ -569,7 +569,7 @@ export default function RedesignAI() {
             <div>
               <div className="footer-brand-name">REDESIGN</div>
               <div className="footer-brand-tagline">Build &middot; Automate &middot; Scale</div>
-              <div className="footer-brand-desc">A hands-on AI workshop for Indian SME owners, operators and founders. Build real systems, automate operations, and scale your business — no engineering team required.</div>
+              <div className="footer-brand-desc">Learn AI by building. Build real systems, automate operations, and scale your business — no engineering team required.</div>
             </div>
             <div>
               <div className="footer-col-title">Contact</div>
