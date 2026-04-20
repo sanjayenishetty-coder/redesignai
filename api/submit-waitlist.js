@@ -1,4 +1,32 @@
-import { waitlistEmailHtml } from "./_helpers/email-template.js";
+function waitlistEmailHtml({ fullName, companyName, industry }) {
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#f4f4f5;font-family:'Helvetica Neue',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:40px 0;">
+    <tr><td align="center"><table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+      <tr><td style="background:#0a0a0a;border-radius:12px 12px 0 0;padding:32px 40px;text-align:center;">
+        <h1 style="margin:0;color:#ffffff;font-size:28px;font-weight:800;letter-spacing:0.05em;">REDESIGN-ai</h1>
+        <p style="margin:6px 0 0;color:#6b7280;font-size:13px;">A Hands-On AI Workshop for Indian SMEs</p>
+      </td></tr>
+      <tr><td style="background:#ffffff;padding:40px 40px 32px;">
+        <h2 style="margin:0 0 8px;color:#111;font-size:22px;font-weight:700;">You're on the REDESIGN-ai waitlist ✅</h2>
+        <p style="margin:0 0 24px;color:#374151;font-size:15px;line-height:1.6;">Hi ${fullName},<br><br>Thank you for your interest in <strong>REDESIGN-ai</strong>. We're planning the next cohort and will reach out as soon as dates are finalised — before any public announcement.</p>
+        <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:20px 24px;margin-bottom:28px;">
+          <p style="margin:0 0 8px;color:#166534;font-size:13px;font-weight:700;">What happens next</p>
+          <ul style="margin:8px 0 0;padding-left:20px;color:#374151;font-size:13px;line-height:1.9;">
+            <li>We are finalising dates for the next cohort</li>
+            <li>You'll hear from us before any public announcement</li>
+            <li>No action needed right now</li>
+          </ul>
+        </div>
+        <p style="margin:0;color:#6b7280;font-size:13px;line-height:1.6;">Warm regards,<br><strong>Sanjay & The REDESIGN-ai Team</strong></p>
+      </td></tr>
+      <tr><td style="background:#f9fafb;border:1px solid #e5e7eb;border-top:none;border-radius:0 0 12px 12px;padding:20px 40px;text-align:center;">
+        <p style="margin:0;color:#9ca3af;font-size:12px;">ScaleMe · <a href="https://www.scaleme.in" style="color:#6b7280;text-decoration:none;">scaleme.in</a></p>
+      </td></tr>
+    </table></td></tr>
+  </table>
+</body></html>`;
+}
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;
