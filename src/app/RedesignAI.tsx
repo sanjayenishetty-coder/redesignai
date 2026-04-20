@@ -201,8 +201,7 @@ export default function RedesignAI() {
           </h1>
 
           <p className="hero-sub fade-up delay-2">
-            AI theory won't grow your business. Implementation will.<br />
-            In 2 days, you walk out with live systems, not notes.
+            AI theory won't grow your business. Implementation will.
           </p>
 
           <div className="hero-ctas fade-up delay-3">
