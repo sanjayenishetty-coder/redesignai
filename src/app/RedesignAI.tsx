@@ -273,6 +273,11 @@ export default function RedesignAI() {
             <img src="/assets/isb-logo.png" alt="ISB-CBI Centre for Business Innovation" className="logo-partner-img" />
             <div className="logo-partner-desc">Knowledge Partner</div>
           </div>
+          <div className="logo-strip-divider" />
+          <div className="logo-partner">
+            <img src="/assets/aicoworkers-logo.png" alt="AICoworkers" className="logo-partner-img" />
+            <div className="logo-partner-desc">No-code AI tools built specifically for Indian SME operators</div>
+          </div>
         </div>
       </div>
 
@@ -573,7 +578,7 @@ export default function RedesignAI() {
       </section>
 
       {/* Corporate Inquiry */}
-      <section className="section" id="corporate" style={{ background: "#f8fafc" }}>
+      <section className="section redesign-waitlist-section" id="corporate">
         <div className="section-inner" style={{ maxWidth: 640 }}>
           <span className="section-tag fade-up">For Organisations</span>
           <h2 className="section-h2 fade-up delay-1">Want to train your team in AI?</h2>
