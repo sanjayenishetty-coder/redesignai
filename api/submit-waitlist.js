@@ -1,4 +1,4 @@
-import { waitlistEmailHtml } from "./email-template.js";
+import { waitlistEmailHtml } from "./_helpers/email-template.js";
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY;

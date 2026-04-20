@@ -4,7 +4,7 @@ import {
   followUpEmailHtml,
   rejectionEmailHtml,
   postEventEmailHtml,
-} from "./email-template.js";
+} from "./_helpers/email-template.js";
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const BREVO_API_KEY = process.env.BREVO_API_KEY;
