@@ -556,7 +556,7 @@ export default function RedesignAI() {
               <div className="waitlist-field">
                 <label>Preferred Format</label>
                 <div style={{ display: "flex", gap: 10, marginTop: 4 }}>
-                  {["Online", "Offline", "No preference yet"].map((opt) => (
+                  {["Online", "Classroom"].map((opt) => (
                     <label key={opt} style={{ display: "flex", alignItems: "center", gap: 7, cursor: "pointer", fontSize: 14, color: waitlistData.sessionPreference === opt ? "var(--primary)" : "#374151", background: waitlistData.sessionPreference === opt ? "var(--primary-light, #e6f4f5)" : "#f9fafb", border: waitlistData.sessionPreference === opt ? "1.5px solid var(--primary)" : "1.5px solid #e5e7eb", borderRadius: 8, padding: "8px 14px", fontWeight: waitlistData.sessionPreference === opt ? 600 : 400, transition: "all 0.15s" }}>
                       <input type="radio" name="sessionPreference" value={opt} checked={waitlistData.sessionPreference === opt} onChange={handleWaitlistChange} style={{ display: "none" }} />
                       {opt}
