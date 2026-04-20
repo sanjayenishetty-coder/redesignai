@@ -231,16 +231,6 @@ export default function RedesignAI() {
             <img src="/assets/isb-logo.png" alt="ISB-CBI Centre for Business Innovation" className="logo-partner-img" />
             <div className="logo-partner-desc">Knowledge Partner</div>
           </div>
-          <div className="logo-strip-divider" />
-          <div className="logo-partner">
-            <img src="/assets/osmapi-logo.png" alt="osmAPI" className="logo-partner-img" />
-            <div className="logo-partner-desc">One Awesome API for everything AI — route to 14+ LLM providers</div>
-          </div>
-          <div className="logo-strip-divider" />
-          <div className="logo-partner">
-            <img src="/assets/aicoworkers-logo.png" alt="AICoworkers" className="logo-partner-img" />
-            <div className="logo-partner-desc">No-code AI tools built specifically for Indian SME operators</div>
-          </div>
         </div>
       </div>
 
