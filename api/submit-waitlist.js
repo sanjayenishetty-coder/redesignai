@@ -63,7 +63,8 @@ export default async function handler(req, res) {
             industry: body.industry || "",
             team_size: body.teamSize || "",
             biggest_challenge: body.biggestChallenge || null,
-            source: "waitlist",
+            session_preference: body.sessionPreference || null,
+            source: body.source || "waitlist",
           }),
         });
       } catch (err) {

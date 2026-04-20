@@ -88,6 +88,17 @@ export default function RedesignAI() {
     phone: '',
     companyName: '',
     industry: '',
+    sessionPreference: '',
+  });
+  const [isCorporateLoading, setIsCorporateLoading] = useState(false);
+  const [corporateSubmitted, setCorporateSubmitted] = useState(false);
+  const [corporateData, setCorporateData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    companyName: '',
+    teamSize: '',
+    message: '',
   });
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -152,13 +163,44 @@ export default function RedesignAI() {
       const res = await fetch("/api/submit-waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(waitlistData),
+        body: JSON.stringify({ ...waitlistData, source: "waitlist" }),
       });
       if (!res.ok) throw new Error("API failed");
       setIsWaitlistLoading(false);
       setWaitlistSubmitted(true);
     } catch {
       setIsWaitlistLoading(false);
+      alert("Submission failed. Please try again.");
+    }
+  };
+
+  const handleCorporateChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setCorporateData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleCorporateSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setIsCorporateLoading(true);
+    try {
+      const res = await fetch("/api/submit-waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: corporateData.fullName,
+          email: corporateData.email,
+          phone: corporateData.phone,
+          companyName: corporateData.companyName,
+          teamSize: corporateData.teamSize,
+          biggestChallenge: corporateData.message,
+          source: "corporate_inquiry",
+        }),
+      });
+      if (!res.ok) throw new Error("API failed");
+      setIsCorporateLoading(false);
+      setCorporateSubmitted(true);
+    } catch {
+      setIsCorporateLoading(false);
       alert("Submission failed. Please try again.");
     }
   };
@@ -511,8 +553,78 @@ export default function RedesignAI() {
                   </select>
                 </div>
               </div>
+              <div className="waitlist-field">
+                <label>Preferred Format</label>
+                <div style={{ display: "flex", gap: 10, marginTop: 4 }}>
+                  {["Online", "Offline", "No preference yet"].map((opt) => (
+                    <label key={opt} style={{ display: "flex", alignItems: "center", gap: 7, cursor: "pointer", fontSize: 14, color: waitlistData.sessionPreference === opt ? "var(--primary)" : "#374151", background: waitlistData.sessionPreference === opt ? "var(--primary-light, #e6f4f5)" : "#f9fafb", border: waitlistData.sessionPreference === opt ? "1.5px solid var(--primary)" : "1.5px solid #e5e7eb", borderRadius: 8, padding: "8px 14px", fontWeight: waitlistData.sessionPreference === opt ? 600 : 400, transition: "all 0.15s" }}>
+                      <input type="radio" name="sessionPreference" value={opt} checked={waitlistData.sessionPreference === opt} onChange={handleWaitlistChange} style={{ display: "none" }} />
+                      {opt}
+                    </label>
+                  ))}
+                </div>
+              </div>
               <button type="submit" className="waitlist-submit-btn" disabled={isWaitlistLoading}>
                 {isWaitlistLoading ? 'Submitting...' : 'Register for Next Cohort →'}
+              </button>
+            </form>
+          )}
+        </div>
+      </section>
+
+      {/* Corporate Inquiry */}
+      <section className="section" id="corporate" style={{ background: "#f8fafc" }}>
+        <div className="section-inner" style={{ maxWidth: 640 }}>
+          <span className="section-tag fade-up">For Organisations</span>
+          <h2 className="section-h2 fade-up delay-1">Want to train your team in AI?</h2>
+          <p className="section-sub fade-up delay-2">
+            We run tailored AI learning sessions for companies who want to upskill their employees. If you're interested in an in-house or group session, reach out and we'll get back to you.
+          </p>
+
+          {corporateSubmitted ? (
+            <div className="waitlist-success">
+              <div className="waitlist-success-icon">✓</div>
+              <h3>Inquiry received!</h3>
+              <p>We'll reach out within 2 business days to discuss how we can help your team.</p>
+            </div>
+          ) : (
+            <form className="waitlist-form" onSubmit={handleCorporateSubmit}>
+              <div className="waitlist-form-row">
+                <div className="waitlist-field">
+                  <label>Your Name *</label>
+                  <input type="text" name="fullName" required value={corporateData.fullName} onChange={handleCorporateChange} placeholder="Your full name" />
+                </div>
+                <div className="waitlist-field">
+                  <label>Phone *</label>
+                  <input type="tel" name="phone" required value={corporateData.phone} onChange={handleCorporateChange} placeholder="+91 XXXXX XXXXX" />
+                </div>
+              </div>
+              <div className="waitlist-field">
+                <label>Email *</label>
+                <input type="email" name="email" required value={corporateData.email} onChange={handleCorporateChange} placeholder="you@company.com" />
+              </div>
+              <div className="waitlist-form-row">
+                <div className="waitlist-field">
+                  <label>Company Name *</label>
+                  <input type="text" name="companyName" required value={corporateData.companyName} onChange={handleCorporateChange} placeholder="Your company" />
+                </div>
+                <div className="waitlist-field">
+                  <label>Team Size</label>
+                  <select name="teamSize" value={corporateData.teamSize} onChange={handleCorporateChange}>
+                    <option value="">Select team size</option>
+                    <option>5–20 employees</option>
+                    <option>21–50 employees</option>
+                    <option>51–100 employees</option>
+                    <option>100+ employees</option>
+                  </select>
+                </div>
+              </div>
+              <div className="waitlist-field">
+                <label>What do you need?</label>
+                <textarea name="message" value={corporateData.message} onChange={handleCorporateChange} placeholder="Brief description of what you're looking for — team size, goals, preferred format (online/offline), timeline..." rows={3} style={{ width: "100%", padding: "10px 12px", fontSize: 14, border: "1.5px solid #e5e7eb", borderRadius: 8, outline: "none", resize: "vertical", boxSizing: "border-box", fontFamily: "inherit" }} />
+              </div>
+              <button type="submit" className="waitlist-submit-btn" disabled={isCorporateLoading}>
+                {isCorporateLoading ? 'Sending...' : 'Send Inquiry →'}
               </button>
             </form>
           )}
