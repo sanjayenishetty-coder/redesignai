@@ -906,26 +906,22 @@ export default function Partners() {
           <div className="grid md:grid-cols-3 gap-4 text-left">
             {[
               {
-                phase: "Phase 1",
                 title: "Summit",
                 desc: "4-hour high-intensity executive conclave. 300–500 vetted SME operators per city. Your brand gets direct visibility.",
                 color: BRAND_TEAL,
               },
               {
-                phase: "Phase 2",
-                title: "Accelerator",
-                desc: "6-month ISB-CBI backed program. 40–50 summit attendees join an intensive scaling cohort. Partners get ongoing cohort access.",
+                title: "Local Meetup",
+                desc: "Smaller curated gatherings in each city, bringing together summit attendees and local SME leaders for focused conversations, peer learning, and ongoing sponsor touchpoints.",
                 color: BRAND_TEAL_LIGHT,
               },
               {
-                phase: "Phase 3",
-                title: "Alumni Network",
-                desc: "1,500+ summit attendees become a lifelong peer community. Quarterly meetups, annual reunion, monthly newsletter. Your brand stays embedded.",
+                title: "ScaleMe Network",
+                desc: "A growing community of 1,500+ verified SME founders and operators across India. Monthly conversations, city chapters, and curated introductions — your brand stays visible long after the summit.",
                 color: "#1a7a7a",
               },
             ].map((p, i) => (
               <div key={i} className="rounded-2xl p-6 text-white" style={{ backgroundColor: p.color }}>
-                <div className="text-xs font-bold uppercase tracking-widest opacity-70 mb-2">{p.phase}</div>
                 <div className="text-2xl font-bold mb-3">{p.title}</div>
                 <p className="text-sm opacity-90 leading-relaxed">{p.desc}</p>
               </div>
