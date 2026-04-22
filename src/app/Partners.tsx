@@ -468,7 +468,7 @@ export default function Partners() {
                 style={{ backgroundColor: BRAND_ORANGE }}
               >
                 <FaWhatsapp className="w-5 h-5" />
-                Check Sponsorship Availability via WhatsApp
+                Let's Connect
               </a>
               <a
                 href="mailto:sanjay@scaleme.in?subject=ScaleMe Summit Partnership Enquiry"
