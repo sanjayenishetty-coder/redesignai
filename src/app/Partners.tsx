@@ -25,6 +25,7 @@ import {
   ShieldCheck,
   GraduationCap,
 } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 const BRAND_TEAL = "#007787";
 const BRAND_TEAL_LIGHT = "#499CA6";
@@ -406,7 +407,7 @@ export default function Partners() {
               className="block text-center px-5 py-3 rounded-lg text-sm font-bold text-white mt-2"
               style={{ backgroundColor: BRAND_ORANGE }}
             >
-              Talk to Sanjay on WhatsApp
+              <FaWhatsapp className="inline w-4 h-4 mr-1" /> Talk to Sanjay on WhatsApp
             </a>
           </div>
         )}
@@ -428,7 +429,7 @@ export default function Partners() {
             </h1>
 
             <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8 max-w-3xl">
-              ScaleMe Summit is India's only curated conclave for growth-stage SME operators —
+              ScaleMe Summit is India's biggest curated conclave for growth-stage SME operators —
               verified ₹25–100 Crore founders making real decisions on capital, tech, and scale.
               Your brand in this room is not visibility. It's access.
             </p>
@@ -449,6 +450,14 @@ export default function Partners() {
               </div>
             </div>
 
+            {/* Collaboration logos */}
+            <div className="flex items-center gap-4 mb-8 flex-wrap">
+              <span className="text-xs text-gray-500 font-semibold uppercase tracking-wider">In Collaboration With</span>
+              <img src="/assets/isb-logo.png" alt="ISB Centre for Business Innovation" className="h-8 w-auto" />
+              <div className="w-px h-6 bg-gray-200" />
+              <img src="/assets/nse-emerge-logo.png" alt="NSE Emerge" className="h-8 w-auto" />
+            </div>
+
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4">
               <a
@@ -458,8 +467,8 @@ export default function Partners() {
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base font-bold text-white transition-all hover:opacity-90 active:scale-95 shadow-lg"
                 style={{ backgroundColor: BRAND_ORANGE }}
               >
-                <Phone className="w-5 h-5" />
-                Talk to Sanjay on WhatsApp
+                <FaWhatsapp className="w-5 h-5" />
+                Check Sponsorship Availability via WhatsApp
               </a>
               <a
                 href="mailto:sanjay@scaleme.in?subject=ScaleMe Summit Partnership Enquiry"
@@ -469,46 +478,6 @@ export default function Partners() {
                 <Mail className="w-5 h-5" />
                 Email Sanjay
               </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── OPPORTUNITY ── */}
-      <section className="py-16 md:py-24 px-4 md:px-8 bg-[#007787]">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-[#a8dde3] text-xs font-bold uppercase tracking-widest mb-3">The Market Context</p>
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-              The ₹50 Lakh Crore Room<br />
-              <span className="text-[#7dd3d8]">You Haven't Accessed Yet</span>
-            </h2>
-            <p className="text-[#c5e8eb] text-lg max-w-2xl mx-auto">
-              India's "Missing Middle" — SMEs in the ₹25–100 Cr bracket — are the most
-              underserved and fastest-growing segment in the economy.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-10">
-            {[
-              { value: "63M", label: "SMEs in India" },
-              { value: "30%", label: "of India's GDP" },
-              { value: "45%", label: "of all exports" },
-              { value: "₹15L Cr", label: "Capital need in 3 years" },
-            ].map((s, i) => (
-              <div key={i} className="bg-white/10 border border-white/20 rounded-2xl p-6 text-center">
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2">{s.value}</div>
-                <div className="text-[#a8dde3] text-sm font-medium">{s.label}</div>
-              </div>
-            ))}
-          </div>
-
-          <div className="bg-white/10 border border-white/20 rounded-2xl p-6 md:p-8">
-            <p className="text-white font-semibold mb-2 text-sm uppercase tracking-wider">The Sweet Spot — ₹25–100 Cr Revenue SMEs</p>
-            <div className="grid md:grid-cols-3 gap-6 text-white">
-              <div><span className="text-2xl font-bold text-[#7dd3d8]">48,000+</span><p className="text-sm text-[#c5e8eb] mt-1">Companies in this revenue bracket (NSSO data)</p></div>
-              <div><span className="text-2xl font-bold text-[#7dd3d8]">18–25%</span><p className="text-sm text-[#c5e8eb] mt-1">Average CAGR of this segment</p></div>
-              <div><span className="text-2xl font-bold text-[#7dd3d8]">₹50+ Lakh Cr</span><p className="text-sm text-[#c5e8eb] mt-1">Combined annual revenue of this segment</p></div>
             </div>
           </div>
         </div>
@@ -1055,7 +1024,7 @@ export default function Partners() {
               className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl text-base font-bold text-white transition-all hover:opacity-90 shadow-lg"
               style={{ backgroundColor: BRAND_ORANGE }}
             >
-              <Phone className="w-5 h-5" />
+              <FaWhatsapp className="w-5 h-5" />
               Talk to Sanjay on WhatsApp
             </a>
             <a
