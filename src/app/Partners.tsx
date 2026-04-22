@@ -940,7 +940,7 @@ export default function Partners() {
           <div className="text-center mb-12">
             <p className="text-[#007787] text-xs font-bold uppercase tracking-widest mb-3">Who's Behind It</p>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-              Built by Operators. Backed by Institution.<br />
+              Built by Operators. Backed by Institutions.<br />
               <span style={{ color: BRAND_TEAL }}>Trusted by India's Growth Leaders.</span>
             </h2>
           </div>
@@ -1024,7 +1024,7 @@ export default function Partners() {
               style={{ backgroundColor: BRAND_ORANGE }}
             >
               <FaWhatsapp className="w-5 h-5" />
-              Talk to Sanjay on WhatsApp
+              Book a Partnership Call
             </a>
             <a
               href="mailto:sanjay@scaleme.in?subject=ScaleMe Summit Partnership Enquiry"
