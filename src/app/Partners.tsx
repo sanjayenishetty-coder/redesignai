@@ -257,7 +257,7 @@ const partnerCategories = [
     category: "HR, Talent & Leadership",
     for: "HRMS, Staffing, Leadership Hiring",
     price: "₹5–7L / city",
-    why: "The #1 bottleneck for scaling SMEs is talent and leadership. Be the solution in the room.",
+    why: "The #1 bottleneck for scaling SMEs is talent and leadership. Engage founders solving hiring and organisational challenges.",
     perks: [
       "Exclusive HR/talent category per city",
       "Session on building professional leadership",
@@ -787,8 +787,8 @@ export default function Partners() {
           <div className="text-center mb-12">
             <p className="text-[#007787] text-xs font-bold uppercase tracking-widest mb-3">Partnership Packages</p>
             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
-              Strategic Access,<br />
-              <span style={{ color: BRAND_TEAL }}>Not Just Visibility.</span>
+              Strategic Access, Category Exclusivity and<br />
+              <span style={{ color: BRAND_TEAL }}>Qualified Sponsor Outcomes.</span>
             </h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
               Each category is exclusive — one partner per city. No competing brands.
@@ -800,7 +800,7 @@ export default function Partners() {
           {/* Highlight badge */}
           <div className="flex items-center justify-center gap-3 mb-10 flex-wrap">
             <span className="flex items-center gap-2 bg-[#007787] text-white text-xs font-bold px-4 py-2 rounded-full">
-              <Star className="w-3.5 h-3.5" /> 1 Partner Per Category Per City
+              <Star className="w-3.5 h-3.5" /> 1 category partner per city
             </span>
             <span className="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 text-xs font-semibold px-4 py-2 rounded-full">
               ₹5–10 Lakhs per city
@@ -893,10 +893,10 @@ export default function Partners() {
       {/* ── ECOSYSTEM ── */}
       <section className="py-16 md:py-24 px-4 md:px-8 bg-white">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-[#007787] text-xs font-bold uppercase tracking-widest mb-3">The Long Game</p>
+          <p className="text-[#007787] text-xs font-bold uppercase tracking-widest mb-3">Beyond The Summit</p>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            The Summit Is Just<br />
-            <span style={{ color: BRAND_TEAL }}>The Entry Point.</span>
+            The Summit Is Only the<br />
+            <span style={{ color: BRAND_TEAL }}>Start of Sponsor Access.</span>
           </h2>
           <p className="text-gray-600 text-lg mb-12 max-w-2xl mx-auto">
             Partners who join ScaleMe Summit get embedded in a growing ecosystem that extends
@@ -908,7 +908,7 @@ export default function Partners() {
               {
                 phase: "Phase 1",
                 title: "Summit",
-                desc: "4-hour high-intensity executive conclave. 300–500 vetted SME operators per city. Your brand front and centre.",
+                desc: "4-hour high-intensity executive conclave. 300–500 vetted SME operators per city. Your brand gets direct visibility.",
                 color: BRAND_TEAL,
               },
               {
