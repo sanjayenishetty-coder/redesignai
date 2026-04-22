@@ -60,13 +60,22 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
-                <a 
-                  // href="/#agenda" 
+                <a
+                  // href="/#agenda"
                   onClick={()=>{navigate('/terms-of-service')}}
                   className="text-[#007787] hover:text-[#1DB2AB] transition-colors text-sm"
                   style={{ fontFamily: 'Montserrat, sans-serif' }}
                 >
                   Terms of Service
+                </a>
+              </li>
+              <li>
+                <a
+                  onClick={()=>{navigate('/redesign-ai')}}
+                  className="text-[#007787] hover:text-[#1DB2AB] transition-colors text-sm cursor-pointer"
+                  style={{ fontFamily: 'Montserrat, sans-serif' }}
+                >
+                  Redesign AI
                 </a>
               </li>
             </ul>

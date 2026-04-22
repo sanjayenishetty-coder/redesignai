@@ -121,12 +121,6 @@ export default function Home() {
             {/* Navigation & Button */}
             <div className="flex items-center gap-4 md:gap-12">
               <nav className="flex items-center gap-3 md:gap-8" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                <button
-                  onClick={() => navigate('/redesign-ai')}
-                  className="redesign-ai-btn text-[20px] md:text-[14px] cursor-pointer whitespace-nowrap"
-                >
-                  Redesign AI
-                </button>
               </nav>
 
               {/* Apply Now Button */}
@@ -162,12 +156,6 @@ export default function Home() {
 
             {/* Desktop Navigation - Hidden on Mobile */}
             <nav className="hidden md:flex items-center gap-8 mr-8" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-              <button
-                onClick={() => navigate('/redesign-ai')}
-                className="redesign-ai-btn text-sm cursor-pointer"
-              >
-                Redesign AI
-              </button>
             </nav>
 
             {/* Apply Now Button */}
@@ -186,15 +174,6 @@ export default function Home() {
         {mobileMenuOpen && (
           <div className="fixed top-[64px] left-0 right-0 bg-white shadow-lg z-40 md:hidden">
             <nav className="flex flex-col py-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-              <button
-                onClick={() => {
-                  navigate('/redesign-ai');
-                  setMobileMenuOpen(false);
-                }}
-                className="redesign-ai-btn mx-6 my-2 text-sm text-left"
-              >
-                Redesign AI
-              </button>
             </nav>
           </div>
         )}
