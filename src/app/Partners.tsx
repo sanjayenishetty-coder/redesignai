@@ -489,12 +489,11 @@ export default function Partners() {
           <div className="text-center mb-12">
             <p className="text-[#007787] text-xs font-bold uppercase tracking-widest mb-3">Summit Edition 1 · Feb 21, 2026</p>
             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
-              We Launched at <span style={{ color: BRAND_TEAL }}>ISB Hyderabad.</span><br />
+              ScaleMe launched at <span style={{ color: BRAND_TEAL }}>ISB Hyderabad.</span><br />
               357 Operators Showed Up.
             </h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              The inaugural ScaleMe Summit was held at one of India's premier business school campuses.
-              Every seat was filled. Watch the after-movie.
+              The inaugural ScaleMe Summit saw strong demand for a curated SME growth platform, bringing together founders, promoters and operators from high-growth businesses. Watch the after-movie.
             </p>
           </div>
 
@@ -630,8 +629,8 @@ export default function Partners() {
             </h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
               ScaleMe Summit travels to India's most important SME markets through Feb–Dec 2026.
-              A single city partnership puts your brand in the room. A multi-city partnership
-              makes you part of a national story.
+              A single-city partnership gives your brand access to one growth market. A multi-city partnership
+              makes you part of a national SME growth platform.
             </p>
           </div>
 
@@ -697,7 +696,7 @@ export default function Partners() {
 
           {/* Multi-city bundle */}
           <div className="mt-10 rounded-2xl p-6 md:p-8 border-2 text-center" style={{ borderColor: BRAND_TEAL, backgroundColor: "#f0fafa" }}>
-            <h3 className="text-xl font-bold mb-2" style={{ color: BRAND_TEAL }}>Multi-City Bundle Pricing</h3>
+            <h3 className="text-xl font-bold mb-2" style={{ color: BRAND_TEAL }}>Multi-City Partnership Pricing</h3>
             <p className="text-gray-600 mb-6">Partners who commit to multiple cities get preferential pricing and first-mover advantage in each market.</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {[
@@ -724,7 +723,7 @@ export default function Partners() {
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
               Not a Conference. <span style={{ color: BRAND_TEAL }}>A High-Impact Conclave.</span>
             </h2>
-            <p className="text-gray-600 max-w-xl mx-auto">4 hours. Every minute is structured for operator-level insight and curated connection.</p>
+            <p className="text-gray-600 max-w-xl mx-auto">A 4-hour curated format designed for operator-level insight, structured networking and sponsor-relevant conversations.</p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
