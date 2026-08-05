@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — ScaleMe | Playbooks & perspectives for India's SME founders</title>
+<meta name="description" content="Research-backed playbooks and perspectives for founders running ₹25–100 crore businesses in India.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B2A2D;--teal:#17696B;--paper:#F6F4EE;--paper-2:#EFECE3;
+  --line:rgba(246,244,238,.14);--line-dark:rgba(11,42,45,.12);
+  --vermilion:#E4572E;--vermilion-deep:#C7431D;--maxw:880px;--radius:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Archivo',system-ui,sans-serif;background:var(--paper);color:rgba(11,42,45,.78);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased}
+::selection{background:var(--vermilion);color:#fff}
+h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;color:var(--ink);line-height:1.15;letter-spacing:-.01em}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 6vw}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--vermilion-deep);margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--vermilion-deep)}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(246,244,238,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line-dark)}
+.nav-in{max-width:1080px;margin:0 auto;padding:0 6vw;height:72px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:700;font-size:21px;color:var(--ink);text-decoration:none}
+.logo .br{color:var(--teal);font-weight:400}.logo .me{color:var(--teal)}
+.nav-links{display:flex;gap:34px;align-items:center}
+.nav-links a{color:rgba(11,42,45,.7);text-decoration:none;font-size:14.5px;font-weight:500}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a.active{color:var(--ink);border-bottom:2px solid var(--vermilion);padding-bottom:3px}
+@media(max-width:820px){.nav-links a:not(.btn){display:none}}
+.btn{display:inline-block;background:var(--vermilion);color:#fff !important;text-decoration:none;font-weight:700;font-size:14.5px;letter-spacing:.04em;padding:14px 28px;border-radius:8px;border:none;cursor:pointer;transition:transform .2s,background .2s,box-shadow .2s}
+.btn:hover{background:var(--vermilion-deep);transform:translateY(-2px);box-shadow:0 10px 30px rgba(228,87,46,.35)}
+.nav-links .btn{padding:10px 20px;font-size:13px;letter-spacing:.05em}
+.float-cta{position:fixed;bottom:26px;right:26px;z-index:60;padding:15px 28px;border-radius:99px;box-shadow:0 12px 34px rgba(228,87,46,.4);opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .35s,transform .35s}
+.float-cta.show{opacity:1;transform:none;pointer-events:auto}
+@media(max-width:600px){.float-cta{bottom:18px;right:18px;padding:13px 22px;font-size:13.5px}}
+.page-hero{padding:190px 0 70px;background:linear-gradient(180deg,var(--paper-2),var(--paper))}
+.page-hero h1{font-size:clamp(36px,4.6vw,56px);margin-bottom:20px}
+.page-hero .lede{font-size:18.5px;max-width:34em}
+.posts{padding:70px 0 100px}
+.post{background:#fff;border:1px solid var(--line-dark);border-radius:var(--radius);margin-bottom:26px;overflow:hidden;transition:box-shadow .25s}
+.post:hover{box-shadow:0 14px 34px rgba(11,42,45,.08)}
+.post summary{list-style:none;cursor:pointer;padding:36px 40px;display:block}
+.post summary::-webkit-details-marker{display:none}
+.post-meta{font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(11,42,45,.45);margin-bottom:10px;display:block}
+.post h2{font-size:clamp(21px,2.4vw,27px);margin-bottom:10px}
+.post .teaser-hint{font-size:14px;color:var(--teal);font-weight:600}
+.post[open] .teaser-hint .plus::before{content:"– Close"}
+.post .teaser-hint .plus::before{content:"+ Read the brief"}
+.post-body{padding:0 40px 40px;border-top:1px solid var(--line-dark);}
+.post-body p{padding-top:22px;font-size:16px;line-height:1.8}
+.post-body p b{color:var(--ink);font-weight:600}
+.post-body .soon{margin-top:20px;font-size:13.5px;color:rgba(11,42,45,.5);font-style:italic}
+@media(max-width:560px){.post summary{padding:26px 24px}.post-body{padding:0 24px 30px}}
+.nl{background:var(--ink);border-radius:var(--radius);padding:52px;margin-top:56px;color:rgba(246,244,238,.75)}
+@media(max-width:560px){.nl{padding:34px 26px}}
+.nl h3{color:#fff;font-size:25px;margin-bottom:12px}
+.nl p{font-size:15.5px;margin-bottom:24px}
+.mini-form{display:flex;gap:12px}
+@media(max-width:560px){.mini-form{flex-direction:column}}
+.mini-form input{flex:1;background:rgba(246,244,238,.08);border:1px solid var(--line);color:#fff;border-radius:8px;padding:14px 16px;font-family:'Archivo';font-size:15.5px}
+.mini-form input::placeholder{color:rgba(246,244,238,.4)}
+.mini-form input:focus{outline:none;border-color:#7FD4CC}
+footer{background:var(--ink);border-top:1px solid var(--line);padding:56px 0;font-size:14px;color:rgba(246,244,238,.5)}
+.foot-in{max-width:1080px;margin:0 auto;padding:0 6vw;display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;align-items:center}
+footer a{color:rgba(246,244,238,.7);text-decoration:none;margin-left:26px}
+footer a:hover{color:#fff}
+@media(max-width:600px){footer a{margin-left:0;margin-right:22px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a class="logo" href="index.html">S<span class="br">{</span>cale<span class="br">}</span><span class="me">ME</span></a>
+    <div class="nav-links">
+      <a href="index.html#why">Why ScaleMe</a>
+      <a href="about.html">About</a>
+      <a href="index.html#inside">Who's inside</a>
+      <a href="index.html#resources">Resources</a>
+      <a href="blog.html" class="active">Blog</a>
+      <a class="btn" href="index.html#apply">Join the Network</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow">The ScaleMe blog</div>
+    <h1>Playbooks &amp; perspectives for the ₹25–100 crore stage.</h1>
+    <p class="lede">Research-backed writing on capital, M&amp;A, and operations for India's SME founders — no generic MSME content, no press-release filter.</p>
+  </div>
+</header>
+
+<main class="posts">
+  <div class="wrap">
+
+    <details class="post">
+      <summary>
+        <span class="post-meta">Capital · 6 min read</span>
+        <h2>Why SME IPOs are having their moment on NSE Emerge</h2>
+        <span class="teaser-hint"><span class="plus"></span></span>
+      </summary>
+      <div class="post-body">
+        <p>Public markets have quietly become a serious option for mid-market operators — not just an exit story, but a growth-capital and credibility story. <b>This brief covers what listing on NSE Emerge actually demands of a ₹50–100 crore business</b>: the governance work that starts 18–24 months before the DRHP, what merchant bankers screen for, where founders underestimate the cost of being public, and how to judge whether your business is a listing candidate or better served by private capital.</p>
+        <p class="soon">Full playbook publishing soon. Subscribe below to get it first.</p>
+      </div>
+    </details>
+
+    <details class="post">
+      <summary>
+        <span class="post-meta">M&amp;A · 8 min read</span>
+        <h2>The roll-up wave has reached Indian SMEs. Here's what it means for you.</h2>
+        <span class="teaser-hint"><span class="plus"></span></span>
+      </summary>
+      <div class="post-body">
+        <p>Acquirers are consolidating fragmented Indian sectors — buying several mid-sized operators to build platforms with scale economics. If you run a business in a fragmented industry, <b>you will likely be approached this decade, as a target or as a platform anchor.</b> This brief covers how roll-ups value SMEs differently from standalone buyers, what makes an operator "platform quality," the traps in earn-out structures, and the questions to ask before any conversation gets serious.</p>
+        <p class="soon">Full playbook publishing soon. Subscribe below to get it first.</p>
+      </div>
+    </details>
+
+    <details class="post">
+      <summary>
+        <span class="post-meta">Operations · 5 min read</span>
+        <h2>Working capital: the silent killer of ₹50 crore businesses</h2>
+        <span class="teaser-hint"><span class="plus"></span></span>
+      </summary>
+      <div class="post-body">
+        <p>Most mid-market failures aren't demand problems — they're cash-conversion problems that compound quietly while the P&amp;L looks healthy. <b>Growth eats working capital faster than profit replaces it</b>, and the ₹25–100 crore band is where the gap turns dangerous: customers stretch payables, growth demands inventory, and formal credit hasn't caught up to your scale. This brief covers the operating levers founders control before borrowing — and how operators inside the network have structured their way out.</p>
+        <p class="soon">Full playbook publishing soon. Subscribe below to get it first.</p>
+      </div>
+    </details>
+
+    <div class="nl">
+      <h3>The ScaleMe Brief</h3>
+      <p>Every playbook lands in the weekly newsletter first — real deals, one tool, one case study, one stat. Five minutes, zero fluff.</p>
+      <form class="mini-form" onsubmit="event.preventDefault();const b=this.querySelector('button');b.textContent='Subscribed ✓';b.disabled=true;this.querySelector('input').disabled=true;/* TODO: POST to newsletter endpoint */">
+        <input type="email" required placeholder="your@email.com" autocomplete="email" aria-label="Email address">
+        <button class="btn" type="submit">Subscribe</button>
+      </form>
+    </div>
+
+  </div>
+</main>
+
+<a class="btn float-cta" id="floatCta" href="index.html#apply">Join the Network</a>
+
+<footer>
+  <div class="foot-in">
+    <div>© 2026 ScaleMe Network · Hyderabad, India</div>
+    <div>
+      <a href="mailto:sme@scaleme.in">sme@scaleme.in</a>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const fcta = document.getElementById('floatCta');
+window.addEventListener('scroll', ()=>{fcta.classList.toggle('show', window.scrollY > 400);}, {passive:true});
+</script>
+</body>
+</html>
