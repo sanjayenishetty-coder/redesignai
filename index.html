@@ -805,9 +805,14 @@ function handleSubscribe(e){
 }
 
 /* ---------- application submit ----------
-   Posts to /api/apply, which emails the application to the team. Success is
-   only shown when the server confirms it; a failure says so and offers the
-   direct email address, so an application is never silently lost. */
+   Posts straight into the ScaleMe Signal CRM. The email stopgap at /api/apply
+   is kept as a fallback: if the CRM is unreachable, the application is emailed
+   to the team instead, so a submission is never silently lost.
+
+   Once scaleme.in is served by the platform itself, this whole page is replaced
+   by its /(marketing) route and the form posts same-origin. */
+const CRM_ENDPOINT = 'https://scaleme-signal.vercel.app/api/network/apply';
+
 async function handleSubmit(e){
   e.preventDefault();
   const form = e.target;
@@ -820,42 +825,62 @@ async function handleSubmit(e){
   btn.textContent = 'Sending…';
   err.style.display = 'none';
 
+  /* Field names the CRM expects. `name`/`company` are accepted as aliases by
+     /api/network/apply; aboutLine and hardestProblem are its own column names. */
   const payload = {
-    name:        form.querySelector('#name').value,
-    company:     form.querySelector('#company').value,
-    city:        form.querySelector('#city').value,
-    revenueBand: form.querySelector('#rev').value,
-    phone:       form.querySelector('#phone').value,
-    whatsapp:    form.querySelector('#waCheck').checked,
-    email:       form.querySelector('#email').value,
-    what:        form.querySelector('#what').value,
-    problem:     form.querySelector('#problem').value
+    name:           form.querySelector('#name').value,
+    company:        form.querySelector('#company').value,
+    city:           form.querySelector('#city').value,
+    revenueBand:    form.querySelector('#rev').value,
+    phone:          form.querySelector('#phone').value,
+    whatsapp:       form.querySelector('#waCheck').checked,
+    email:          form.querySelector('#email').value,
+    aboutLine:      form.querySelector('#what').value,
+    hardestProblem: form.querySelector('#problem').value,
+    source:         'CAMPAIGN'
   };
 
+  function succeed(){
+    btn.textContent = 'Application received ✓';
+    btn.style.background = '#17696B';
+    form.querySelectorAll('input,select,textarea').forEach(el => { el.disabled = true; });
+  }
+  function fail(message){
+    err.textContent = message;
+    err.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = original;
+  }
+
+  /* Primary: the CRM. */
   try {
-    const res = await fetch('/api/apply', {
+    const res = await fetch(CRM_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
     const data = await res.json().catch(() => ({}));
+    if (res.ok && data.ok !== false) { succeed(); return; }
+    /* A 4xx is the applicant's input (bad phone/email) — show it, don't retry. */
+    if (res.status >= 400 && res.status < 500 && data.error) { fail(data.error); return; }
+  } catch (_) { /* network/CORS failure — fall through to email */ }
 
-    if (!res.ok || data.ok === false) {
-      err.textContent = data.error || "We couldn't submit your application. Please email sme@scaleme.in directly.";
-      err.style.display = 'block';
-      btn.disabled = false;
-      btn.textContent = original;
-      return;
-    }
-
-    btn.textContent = 'Application received ✓';
-    btn.style.background = '#17696B';
-    form.querySelectorAll('input,select,textarea').forEach(el => { el.disabled = true; });
+  /* Fallback: email the application so it is never lost. */
+  try {
+    const res = await fetch('/api/apply', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...payload,
+        what: payload.aboutLine,
+        problem: payload.hardestProblem
+      })
+    });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok && data.ok !== false) { succeed(); return; }
+    fail(data.error || "We couldn't submit your application. Please email sme@scaleme.in directly.");
   } catch (_) {
-    err.textContent = "Couldn't reach the server. Check your connection, or email sme@scaleme.in directly.";
-    err.style.display = 'block';
-    btn.disabled = false;
-    btn.textContent = original;
+    fail("Couldn't reach the server. Check your connection, or email sme@scaleme.in directly.");
   }
 }
 
